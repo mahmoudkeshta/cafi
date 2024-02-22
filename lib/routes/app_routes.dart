@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import '../presentation/flash_screen/onboarding.dart';
 import '../presentation/loading_screen/loading_screen.dart';
 import '../presentation/loading_screen/binding/loading_binding.dart';
 import '../presentation/flash_screen_two_screen/flash_screen_two_screen.dart';
@@ -413,6 +414,9 @@ class AppRoutes {
 
   static const String initialRoute = '/initialRoute';
 
+  static const String On_Boarding = '/OnBoarding';
+  
+
   static List<GetPage> pages = [
     GetPage(
       name: loadingScreen,
@@ -422,10 +426,10 @@ class AppRoutes {
       ],
     ),
     GetPage(
-      name: flashScreenTwoScreen,
-      page: () => FlashScreenTwoScreen(),
+      name: On_Boarding ,
+      page: () => OnBoarding(),
       bindings: [
-        FlashScreenTwoBinding(),
+        
       ],
     ),
     GetPage(

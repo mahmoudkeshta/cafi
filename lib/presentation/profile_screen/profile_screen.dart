@@ -188,10 +188,16 @@ class ProfileScreen extends GetWidget<ProfileController> {
                                 height: 45.adaptSize,
                                 width: 45.adaptSize,
                                 padding: EdgeInsets.all(11.h),
-                                child: CustomImageView(
+                                child:
+                                  Icon(
+          Icons.favorite, // اختيار الأيقونة
+          size: 48.0, // حجم الأيقونة
+          color: Colors.blue, // لون الأيقونة
+        ), 
+                                /*CustomImageView(
                                   imagePath:
                                       ImageConstant.imgThumbsUpBlack90045x45,
-                                ),
+                                ),*/
                               ),
                               Padding(
                                 padding: EdgeInsets.only(
@@ -224,9 +230,15 @@ class ProfileScreen extends GetWidget<ProfileController> {
                                 height: 45.adaptSize,
                                 width: 45.adaptSize,
                                 padding: EdgeInsets.all(11.h),
-                                child: CustomImageView(
-                                  imagePath: ImageConstant.imgCallBlack900,
-                                ),
+                                child:
+                                         Icon(
+          Icons.phone_callback, // اختيار الأيقونة
+          size: 48.0, // حجم الأيقونة
+          color: Colors.blue, // لون الأيقونة
+        ), 
+                               /**
+                                * img_call_black_900
+                                */
                               ),
                               Padding(
                                 padding: EdgeInsets.only(
@@ -534,6 +546,7 @@ class ProfileScreen extends GetWidget<ProfileController> {
                   itemBuilder: (context, index) {
                     ProfileItemModel model = controller
                         .profileModelObj.value.profileItemList.value[index];
+
                     return ProfileItemWidget(
                       model,
                     );

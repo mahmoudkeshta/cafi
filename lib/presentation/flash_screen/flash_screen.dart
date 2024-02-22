@@ -26,13 +26,14 @@ class FlashScreen extends GetWidget<FlashController> {
           width: double.maxFinite,
           child: Column(
             children: [
-            //  _buildTelevision(),
+             //  _buildTelevision(),
               Container(
                 padding: EdgeInsets.symmetric(
                   horizontal: 10.h,
                   vertical: 15.v,
                 ),
-                child: Column(
+                child:
+                Column(
                   children: [
                     CustomImageView(
                       imagePath: ImageConstant.imgImage2494x407,
@@ -88,6 +89,7 @@ class FlashScreen extends GetWidget<FlashController> {
                       ),
                     ),
                     SizedBox(height: 10.v),
+
                     CustomElevatedButton(
                       text: "lbl_get_start".tr,
                       margin: EdgeInsets.symmetric(horizontal: 14.h),

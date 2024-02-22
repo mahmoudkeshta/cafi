@@ -23,8 +23,12 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         theme: theme,
         translations: AppLocalization(),
-        locale: Get.deviceLocale, //for setting localization strings
-        fallbackLocale: Locale('en', 'US'),
+        locale: Get.deviceLocale,
+
+
+        //for setting localization strings
+      fallbackLocale: Locale('ar', 'AR'),
+       // locale: Locale('en', 'US'),
         title: 'coffee_app',
         initialBinding: InitialBindings(),
         initialRoute: AppRoutes.initialRoute,

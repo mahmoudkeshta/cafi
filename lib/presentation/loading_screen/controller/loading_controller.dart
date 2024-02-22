@@ -1,4 +1,5 @@
 import 'package:coffee_app/core/app_export.dart';
+import 'package:coffee_app/presentation/flash_screen/onboarding.dart';
 import 'package:coffee_app/presentation/loading_screen/models/loading_model.dart';
 
 import '../../flash_screen/flash_screen.dart';
@@ -16,7 +17,7 @@ class LoadingController extends GetxController {
     // Delay navigation to the next screen after 10 seconds
     Future.delayed(Duration(seconds: 10), () {
       // Navigate to the next screen
-      Get.off(FlashScreenTwoScreen());//flashScreenTwoScreen
+      Get.off(OnBoarding());//flashScreenTwoScreen
       // Use Get.offAll() if you want to remove all the previous routes from the stack
     });
   }
