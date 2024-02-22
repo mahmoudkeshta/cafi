@@ -1,0 +1,9 @@
+import 'package:flutter/material.dart';import 'package:grouped_list/grouped_list.dart';import 'package:coffee_app/core/app_export.dart';import 'package:coffee_app/widgets/app_bar/appbar_leading_image.dart';import 'package:coffee_app/widgets/app_bar/appbar_subtitle_two.dart';import 'package:coffee_app/widgets/app_bar/appbar_trailing_image.dart';import 'package:coffee_app/widgets/app_bar/custom_app_bar.dart';import '../refund_screen/widgets/active_item_widget.dart';import 'controller/refund_controller.dart';import 'models/active_item_model.dart';class RefundScreen extends GetWidget<RefundController> {const RefundScreen({Key? key}) : super(key: key);
+
+@override Widget build(BuildContext context) { return SafeArea(child: Scaffold(appBar: _buildAppBar(), body: Padding(padding: EdgeInsets.fromLTRB(24.h, 19.v, 24.h, 5.v), child: Obx(() => GroupedListView<ActiveItemModel, String>(shrinkWrap: true, stickyHeaderBackgroundColor: Colors.transparent, elements: controller.refundModelObj.value.activeItemList.value, groupBy: (element) => element.groupBy!.value, sort: false, groupSeparatorBuilder: (String value) {return Padding(padding: EdgeInsets.only(top: 22.v, bottom: 7.v), child: Text(value, style: CustomTextStyles.headlineSmallBlack900_2.copyWith(color: appTheme.black900)));}, itemBuilder: (context, model) {return ActiveItemWidget(model);}))))); } 
+/// Section Widget
+PreferredSizeWidget _buildAppBar() { return CustomAppBar(leadingWidth: 51.h, leading: AppbarLeadingImage(imagePath: ImageConstant.imgArrowLeftOnprimary, margin: EdgeInsets.only(left: 24.h, top: 67.v, bottom: 19.v), onTap: () {onTapArrowLeft();}), centerTitle: true, title: AppbarSubtitleTwo(text: "lbl_refund".tr, margin: EdgeInsets.only(top: 58.v, bottom: 11.v)), actions: [AppbarTrailingImage(imagePath: ImageConstant.imgSend, margin: EdgeInsets.fromLTRB(24.h, 67.v, 24.h, 18.v))], styleType: Style.bgShadow); } 
+
+/// Navigates to the previous screen.
+onTapArrowLeft() { Get.back(); } 
+ }

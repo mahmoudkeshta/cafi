@@ -1,0 +1,13 @@
+import 'package:flutter/material.dart';import 'package:coffee_app/core/app_export.dart';import 'package:coffee_app/widgets/app_bar/appbar_leading_image.dart';import 'package:coffee_app/widgets/app_bar/appbar_subtitle_two.dart';import 'package:coffee_app/widgets/app_bar/custom_app_bar.dart';import 'package:coffee_app/widgets/custom_elevated_button.dart';import 'controller/reward_history_controller.dart';class RewardHistoryScreen extends GetWidget<RewardHistoryController> {const RewardHistoryScreen({Key? key}) : super(key: key);
+
+@override Widget build(BuildContext context) { return SafeArea(child: Scaffold(appBar: _buildAppBar(), body: Container(width: double.maxFinite, padding: EdgeInsets.symmetric(horizontal: 24.h, vertical: 17.v), child: Column(children: [_buildReferFirstFriend(referFirstFriend: "msg_new_account_register".tr, widget: "lbl_1004".tr), SizedBox(height: 17.v), Divider(), SizedBox(height: 16.v), _buildOneHundredFifty(), SizedBox(height: 17.v), Divider(), SizedBox(height: 16.v), _buildReferFirstFriend(referFirstFriend: "msg_refer_first_friend".tr, widget: "lbl_503".tr), SizedBox(height: 5.v)])))); } 
+/// Section Widget
+PreferredSizeWidget _buildAppBar() { return CustomAppBar(leadingWidth: 51.h, leading: AppbarLeadingImage(imagePath: ImageConstant.imgArrowLeftOnprimary, margin: EdgeInsets.only(left: 24.h, top: 67.v, bottom: 19.v), onTap: () {onTapArrowLeft();}), centerTitle: true, title: AppbarSubtitleTwo(text: "lbl_reward_history".tr, margin: EdgeInsets.only(top: 61.v, bottom: 8.v)), styleType: Style.bgShadow); } 
+/// Section Widget
+Widget _buildOneHundredFifty() { return Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [Padding(padding: EdgeInsets.only(top: 2.v, bottom: 3.v), child: Text("lbl_first_order".tr, style: theme.textTheme.titleLarge)), CustomElevatedButton(height: 36.v, width: 60.h, text: "lbl_1502".tr, buttonStyle: CustomButtonStyles.fillBlack, buttonTextStyle: theme.textTheme.titleLarge!)]); } 
+/// Common widget
+Widget _buildReferFirstFriend({required String referFirstFriend, required String widget, }) { return Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, crossAxisAlignment: CrossAxisAlignment.start, children: [Padding(padding: EdgeInsets.only(top: 2.v, bottom: 3.v), child: Text(referFirstFriend, style: theme.textTheme.titleLarge!.copyWith(color: appTheme.black900))), Container(width: 60.h, padding: EdgeInsets.symmetric(horizontal: 10.h, vertical: 2.v), decoration: AppDecoration.fillBlack9001.copyWith(borderRadius: BorderRadiusStyle.circleBorder7), child: Text(widget, style: theme.textTheme.titleLarge!.copyWith(color: appTheme.black900)))]); } 
+
+/// Navigates to the previous screen.
+onTapArrowLeft() { Get.back(); } 
+ }
