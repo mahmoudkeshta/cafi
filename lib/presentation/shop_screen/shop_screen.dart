@@ -183,14 +183,15 @@ class ShopScreen extends GetWidget<ShopController> {
           alignment: Alignment.centerLeft,
           child: SizedBox(
               height: 250.v,
-              width: 784.h,
+
+              width: 484.h,
               child: Stack(alignment: Alignment.bottomRight, children: [
                 Obx(() => CarouselSlider.builder(
                     options: CarouselOptions(
                         height: 250.v,
                         initialPage: 0,
                         autoPlay: true,
-                        viewportFraction: 1.0,
+                        viewportFraction: 1.3,
                         enableInfiniteScroll: false,
                         scrollDirection: Axis.horizontal,
                         onPageChanged: (index, reason) {

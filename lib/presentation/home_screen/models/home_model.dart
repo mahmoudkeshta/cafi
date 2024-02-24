@@ -12,7 +12,8 @@ class HomeModel {
   Rx<List<WidgetItemModel>> widgetItemList = Rx([
     WidgetItemModel(imageFiftySix: ImageConstant.imgImage56.obs),
     WidgetItemModel(imageFiftySix: ImageConstant.imgImage11.obs),
-    WidgetItemModel(imageFiftySix: ImageConstant.imgImage10.obs)
+    WidgetItemModel(imageFiftySix: ImageConstant.imgImage10.obs),
+
   ]);
   Rx<List<DynamictextItemModel>> dynamictextItemList = Rx([
     DynamictextItemModel(
@@ -28,6 +29,10 @@ class HomeModel {
         off: ImageConstant.imgImage17.obs,
         offer: "50% OFF".obs,
         price: "Price 5 up".obs),
+    OffItemModel(
+        off: ImageConstant.imgImage13.obs,
+        offer: "10% OFF".obs,
+        price: "Price 2 up".obs),
     OffItemModel(
         off: ImageConstant.imgImage18.obs,
         offer: "50% OFF".obs,

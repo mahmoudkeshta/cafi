@@ -189,15 +189,10 @@ class ProfileScreen extends GetWidget<ProfileController> {
                                 width: 45.adaptSize,
                                 padding: EdgeInsets.all(11.h),
                                 child:
-                                  Icon(
-          Icons.favorite, // اختيار الأيقونة
-          size: 48.0, // حجم الأيقونة
-          color: Colors.blue, // لون الأيقونة
-        ), 
-                                /*CustomImageView(
+                                CustomImageView(
                                   imagePath:
                                       ImageConstant.imgThumbsUpBlack90045x45,
-                                ),*/
+                                ),
                               ),
                               Padding(
                                 padding: EdgeInsets.only(

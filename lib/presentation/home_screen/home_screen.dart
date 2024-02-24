@@ -106,10 +106,10 @@ class HomeScreen extends GetWidget<HomeController> {
   Widget _buildWidget() {
     return Obx(() => CarouselSlider.builder(
         options: CarouselOptions(
-            height: 250.v,
+            height: 150.v,
             initialPage: 0,
             autoPlay: true,
-            viewportFraction: 1.0,
+            viewportFraction: 2.2,
             enableInfiniteScroll: false,
             scrollDirection: Axis.horizontal,
             onPageChanged: (index, reason) {
@@ -322,15 +322,15 @@ class HomeScreen extends GetWidget<HomeController> {
   String getCurrentRoute(BottomBarEnum type) {
     switch (type) {
       case BottomBarEnum.Home:
-        return AppRoutes.shopScreen;
+        return "/";
       case BottomBarEnum.Orders:
-        return "/";
+        return home_ControllerIme().goToYourOrder();
       case BottomBarEnum.Chat:
-        return "/";
+        return home_ControllerIme().goToChat();
       case BottomBarEnum.Cart:
-        return AppRoutes.chatScreen;
+        return home_ControllerIme().goToCart();
       case BottomBarEnum.Profile:
-        return "/";
+        return  home_ControllerIme().goToProfile();
       default:
         return "/";
     }
