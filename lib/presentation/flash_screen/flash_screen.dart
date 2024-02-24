@@ -13,6 +13,7 @@ import 'controller/flash_controller.dart';
 
 // ignore_for_file: must_be_immutable
 class FlashScreen extends GetWidget<FlashController> {
+  
   const FlashScreen({Key? key})
       : super(
           key: key,

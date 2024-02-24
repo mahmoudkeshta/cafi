@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -18,12 +19,32 @@ void main() async {
     Logger.init(kReleaseMode ? LogMode.live : LogMode.debug);
     runApp(MyApp());
   });
+  
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
 
+class _MyAppState extends State<MyApp> {
+  @override
+  void initState() {
+  
+    FirebaseAuth.instance
+  .authStateChanges()
+  .listen((User? user) {
+    if (user == null) {
+      print('========User is currently signed out!');
+    } else {
+      print('User is signed in!');
+    }
+  });
+  }
+  // ignore: override_on_non_overriding_member
   @override
   Widget build(BuildContext context) {
+    
     return Sizer(builder: (context, orientation, deviceType) {
       return GetMaterialApp(
         debugShowCheckedModeBanner: false,
@@ -40,6 +61,12 @@ class MyApp extends StatelessWidget {
         initialRoute: AppRoutes.initialRoute,
         getPages: AppRoutes.pages,
       );
+
+      
     });
-  }
-}
+  
+  
+
+
+
+  }}
