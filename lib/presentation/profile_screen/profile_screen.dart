@@ -1,3 +1,6 @@
+import 'package:coffee_app/presentation/sign_in_screen/binding/sign_in_binding.dart';
+import 'package:coffee_app/presentation/sign_in_screen/sign_in_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'models/profile_item_model.dart';
 import 'controller/profile_controller.dart';
@@ -579,10 +582,21 @@ class ProfileScreen extends GetWidget<ProfileController> {
               top: 10.v,
               bottom: 4.v,
             ),
-            child: Text(
-              "lbl_sign_out".tr,
-              style: CustomTextStyles.titleLargeMedium,
+            child:
+            GestureDetector(
+              child: Text(
+                "lbl_sign_out".tr,
+
+                style: CustomTextStyles.titleLargeMedium
+
+              ),
+              onTap:() async{
+                await FirebaseAuth.instance.signOut();
+                Get.offAll(SignInScreen(),binding:SignInBinding());
+              } ,
             ),
+
+
           ),
           Spacer(),
           Padding(
@@ -592,7 +606,7 @@ class ProfileScreen extends GetWidget<ProfileController> {
             ),
             child:
              GestureDetector(
-               child: 
+               child:
                Text(
                 "lbl_2022_cafi".tr,
                 style: CustomTextStyles.bodyLargeBlack900_1,

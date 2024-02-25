@@ -1,3 +1,7 @@
+
+
+import 'package:coffee_app/presentation/home_screen/home_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:coffee_app/core/app_export.dart';
 import 'package:coffee_app/widgets/app_bar/custom_app_bar.dart';
@@ -6,8 +10,9 @@ import 'package:coffee_app/widgets/custom_text_form_field.dart';
 import 'package:coffee_app/core/utils/validation_functions.dart';
 
 import 'package:coffee_app/widgets/app_bar/appbar_leading_image.dart';
-// ignore: unused_import
+// ignore: unused_import;
 
+import '../home_screen/binding/home_binding.dart';
 import 'controller/sign_up_controller.dart';
 
 // ignore_for_file: must_be_immutable
@@ -17,6 +22,7 @@ class SignUpScreen extends GetWidget<SignUpController> {
   @override
   Widget build(BuildContext context) {
     SignUp_ControllerImg signUp_ControllerImg = Get.put(SignUp_ControllerImg());
+    
     return SafeArea(
         child: Scaffold(
             resizeToAvoidBottomInset: false,
@@ -39,7 +45,11 @@ class SignUpScreen extends GetWidget<SignUpController> {
                                   width: 159.adaptSize),
                               SizedBox(height: 29.v),
                               Text("lbl_sign_up".tr,
-                                  style: theme.textTheme.displaySmall),
+                                  style: theme.textTheme.displaySmall,
+                                
+                                  ),
+                                  
+                                
                               SizedBox(height: 8.v),
                               Text("msg_register_new_account".tr,
                                   style: CustomTextStyles.titleLargeAmberA400),
@@ -188,6 +198,7 @@ class SignUpScreen extends GetWidget<SignUpController> {
       CustomImageView(
           imagePath: ImageConstant.imgUser35x35,
           height: 35.adaptSize,
+          color: Colors.black,
           width: 35.adaptSize,
           margin: EdgeInsets.only(bottom: 4.v)),
       _buildFullNameRow()
@@ -201,6 +212,7 @@ class SignUpScreen extends GetWidget<SignUpController> {
             padding: EdgeInsets.only(left: 20.h, top: 2.v),
             child: CustomTextFormField(
                 controller: controller.phoneRowController,
+                fillColor: Colors.black,
                 hintText: "lbl_email_or_phone".tr,
                 textInputType: TextInputType.emailAddress,
                 validator: (value) {
@@ -237,7 +249,34 @@ class SignUpScreen extends GetWidget<SignUpController> {
 
   /// Section Widget
   Widget _buildSignUpButton() {
-    return CustomElevatedButton(text: "lbl_sign_up".tr);
+    TextEditingController phoneRowController =TextEditingController();
+     TextEditingController fullNameRowController =TextEditingController();
+     // SignUp_ControllerImg signUp_ControllerImg = Get.put(SignUp_ControllerImg());
+    return CustomElevatedButton(text: "lbl_sign_up".tr,
+    onPressed: ()async{
+      
+      try {
+  // ignore: unused_local_variable
+  final credential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+    email:controller.phoneRowController.text,
+    password: controller.fullNameRowController.text,
+   // Name:controller.fullNameRowController.text,
+  );
+//signUp_ControllerImg.gotohome();
+Get.offAll(HomeScreen(),binding:HomeBinding());
+} on FirebaseAuthException catch (e) {
+  if (e.code == 'weak-password') {
+    print('The password provided is too weak.');
+  } else if (e.code == 'email-already-in-use') {
+    print('The account already exists for that email.');
+  } 
+} catch (e) {
+  print(e);
+}
+    },
+    
+    
+    );
   }
 
   /// Navigates to the previous screen.

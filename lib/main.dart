@@ -1,3 +1,6 @@
+import 'package:coffee_app/presentation/home_screen/binding/home_binding.dart';
+import 'package:coffee_app/presentation/home_screen/home_screen.dart';
+import 'package:coffee_app/presentation/sign_in_screen/sign_in_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
@@ -40,7 +43,9 @@ class _MyAppState extends State<MyApp> {
       print('User is signed in!');
     }
   });
+   super.initState();
   }
+
   // ignore: override_on_non_overriding_member
   @override
   Widget build(BuildContext context) {
@@ -57,6 +62,7 @@ class _MyAppState extends State<MyApp> {
       fallbackLocale: Locale('ar', 'AR'),
        // locale: Locale('en', 'US'),
         title: 'coffee_app',
+        home: FirebaseAuth.instance.currentUser == null? SignInScreen():HomeScreen(),
         initialBinding: InitialBindings(),
         initialRoute: AppRoutes.initialRoute,
         getPages: AppRoutes.pages,

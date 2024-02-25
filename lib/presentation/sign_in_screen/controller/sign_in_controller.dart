@@ -38,7 +38,7 @@ class LoginControllerImp extends LoginController{
   @override
   Login() {
     // TODO: implement Login
-   Get.toEnd(() => AppRoutes.homeScreen);
+  // Get.toEnd(() => AppRoutes.homeScreen);
   }
 
   @override

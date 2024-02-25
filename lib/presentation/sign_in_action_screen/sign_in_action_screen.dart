@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:coffee_app/core/app_export.dart';
 import 'package:coffee_app/core/utils/validation_functions.dart';
@@ -5,6 +6,8 @@ import 'package:coffee_app/widgets/custom_checkbox_button.dart';
 import 'package:coffee_app/widgets/custom_elevated_button.dart';
 import 'package:coffee_app/widgets/custom_icon_button.dart';
 import 'package:coffee_app/widgets/custom_text_form_field.dart';
+import '../home_screen/binding/home_binding.dart';
+import '../home_screen/home_screen.dart';
 import 'controller/sign_in_action_controller.dart';
 
 // ignore_for_file: must_be_immutable
@@ -263,6 +266,8 @@ class SignInActionScreen extends GetWidget<SignInActionController> {
 
   /// Section Widget
   Widget _buildSignInWithSection() {
+    TextEditingController emailController =TextEditingController();
+    TextEditingController passwordController =TextEditingController();
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -281,10 +286,32 @@ class SignInActionScreen extends GetWidget<SignInActionController> {
         ),
         Padding(
           padding: EdgeInsets.only(left: 22.h),
-          child: Text(
-            "lbl_or_sign_in_with".tr,
-            style: CustomTextStyles.titleLargeBlack900_3,
+          child: 
+          GestureDetector(
+            child: Text(
+              "lbl_or_sign_in_with".tr,
+              
+              style: CustomTextStyles.titleLargeBlack900_3,
+            ),
+            onTap: ()async{
+            try {
+  final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+    email: emailController.text,
+    password: passwordController.text,
+  );
+  Get.offAll(HomeScreen(),binding:HomeBinding());
+} on FirebaseAuthException catch (e) {
+  if (e.code == 'user-not-found') {
+    print('No user found for that email.');
+  } else if (e.code == 'wrong-password') {
+    print('Wrong password provided for that user.');
+  }
+}
+
+
+            },
           ),
+         
         ),
         Padding(
           padding: EdgeInsets.only(
@@ -298,8 +325,13 @@ class SignInActionScreen extends GetWidget<SignInActionController> {
               indent: 28.h,
             ),
           ),
+        
         ),
+        
       ],
+     
     );
+
+    
   }
 }

@@ -1,13 +1,17 @@
 import 'package:coffee_app/core/app_export.dart';
+import 'package:coffee_app/presentation/sign_in_action_screen/binding/sign_in_action_binding.dart';
+import 'package:coffee_app/presentation/sign_in_action_screen/sign_in_action_screen.dart';
+import 'package:coffee_app/presentation/sign_up_action_screen/sign_up_action_screen.dart';
 import 'package:coffee_app/widgets/custom_image_view.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+//import 'package:get/get.dart';
 // ignore: unnecessary_import
 import 'package:get/get_core/src/get_main.dart';
 
 import '../../widgets/custom_elevated_button.dart';
 import '../sign_in_screen/binding/sign_in_binding.dart';
 import '../sign_in_screen/sign_in_screen.dart';
+import '../sign_up_action_screen/binding/sign_up_action_binding.dart';
 import 'models/static.dart';
 
 
@@ -78,7 +82,8 @@ class OnBoarding extends StatelessWidget {
                       text: "lbl_get_start".tr,
                       margin: EdgeInsets.symmetric(horizontal: 14),
                       onPressed: (){
-                        Get.offAll(SignInScreen(),binding: SignInBinding());
+                      //  Get.offAll(SignInActionScreen(),binding:SignInActionBinding());
+                        Get.offAll(SignInScreen(),binding:SignInBinding());
                       },
                     ),
                    // SizedBox(height: 10.h),

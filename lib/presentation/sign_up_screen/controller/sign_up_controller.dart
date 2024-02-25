@@ -1,4 +1,5 @@
 import 'package:coffee_app/core/app_export.dart';
+import 'package:coffee_app/presentation/home_screen/home_screen.dart';
 import 'package:coffee_app/presentation/sign_up_screen/models/sign_up_model.dart';
 import 'package:flutter/material.dart';
 
@@ -22,6 +23,7 @@ class SignUpController extends GetxController {
 
 abstract class SignUp_Controller extends GetxController{
  gotohelp();
+ gotohome();
 
 }
 class SignUp_ControllerImg extends SignUp_Controller{
@@ -29,6 +31,12 @@ class SignUp_ControllerImg extends SignUp_Controller{
   gotohelp() {
     // TODO: implement gotohelp
    Get.toNamed(AppRoutes.getHelpScreen);
+  }
+  
+  @override
+  gotohome() {
+    // TODO: implement gotohome
+      Get.offAll(() => HomeScreen());
   }
 
 

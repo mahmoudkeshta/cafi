@@ -1,3 +1,5 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:coffee_app/core/app_export.dart';
 import 'package:coffee_app/widgets/custom_icon_button.dart';
@@ -7,11 +9,28 @@ import 'package:coffee_app/widgets/custom_text_form_field.dart';
 import 'package:coffee_app/core/utils/validation_functions.dart';
 import 'package:coffee_app/presentation/home_screen/home_screen.dart';
 import 'package:coffee_app/presentation/home_screen/binding/home_binding.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 import 'controller/sign_in_controller.dart';
 
 // ignore_for_file: must_be_immutable
 class SignInScreen extends GetWidget<SignInController> {
+  Future<UserCredential> signInWithGoogle() async {
+  // Trigger the authentication flow
+  final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+
+  // Obtain the auth details from the request
+  final GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
+
+  // Create a new credential
+  final credential = GoogleAuthProvider.credential(
+    accessToken: googleAuth?.accessToken,
+    idToken: googleAuth?.idToken,
+  );
+
+  // Once signed in, return the UserCredential
+  return await FirebaseAuth.instance.signInWithCredential(credential);
+}
   SignInScreen({Key? key})
       : super(
           key: key,
@@ -19,6 +38,8 @@ class SignInScreen extends GetWidget<SignInController> {
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
+     TextEditingController emailController =TextEditingController();
+    TextEditingController passwordController =TextEditingController();
     // ignore: unused_local_variable
     LoginControllerImp controllerImp = Get.put(LoginControllerImp());
     return SafeArea(
@@ -63,18 +84,66 @@ class SignInScreen extends GetWidget<SignInController> {
                     CustomElevatedButton(
                       text: "lbl_sign_in".tr,
                       buttonStyle: CustomButtonStyles.fillPrimaryTL30,
-                      onPressed: () {
-                        Get.offAll(HomeScreen(), binding: HomeBinding());
+                      onPressed: () async{
+                        
+   try {
+  final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+    email: controller.phoneController.text,
+    password: controller.passwordController.text,
+  );
+    Get.offAll(HomeScreen(), binding: HomeBinding());
+} on FirebaseAuthException catch (e) {
+  if (e.code == 'user-not-found') {
+ 
+    print('No user found for that email.');
+       AwesomeDialog(
+            context: context,
+            dialogType: DialogType.info,
+            animType: AnimType.rightSlide,
+            title: 'Error',
+            desc: 'No user found for that email',
+            btnCancelOnPress: () {},
+            btnOkOnPress: () {},
+            ).show();
+  } else if (e.code == 'wrong-password') {
+    print('Wrong password provided for that user.');
+    AwesomeDialog(
+            context: context,
+            dialogType: DialogType.info,
+            animType: AnimType.rightSlide,
+            title: 'Error',
+            desc: 'Wrong password provided for that user',
+            btnCancelOnPress: () {},
+            btnOkOnPress: () {},
+            ).show();
+  }
+
+}
+
+
+                     //   Get.offAll(HomeScreen(), binding: HomeBinding());
                       },
                     ),
                     SizedBox(height: 22.v),
-                    GestureDetector(
-                      child: Text(
-                        "msg_forgot_password".tr,
-                        style: CustomTextStyles.titleLargeIndigoA700,
-                      ),
-                      onTap: () {
-                        controllerImp.goTopassword();
+                  
+                   
+                      InkWell(
+                        child: Text(
+                          "msg_forgot_password".tr,
+                          style: CustomTextStyles.titleLargeIndigoA700,
+                        ),
+                      
+                      onTap: () async {
+                       await FirebaseAuth.instance.sendPasswordResetEmail(email:controller.passwordController.text );
+                       AwesomeDialog(
+            context: context,
+            dialogType: DialogType.info,
+            animType: AnimType.rightSlide,
+            title: 'Dialog Title',
+            desc: 'Dialog description here.............',
+            btnCancelOnPress: () {},
+            btnOkOnPress: () {},
+            )..show();
                       },
                     ),
                     SizedBox(height: 19.v),
@@ -96,9 +165,16 @@ class SignInScreen extends GetWidget<SignInController> {
                             height: 54.adaptSize,
                             width: 54.adaptSize,
                             padding: EdgeInsets.all(2.h),
+                           
                             decoration: IconButtonStyleHelper.fillBlack,
-                            child: CustomImageView(
-                              imagePath: ImageConstant.imgGroup183,
+                            child: 
+                            InkWell(
+                              child: CustomImageView(
+                                imagePath: ImageConstant.imgGroup183,
+                              ),
+                               onTap: (){
+                              signInWithGoogle();
+                            }, 
                             ),
                           ),
                         ),
@@ -155,6 +231,7 @@ class SignInScreen extends GetWidget<SignInController> {
 
   /// Section Widget
   Widget _buildPhone() {
+    
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -162,6 +239,7 @@ class SignInScreen extends GetWidget<SignInController> {
           imagePath: ImageConstant.imgAtSign,
           height: 35.adaptSize,
           width: 35.adaptSize,
+          color: Colors.black,
           margin: EdgeInsets.only(bottom: 4.v),
         ),
         Expanded(
@@ -173,10 +251,12 @@ class SignInScreen extends GetWidget<SignInController> {
             child: CustomTextFormField(
               controller: controller.phoneController,
               hintText: "lbl_email_or_phone".tr,
+             
               textInputType: TextInputType.emailAddress,
               validator: (value) {
                 if (value == null || (!isValidEmail(value, isRequired: true))) {
-                  return "err_msg_please_enter_valid_email".tr;
+                  return
+                   "err_msg_please_enter_valid_email".tr;
                 }
                 return null;
               },
@@ -203,7 +283,8 @@ class SignInScreen extends GetWidget<SignInController> {
               left: 20.h,
               top: 7.v,
             ),
-            child: CustomTextFormField(
+            child:
+             CustomTextFormField(
               controller: controller.passwordController,
               hintText: "lbl_password".tr,
               textInputAction: TextInputAction.done,
@@ -212,7 +293,10 @@ class SignInScreen extends GetWidget<SignInController> {
                 if (value == null ||
                     (!isValidPassword(value, isRequired: true))) {
                   return "err_msg_please_enter_valid_password".tr;
+                
+                
                 }
+
                 return null;
               },
               obscureText: true,
@@ -238,6 +322,7 @@ class SignInScreen extends GetWidget<SignInController> {
 
   /// Section Widget
   Widget _buildLineFour() {
+    
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -256,11 +341,16 @@ class SignInScreen extends GetWidget<SignInController> {
         ),
         Padding(
           padding: EdgeInsets.only(left: 22.h),
-          child: Text(
-            "lbl_or_sign_in_with".tr,
-            style: CustomTextStyles.titleLargeBlack900_3,
+          child: 
+          
+            Text(
+              "lbl_or_sign_in_with".tr,
+              style: CustomTextStyles.titleLargeBlack900_3,
+            ),
+                      
+         
           ),
-        ),
+        
         Padding(
           padding: EdgeInsets.only(
             top: 13.v,

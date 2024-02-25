@@ -233,7 +233,9 @@ class SignUpActionScreen extends GetWidget<SignUpActionController> {
 
   /// Section Widget
   Widget _buildSignUp() {
-    return CustomElevatedButton(text: "lbl_sign_up".tr);
+    return CustomElevatedButton(text: "lbl_sign_up".tr,
+    
+    );
   }
 
   /// Navigates to the previous screen.
