@@ -19,6 +19,7 @@ String? lastActivated;
 
 String? puchToken;
 
+String? online;
 
 chatUser ({
 required this. id, required this. name, required this.email, required this. about, required this. image, required this. createdAt, required this. lastActivated, required this.puchToken, required this.online,
