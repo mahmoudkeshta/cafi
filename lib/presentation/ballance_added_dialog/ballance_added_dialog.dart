@@ -49,6 +49,8 @@ class BallanceAddedDialog extends StatelessWidget {
               margin: EdgeInsets.only(
                 left: 41.h,
                 right: 48.h,
+
+                
               ),
               child: Text(
                 "msg_your_balance_added".tr,
