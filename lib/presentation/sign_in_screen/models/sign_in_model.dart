@@ -1,7 +1,12 @@
 /// This class defines the variables used in the 
 /// and is typically used to hold data that is passed between different parts of the application.
 class SignInModel{ 
-String? id ;
+
+
+}
+class User {
+
+  String? id ;
 String?name;
 String?email;
 String?about;
@@ -11,7 +16,7 @@ String? lastActivated;
 String? puchToken;
 String? online;
 
-SignInModel({
+User({
 required this.id,
 required this. name,
  required this.email,
@@ -22,5 +27,4 @@ required this. name,
    required this.puchToken, 
    required this.online
 });
-
 }
