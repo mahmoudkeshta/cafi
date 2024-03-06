@@ -4,27 +4,4 @@ class SignInModel{
 
 
 }
-class User {
 
-  String? id ;
-String?name;
-String?email;
-String?about;
-String? image;
-String? createdAt;
-String? lastActivated;
-String? puchToken;
-String? online;
-
-User({
-required this.id,
-required this. name,
- required this.email,
-  required this.about, 
-  required this.image,
-   required this.createdAt, 
-   required this.lastActivated, 
-   required this.puchToken, 
-   required this.online
-});
-}
