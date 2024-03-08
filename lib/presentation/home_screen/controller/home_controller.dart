@@ -17,42 +17,48 @@ class HomeController extends GetxController {
   goToChat();
   goToCart();
   goToYourOrder();
+  gotohome();
  }
 class home_ControllerIme extends home_Controller{
   @override
   goToshop() {
-    // TODO: implement goToshop
+  
     Get.toNamed(AppRoutes.shopScreen);
   }
   
   @override
   gOToProduct() {
-    // TODO: implement gOToProduct
+   
      Get.toNamed(AppRoutes.productScreen);
   }
   
   @override
   goToProfile() {
-    // TODO: implement goToProfile
+   
     Get.toNamed(AppRoutes.profileScreen);
   }
 
   @override
   goToCart() {
-    // TODO: implement goToCart
+  
     Get.toNamed(AppRoutes.cartScreen);
   }
 
   @override
   goToChat() {
-    // TODO: implement goToChat
+   
     Get.toNamed(AppRoutes.chatScreen);
   }
 
   @override
   goToYourOrder() {
-    // TODO: implement goToYourOrder
+   
     Get.toNamed(AppRoutes.yourOrderTabContainerScreen);
+  }
+  
+  @override
+  gotohome() {
+Get.toNamed(AppRoutes.homeScreen);
   }
 }
  

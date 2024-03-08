@@ -1,4 +1,5 @@
 import 'package:coffee_app/core/app_export.dart';
+import 'package:coffee_app/presentation/forgot_password_screen/binding/forgot_password_binding.dart';
 import 'package:coffee_app/presentation/sign_in_screen/models/sign_in_model.dart';
 import 'package:flutter/material.dart';
 
@@ -32,38 +33,44 @@ goToSignup();
 goTopassword();
 goVerify();
 goCreatePassword();
+goForpassword();
 
 }
 class LoginControllerImp extends LoginController{
   @override
   Login() {
-    // TODO: implement Login
+   
   // Get.toEnd(() => AppRoutes.homeScreen);
   }
 
   @override
   goToSignup() {
-    // TODO: implement goToSignup
+  
    Get.toNamed(AppRoutes.signUpScreen);
   }
 
   @override
   goTopassword() {
-    // TODO: implement goTopassword
+   
     Get.toNamed(AppRoutes.forgotPasswordScreen);
   }
 
   @override
   goCreatePassword() {
-    // TODO: implement goCreatePassword
+  
     Get.toNamed(AppRoutes.createPasswordOneScreen);
   }
 
   @override
   goVerify() {
-    // TODO: implement goVerify
-
+  
     Get.toNamed(AppRoutes.verifyOneScreen);
+  }
+  
+  @override
+  goForpassword() {
+    // TODO: implement goForpassword
+     Get.toNamed(AppRoutes.forgotPasswordOneScreen);
   }
 
 

@@ -1,3 +1,11 @@
+import 'package:coffee_app/presentation/order_success_screen/models/order.dart';
+import 'package:coffee_app/presentation/sign_up_screen/models/sign_up_model.dart';
+import 'package:coffee_app/presentation/sign_up_screen/models/sign_up_model.dart';
+import 'package:coffee_app/presentation/sign_up_screen/services/auth.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
+
+import '../sign_up_screen/models/sign_up_model.dart';
 import 'models/off_item_model.dart';
 import 'models/menu_item_model.dart';
 import 'widgets/off_item_widget.dart';
@@ -30,6 +38,7 @@ class HomeScreen extends GetWidget<HomeController> {
   Widget build(BuildContext context) {
     // ignore: unused_local_variable
     home_ControllerIme home_cont = Get.put(home_ControllerIme());
+   
     return SafeArea(
         child: Scaffold(
             appBar: _buildAppBar(),
@@ -42,6 +51,7 @@ class HomeScreen extends GetWidget<HomeController> {
 
   /// Section Widget
   PreferredSizeWidget _buildAppBar() {
+     FirebaseAuth _auth=FirebaseAuth.instance;
     return CustomAppBar(
       
         height: 112.v,
@@ -61,8 +71,8 @@ class HomeScreen extends GetWidget<HomeController> {
                   text: "lbl_welcome".tr, margin: EdgeInsets.only(right: 51.h)),
               GestureDetector(
                 child: AppbarSubtitleFive(
-                  text: "lbl_mr_yev_yev".tr),
-                  
+                 // text: "lbl_mr_yev_yev".tr),
+                  text:_auth.currentUser!.email.toString()),
               )
             ])),
         actions: [
@@ -219,7 +229,8 @@ class HomeScreen extends GetWidget<HomeController> {
                   child: Text("lbl_see_all".tr,
                       style: CustomTextStyles.bodyLargeIndigoA700)),
               onTap: () {
-                home_controllerIme.goToshop();
+               // home_controllerIme.goToshop();
+              Get.to(AddProductPage());
               },
             ),
           ])),

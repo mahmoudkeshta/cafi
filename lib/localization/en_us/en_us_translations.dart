@@ -24,6 +24,8 @@ final Map<String, String> enUs = {
   // Forgot Password One Screen
   "lbl_email_or_phone2": "Email or phone",
 
+  "lbl_Dialog_chanepassword": "Do you want to change your password?",
+
   // Create Password Three Screen
   "msg_enter_your_new_secure": "Enter your new secure password",
 

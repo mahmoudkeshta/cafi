@@ -1,3 +1,5 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:coffee_app/core/app_export.dart';
 import 'package:coffee_app/core/utils/validation_functions.dart';
@@ -60,8 +62,54 @@ class ForgotPasswordScreen extends GetWidget<ForgotPasswordController> {
                                           style: CustomTextStyles
                                               .bodyLargeBlack900_1)),
                                   SizedBox(height: 28.v),
-                                  CustomElevatedButton(text: "lbl_continue".tr),
-                                  Spacer(),
+                                  InkWell(
+                                    child: CustomElevatedButton(
+                                      
+                                    
+                                     text: "lbl_continue".tr
+                                      
+                                      
+                                      ),
+
+
+                                             onTap: () async {
+                                  AwesomeDialog(
+            context: context,
+            dialogType: DialogType.info,
+            animType: AnimType.rightSlide,
+            title: 'Do you want to change your password?',
+            desc: "The email you enter will be sent".tr,
+            btnCancelOnPress: () {
+                Get.snackbar(
+                            "تم",
+                            "تم ارجاع الي تسجل دخول",
+                            snackPosition: SnackPosition.BOTTOM,
+                            backgroundColor: Colors.red,
+                            colorText: Color.fromARGB(233, 254, 254, 255),
+                          );
+            
+            },
+            btnOkOnPress: () async{ await FirebaseAuth.instance.sendPasswordResetEmail(email:controller.emailController.text );
+             Get.snackbar(
+                            "تم",
+                            "ارسال الايميل تغيير كلمه السر",
+                            snackPosition: SnackPosition.BOTTOM,
+                            backgroundColor: Colors.green,
+                            colorText: Color.fromARGB(233, 254, 254, 255),
+                          );
+            
+            
+            },
+            )..show();
+                      
+             
+                      },
+                                  ),
+                                    
+                                  Spacer(
+                                 
+
+                                  ),
                                   SizedBox(height: 4.v),
                                   RichText(
                                       text: TextSpan(children: [

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import '../core/app_export.dart';
 
+// ignore: must_be_immutable
 class CustomSwitch extends StatelessWidget {
   CustomSwitch({
     Key? key,

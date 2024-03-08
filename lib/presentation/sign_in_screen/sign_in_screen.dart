@@ -1,4 +1,7 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:coffee_app/presentation/forgot_password_screen/binding/forgot_password_binding.dart';
+import 'package:coffee_app/presentation/forgot_password_screen/forgot_password_screen.dart';
+import 'package:coffee_app/presentation/sign_up_screen/services/auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:coffee_app/core/app_export.dart';
@@ -15,6 +18,23 @@ import 'controller/sign_in_controller.dart';
 
 // ignore_for_file: must_be_immutable
 class SignInScreen extends GetWidget<SignInController> {
+  TextEditingController emailController =TextEditingController();
+  TextEditingController passwordController =TextEditingController();
+  /*
+  * signin() async {
+    try {
+      String res = await AuthMethods().signin(
+          email: controller.phoneController.text,
+          password: controller.passwordController.text);
+      if (res == "success"){
+        print("done");
+      }else {
+        print(res);
+      };
+    } on Exception catch (e) {
+      print(e);
+    }
+  }*/
   Future<UserCredential> signInWithGoogle() async {
   // Trigger the authentication flow
   final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
@@ -38,8 +58,7 @@ class SignInScreen extends GetWidget<SignInController> {
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
-     TextEditingController emailController =TextEditingController();
-    TextEditingController passwordController =TextEditingController();
+ 
     // ignore: unused_local_variable
     LoginControllerImp controllerImp = Get.put(LoginControllerImp());
     return SafeArea(
@@ -58,7 +77,7 @@ class SignInScreen extends GetWidget<SignInController> {
                 padding: EdgeInsets.all(23.h),
                 child: Column(
                   children: [
-                    SizedBox(height: 94.v),
+                    SizedBox(height: 40.v),
                     CustomImageView(
                       imagePath: ImageConstant.imgGroup,
                       height: 159.adaptSize,
@@ -84,19 +103,52 @@ class SignInScreen extends GetWidget<SignInController> {
                     CustomElevatedButton(
                       text: "lbl_sign_in".tr,
                       buttonStyle: CustomButtonStyles.fillPrimaryTL30,
-                      onPressed: () async{
-                        
+                      
+           onPressed: ()
+
+
+           
+       /**
+        *        async {
+               try {
+               String res = await AuthMethods().signin(
+               email: controller.phoneController.text,
+               password: controller.passwordController.text);
+               if (res == "User is signed in"){
+               print("ok");
+               Get.offAll(HomeScreen(), binding: HomeBinding());
+               }else {
+               print(res);
+               };
+               } on Exception catch (e) {
+               print(e);
+               }
+               },
+        */
+
+
+
+                      async{
+
    try {
   final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
     email: controller.phoneController.text,
     password: controller.passwordController.text,
   );
     Get.offAll(HomeScreen(), binding: HomeBinding());
+          Get.snackbar(
+                            "تم",
+                            "تم تسجل دخول بنجاح",
+                            snackPosition: SnackPosition.BOTTOM,
+                            backgroundColor: Colors.green,
+                            colorText: Color.fromARGB(233, 254, 254, 255),
+                          );
+    
+
 } on FirebaseAuthException catch (e) {
-  if (e.code == 'user-not-found') {
- 
-    print('No user found for that email.');
-       AwesomeDialog(
+  if ( e.code == 'user-not-found') {
+
+AwesomeDialog(
             context: context,
             dialogType: DialogType.info,
             animType: AnimType.rightSlide,
@@ -104,10 +156,19 @@ class SignInScreen extends GetWidget<SignInController> {
             desc: 'No user found for that email',
             btnCancelOnPress: () {},
             btnOkOnPress: () {},
-            ).show();
+            )..show();
+    print('No user found for that email.');
+       
+            Get.snackbar(
+                            "Error",
+                            "Please try again",
+                            snackPosition: SnackPosition.BOTTOM,
+                            backgroundColor: Color.fromARGB(0, 252, 65, 9),
+                            colorText: Color.fromARGB(233, 254, 254, 255),
+                          );
   } else if (e.code == 'wrong-password') {
     print('Wrong password provided for that user.');
-    AwesomeDialog(
+    AwesomeDialog (
             context: context,
             dialogType: DialogType.info,
             animType: AnimType.rightSlide,
@@ -115,7 +176,14 @@ class SignInScreen extends GetWidget<SignInController> {
             desc: 'Wrong password provided for that user',
             btnCancelOnPress: () {},
             btnOkOnPress: () {},
-            ).show();
+            )..show();
+             Get.snackbar(
+                            "Error",
+                            "Please try again",
+                            snackPosition: SnackPosition.BOTTOM,
+                            backgroundColor: Color.fromARGB(0, 252, 65, 9),
+                            colorText: Color.fromARGB(233, 254, 254, 255),
+                          );
   }
 
 }
@@ -128,23 +196,48 @@ class SignInScreen extends GetWidget<SignInController> {
                   
                    
                       InkWell(
-                        child: Text(
+                        child: 
+                        Text(
                           "msg_forgot_password".tr,
                           style: CustomTextStyles.titleLargeIndigoA700,
                         ),
+                      /**  onTap: (){
+                          controllerImp.goForpassword();
+                        }, */
                       
-                      onTap: () async {
-                       await FirebaseAuth.instance.sendPasswordResetEmail(email:controller.passwordController.text );
-                       AwesomeDialog(
+                   onTap: () async {
+                                  AwesomeDialog(
             context: context,
             dialogType: DialogType.info,
             animType: AnimType.rightSlide,
-            title: 'Dialog Title',
-            desc: 'Dialog description here.............',
-            btnCancelOnPress: () {},
-            btnOkOnPress: () {},
+            title: 'Do you want to change your password?',
+            desc: "The email you enter will be sent".tr,
+            btnCancelOnPress: () {
+                Get.snackbar(
+                            "تم",
+                            "تم ارجاع الي تسجل دخول",
+                            snackPosition: SnackPosition.BOTTOM,
+                            backgroundColor: Colors.red,
+                            colorText: Color.fromARGB(233, 254, 254, 255),
+                          );
+            
+            },
+            btnOkOnPress: () async{ await FirebaseAuth.instance.sendPasswordResetEmail(email:controller.phoneController.text );
+             Get.snackbar(
+                            "تم",
+                            "ارسال الايميل تغيير كلمه السر",
+                            snackPosition: SnackPosition.BOTTOM,
+                            backgroundColor: Colors.green,
+                            colorText: Color.fromARGB(233, 254, 254, 255),
+                          );
+            
+            
+            },
             )..show();
+                      
+             
                       },
+            
                     ),
                     SizedBox(height: 19.v),
                     _buildLineFour(),
@@ -192,7 +285,7 @@ class SignInScreen extends GetWidget<SignInController> {
                         ),
                       ],
                     ),
-                    SizedBox(height: 19.v),
+                    SizedBox(height: 10.v),
                     GestureDetector(
                       onTap: () {
                         controllerImp.goToSignup();
@@ -250,7 +343,9 @@ class SignInScreen extends GetWidget<SignInController> {
             ),
             child: CustomTextFormField(
               controller: controller.phoneController,
+              textStyle:TextStyle(color: Colors.black),
               hintText: "lbl_email_or_phone".tr,
+
              
               textInputType: TextInputType.emailAddress,
               validator: (value) {
@@ -289,6 +384,8 @@ class SignInScreen extends GetWidget<SignInController> {
               hintText: "lbl_password".tr,
               textInputAction: TextInputAction.done,
               textInputType: TextInputType.visiblePassword,
+              textStyle:TextStyle(color: Colors.black),
+              
               validator: (value) {
                 if (value == null ||
                     (!isValidPassword(value, isRequired: true))) {

@@ -3,6 +3,7 @@ import 'package:coffee_app/core/app_export.dart';
 import 'package:coffee_app/widgets/custom_elevated_button.dart';
 import 'controller/ballance_added_controller.dart';
 
+// ignore: must_be_immutable
 class BallanceAddedDialog extends StatelessWidget {
   BallanceAddedDialog(
     this.controller, {

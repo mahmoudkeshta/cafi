@@ -1,4 +1,4 @@
-import 'package:coffee_app/presentation/home_screen/binding/home_binding.dart';
+
 import 'package:coffee_app/presentation/home_screen/home_screen.dart';
 import 'package:coffee_app/presentation/sign_in_screen/sign_in_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -40,7 +40,7 @@ class _MyAppState extends State<MyApp> {
     if (user == null) {
       print('========User is currently signed out!');
     } else {
-      print('User is signed in!');
+      print('User is signed in');
     }
   });
    super.initState();

@@ -7,6 +7,7 @@ final Map<String, String> arAr = {
 
   // شاشة فلاش
   "lbl_best_coffee": "أفضل قهوة",
+ "lbl_Dialog_chanepassword": " هل تريد تغيير كلمه السر ؟",
 
   // شاشة فلاش
   "lbl_1_cup_drink": "1 كوب مشروب",

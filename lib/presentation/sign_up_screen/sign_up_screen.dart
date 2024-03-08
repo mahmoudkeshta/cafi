@@ -1,6 +1,7 @@
 
 
 import 'package:coffee_app/presentation/home_screen/home_screen.dart';
+import 'package:coffee_app/presentation/sign_up_screen/services/auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:coffee_app/core/app_export.dart';
@@ -17,12 +18,13 @@ import 'controller/sign_up_controller.dart';
 
 // ignore_for_file: must_be_immutable
 class SignUpScreen extends GetWidget<SignUpController> {
+
   SignUpScreen({Key? key}) : super(key: key);
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     SignUp_ControllerImg signUp_ControllerImg = Get.put(SignUp_ControllerImg());
-    
+
     return SafeArea(
         child: Scaffold(
             resizeToAvoidBottomInset: false,
@@ -58,6 +60,9 @@ class SignUpScreen extends GetWidget<SignUpController> {
                               SizedBox(height: 34.v),
                               _buildPhone(),
                               SizedBox(height: 34.v),
+
+                               _buildPassword(),
+                               SizedBox(height: 34.v),
                               Align(
                                   alignment: Alignment.centerLeft,
                                   child: Row(children: [
@@ -137,7 +142,7 @@ class SignUpScreen extends GetWidget<SignUpController> {
                                           ]))),
                               SizedBox(height: 27.v),
                               _buildSignUpButton(),
-                              SizedBox(height: 73.v),
+                              SizedBox(height: 10.v),
                               GestureDetector(
                                 child: RichText(
                                     text: TextSpan(children: [
@@ -184,6 +189,7 @@ class SignUpScreen extends GetWidget<SignUpController> {
             child: CustomTextFormField(
                 controller: controller.fullNameRowController,
                 hintText: "lbl_full_name".tr,
+                 textStyle:TextStyle(color: Colors.black),
                 validator: (value) {
                   if (!isText(value)) {
                     return "err_msg_please_enter_valid_text".tr;
@@ -204,6 +210,45 @@ class SignUpScreen extends GetWidget<SignUpController> {
       _buildFullNameRow()
     ]);
   }
+    Widget _buildPassword() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        CustomImageView(
+          imagePath: ImageConstant.imgSecurityShield,
+          height: 45.v,
+          width: 35.h,
+        ),
+        Expanded(
+          child: Padding(
+            padding: EdgeInsets.only(
+              left: 20.h,
+              top: 7.v,
+            ),
+            child:
+             CustomTextFormField(
+              controller: controller.passwordRowController,
+              hintText: "lbl_password".tr,
+               textStyle:TextStyle(color: Colors.black),
+              textInputAction: TextInputAction.done,
+              textInputType: TextInputType.visiblePassword,
+              validator: (value) {
+                if (value == null ||
+                    (!isValidPassword(value, isRequired: true))) {
+                  return "err_msg_please_enter_valid_password".tr;
+                
+                
+                }
+
+                return null;
+              },
+              obscureText: true,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
 
   /// Section Widget
   Widget _buildPhoneRow() {
@@ -212,7 +257,8 @@ class SignUpScreen extends GetWidget<SignUpController> {
             padding: EdgeInsets.only(left: 20.h, top: 2.v),
             child: CustomTextFormField(
                 controller: controller.phoneRowController,
-                fillColor: Colors.black,
+               textStyle:TextStyle(color: Colors.black),
+
                 hintText: "lbl_email_or_phone".tr,
                 textInputType: TextInputType.emailAddress,
                 validator: (value) {
@@ -232,6 +278,7 @@ class SignUpScreen extends GetWidget<SignUpController> {
           height: 35.adaptSize,
           width: 35.adaptSize,
           margin: EdgeInsets.only(bottom: 5.v)),
+          
       _buildPhoneRow()
     ]);
   }
@@ -242,6 +289,7 @@ class SignUpScreen extends GetWidget<SignUpController> {
         child: Padding(
             padding: EdgeInsets.only(left: 20.h, top: 2.v),
             child: CustomTextFormField(
+               textStyle:TextStyle(color: Colors.black),
                 controller: controller.addressRowController,
                 hintText: "lbl_your_address".tr,
                 textInputAction: TextInputAction.done)));
@@ -249,17 +297,49 @@ class SignUpScreen extends GetWidget<SignUpController> {
 
   /// Section Widget
   Widget _buildSignUpButton() {
-    TextEditingController phoneRowController =TextEditingController();
-     TextEditingController fullNameRowController =TextEditingController();
+    TextEditingController fullNameRowController = TextEditingController();
+    TextEditingController phoneRowController = TextEditingController();
+    TextEditingController addressRowController = TextEditingController();
+    TextEditingController addpasswordController = TextEditingController();
      // SignUp_ControllerImg signUp_ControllerImg = Get.put(SignUp_ControllerImg());
     return CustomElevatedButton(text: "lbl_sign_up".tr,
-    onPressed: ()async{
-      
+    onPressed: ()
+
+  
+       async{
+ // ignore: unused_local_variable
+
+        try  {
+           
+          String res = await AuthMethods().signup(email: controller.phoneRowController.text,
+              password:controller.passwordRowController.text,
+              username:  controller.fullNameRowController.text,
+              dispose: controller.addressRowController.text);
+          if(res=='s'){
+           Get.to(HomeScreen(),binding:HomeBinding());
+               
+          }else{
+            
+            
+            print(res);
+          
+          
+          }
+        } on Exception catch (e) {
+          print(e);
+        }
+
+
+
+
+    }
+   /* async{
+
       try {
   // ignore: unused_local_variable
   final credential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
     email:controller.phoneRowController.text,
-    password: controller.fullNameRowController.text,
+    password: controller.passwordRowController.text,
    // Name:controller.fullNameRowController.text,
   );
 //signUp_ControllerImg.gotohome();
@@ -269,13 +349,13 @@ Get.offAll(HomeScreen(),binding:HomeBinding());
     print('The password provided is too weak.');
   } else if (e.code == 'email-already-in-use') {
     print('The account already exists for that email.');
-  } 
+  }
 } catch (e) {
   print(e);
 }
-    },
-    
-    
+    },**/
+
+
     );
   }
 

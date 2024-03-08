@@ -21,6 +21,7 @@ class ProfileScreen extends GetWidget<ProfileController> {
   Widget build(BuildContext context) {
     // ignore: unused_local_variable
     Profile_ControllerIgm profile_controllerIgm =Get.put(Profile_ControllerIgm());
+    
     return SafeArea(
       child: Scaffold(
         body: SizedBox(
@@ -229,14 +230,14 @@ class ProfileScreen extends GetWidget<ProfileController> {
                                 width: 45.adaptSize,
                                 padding: EdgeInsets.all(11.h),
                                 child:
-                                         Icon(
-          Icons.phone_callback, // اختيار الأيقونة
-          size: 48.0, // حجم الأيقونة
-          color: Colors.blue, // لون الأيقونة
-        ), 
-                               /**
-                                * img_call_black_900
-                                */
+
+                         CustomImageView(
+                                  imagePath:
+                                      ImageConstant.imgCallBlack900,
+                                ),
+
+                                
+                        
                               ),
                               Padding(
                                 padding: EdgeInsets.only(
@@ -389,6 +390,7 @@ class ProfileScreen extends GetWidget<ProfileController> {
 
   /// Section Widget
   Widget _buildMyAccount() {
+    FirebaseAuth _auth=FirebaseAuth.instance;
     return Container(
       padding: EdgeInsets.symmetric(vertical: 7.v),
       decoration: AppDecoration.pink,
@@ -463,7 +465,8 @@ class ProfileScreen extends GetWidget<ProfileController> {
                 Align(
                   alignment: Alignment.bottomCenter,
                   child: Text(
-                    "lbl_yev_yev".tr,
+                    //"lbl_yev_yev".tr,
+                    _auth.currentUser!.email.toString(),
                     style: CustomTextStyles.displaySmallOnPrimary,
                   ),
                 ),

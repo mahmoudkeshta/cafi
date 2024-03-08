@@ -190,24 +190,24 @@ class ImageConstant {
 
   static String imgRectangle103 = '$imagePath/img_rectangle_103.png';
 
-  static String imgLockGray900 = '$imagePath/img_lock_gray_900.svg';
+  static String imgLockGray900 = '$imagePath/img_lock_gray_900.png';
 
-  static String imgGroup32 = '$imagePath/img_group_32.svg';
+  static String imgGroup32 = '$imagePath/img_group_32.png';
 
-  static String imgThumbsUpBlack900 = '$imagePath/img_thumbs_up_black_900.svg';
+  static String imgThumbsUpBlack900 = '$imagePath/img_thumbs_up_black_900.png';
 
-  static String imgFavoriteBlack900 = '$imagePath/img_favorite_black_900.svg';
+  static String imgFavoriteBlack900 = '$imagePath/img_favorite_black_900.png';
 
   static String imgThumbsUpBlack90045x45 =
-      '$imagePath/img_thumbs_up_black_900_45x45.svg';
+      '$imagePath/img_thumbs_up_black_900_45x45.png';
 
-  static String imgCallBlack900 = '$imagePath/img_call_black_900.svg';
+  static String imgCallBlack900 = '$imagePath/img_call_black_900.png';
 
   static String imgGroup584 = '$imagePath/img_group_584.png';
 
-  static String imgSearch = '$imagePath/img_search.svg';
+  static String imgSearch = '$imagePath/img_search.png';
 
-  static String imgThumbsUp45x45 = '$imagePath/img_thumbs_up_45x45.svg';
+  static String imgThumbsUp45x45 = '$imagePath/img_thumbs_up_45x45.png';
 
   // Notification images
   static String imgThumbsUpOnprimary = '$imagePath/img_thumbs_up_onprimary.svg';
@@ -237,7 +237,7 @@ class ImageConstant {
   static String imgUser40x40 = '$imagePath/img_user_40x40.png';
 
   static String imgCallBlack90031x31 =
-      '$imagePath/img_call_black_900_31x31.svg';
+      '$imagePath/img_call_black_900_31x31.png';
 
   static String imgMale = '$imagePath/img_male.png';
 
@@ -445,7 +445,7 @@ class ImageConstant {
 
   static String imgImage1650x50 = '$imagePath/img_image_16_50x50.png';
 
-  static String imgInbox = '$imagePath/img_inbox.svg';
+  static String imgInbox = '$imagePath/img_inbox.png';
 
   static String imgImage44 = '$imagePath/img_image_44.png';
 

@@ -11,6 +11,8 @@ class SignUpController extends GetxController {
   TextEditingController fullNameRowController = TextEditingController();
   TextEditingController phoneRowController = TextEditingController();
   TextEditingController addressRowController = TextEditingController();
+  TextEditingController   passwordRowController = TextEditingController();
+
   Rx<SignUpModel> signUpModelObj = SignUpModel().obs;
   @override
   void onClose() {
@@ -19,6 +21,8 @@ class SignUpController extends GetxController {
     phoneRowController.dispose();
     addressRowController.dispose();
   }
+
+  static signUpMethod(String name, String email, String password, String userDeviceToken) {}
 }
 
 abstract class SignUp_Controller extends GetxController{
@@ -41,3 +45,4 @@ class SignUp_ControllerImg extends SignUp_Controller{
 
 
 }
+

@@ -2,8 +2,8 @@ import 'package:get/get.dart';
 import '../presentation/flash_screen/onboarding.dart';
 import '../presentation/loading_screen/loading_screen.dart';
 import '../presentation/loading_screen/binding/loading_binding.dart';
-import '../presentation/flash_screen_two_screen/flash_screen_two_screen.dart';
-import '../presentation/flash_screen_two_screen/binding/flash_screen_two_binding.dart';
+
+
 import '../presentation/flash_screen_one_screen/flash_screen_one_screen.dart';
 import '../presentation/flash_screen_one_screen/binding/flash_screen_one_binding.dart';
 import '../presentation/flash_screen/flash_screen.dart';
