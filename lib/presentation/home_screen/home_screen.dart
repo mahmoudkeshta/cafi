@@ -1,9 +1,16 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:coffee_app/presentation/notification_screen/binding/notification_binding.dart';
+import 'package:coffee_app/presentation/notification_screen/notification_screen.dart';
 import 'package:coffee_app/presentation/order_success_screen/models/order.dart';
+import 'package:coffee_app/presentation/search_items_screen/binding/search_items_binding.dart';
+import 'package:coffee_app/presentation/search_items_screen/search_items_screen.dart';
 import 'package:coffee_app/presentation/sign_up_screen/models/sign_up_model.dart';
 import 'package:coffee_app/presentation/sign_up_screen/models/sign_up_model.dart';
 import 'package:coffee_app/presentation/sign_up_screen/services/auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_statusbarcolor_ns/flutter_statusbarcolor_ns.dart';
 
 import '../sign_up_screen/models/sign_up_model.dart';
 import 'models/off_item_model.dart';
@@ -51,12 +58,16 @@ class HomeScreen extends GetWidget<HomeController> {
 
   /// Section Widget
   PreferredSizeWidget _buildAppBar() {
+
+
      FirebaseAuth _auth=FirebaseAuth.instance;
+     CollectionReference order = FirebaseFirestore.instance.collection('order');
     return CustomAppBar(
       
-        height: 112.v,
+        height: 95.v,//112
         leadingWidth: 73.h,
-        leading: AppbarLeadingIconbutton(
+        leading:
+         AppbarLeadingIconbutton(
             imagePath: ImageConstant.imgClosePrimary,
             margin: EdgeInsets.only(left: 24.h, top: 52.v, bottom: 11.v),
             onTap: () {
@@ -72,24 +83,39 @@ class HomeScreen extends GetWidget<HomeController> {
               GestureDetector(
                 child: AppbarSubtitleFive(
                  // text: "lbl_mr_yev_yev".tr),
-                  text:_auth.currentUser!.email.toString()),
+                 text:_auth.currentUser!.email.toString()),
+                
+               
               )
             ])),
         actions: [
-          AppbarTrailingImage(
-              imagePath: ImageConstant.imgSearchOnprimary,
-              margin: EdgeInsets.fromLTRB(17.h, 61.v, 14.h, 3.v)),
+          
+            GestureDetector(
+              child: AppbarTrailingImage(
+                onTap: (){
+                  Get.to(SearchItemsScreen(),binding: SearchItemsBinding());
+                },
+                  imagePath: ImageConstant.imgSearchOnprimary,
+                  margin: EdgeInsets.fromLTRB(17.h, 61.v, 14.h, 3.v)),
+            ),
+                
+          
+              
           Container(
               height: 36.160004.v,
               width: 35.h,
               margin: EdgeInsets.only(left: 30.h, top: 61.v, right: 31.h),
               child: Stack(alignment: Alignment.bottomRight, children: [
                 CustomImageView(
+                  onTap: () {
+                    Get.to(NotificationScreen(),binding: NotificationBinding());
+                  },
                     imagePath: ImageConstant.imgVector,
                     height: 32.v,
                     width: 28.h,
                     alignment: Alignment.topLeft,
                     margin: EdgeInsets.only(right: 7.h, bottom: 4.v)),
+                    
                 Align(
                     alignment: Alignment.bottomRight,
                     child: Padding(
@@ -139,6 +165,8 @@ class HomeScreen extends GetWidget<HomeController> {
   ///
   Widget _buildScrollView() {
     home_ControllerIme home_controllerIme = Get.put(home_ControllerIme());
+    CollectionReference order = FirebaseFirestore.instance.collection('order');
+
     return Expanded(
         child: SingleChildScrollView(
             child: Column(children: [
@@ -186,7 +214,8 @@ class HomeScreen extends GetWidget<HomeController> {
               child: Text("lbl_promotion".tr,
                   style: CustomTextStyles.headlineSmallBlack900_2))),
       SizedBox(height: 10.v),
-      Align(
+      /**
+       *       Align(
         alignment: Alignment.centerRight,
         child: GestureDetector(
           child: SizedBox(
@@ -207,8 +236,127 @@ class HomeScreen extends GetWidget<HomeController> {
           onTap: () {
             home_ControllerIme().gOToProduct();
           },
+        ), 
+      ), 
+       */
+
+      Align(
+        alignment: Alignment.centerRight,
+        child: GestureDetector(
+          child: SizedBox(
+              height: 136.v,
+              
+              child: 
+               StreamBuilder(
+                 stream:order.snapshots()  ,
+                 builder: (BuildContext context, AsyncSnapshot snapshot) 
+                 {
+                    if (snapshot.hasError) {
+          return Center(child: Text("Something went wrong"));
+                              }
+
+                   if(snapshot.connectionState == ConnectionState.waiting){
+                 return Center(
+                  child: CircularProgressIndicator(),
+                 ) ;  };
+
+
+
+                    dynamic data = snapshot.data! as dynamic;
+                   
+                        return 
+                     ListView.builder(
+                      
+  padding: EdgeInsets.only(left: 24.h),
+  scrollDirection: Axis.horizontal,
+  itemCount: data.docs.length,
+  itemBuilder: (context, index) {
+    dynamic item= data.docs[index];
+     return item['Discount'] != ""? SizedBox(
+      width: 140.h,
+      child: Align(
+        alignment: Alignment.centerRight,
+        child: Column(
+          children: [
+            Card(
+              clipBehavior: Clip.antiAlias,
+              elevation: 5,
+             //margin: EdgeInsets.all(0),
+               margin: EdgeInsets.only(right: 10.h),
+              color: theme.colorScheme.primaryContainer,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadiusStyle.roundedBorder20,
+              ),
+              child: Container(
+                height: 110.v,
+                width: 140.h,
+                decoration: AppDecoration.fillPrimaryContainer.copyWith(
+                  borderRadius: BorderRadiusStyle.roundedBorder20,
+                ),
+                child: Stack(
+                  alignment: Alignment.bottomLeft,
+                  children: [
+                 
+                  // item['productImages'] != "" &&
+                  CustomImageView(
+                      imagePath: item['productImages'],
+                      height: 110.v,
+                      width: 140.h,
+                      radius: BorderRadius.circular(20.h),
+                      alignment: Alignment.center,
+                    ),
+                    Align(
+                      alignment: Alignment.bottomLeft,
+                      child: Container(
+                        width: 65.h,
+                        margin: EdgeInsets.only(
+                          left: 12.h,
+                          bottom: 6.v,
+                        ),
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 5.h,
+                          vertical: 1.v,
+                        ),
+                        decoration: AppDecoration.fillOnPrimary.copyWith(
+                          borderRadius: BorderRadiusStyle.customBorderBL11,
+                        ),
+                        child: Text(
+                         item['Discount'],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            SizedBox(height: 6.v),
+            Align(
+              alignment: Alignment.centerRight,
+              child: Text(
+                item['productName'], // Display product name
+                style: TextStyle(color: Colors.black),
+              ),
+            ),
+          ],
         ),
       ),
+    ): Container();
+  },
+);
+
+                   }         
+
+                  
+                 
+               )
+                  ),
+        /**
+         *   onTap: () {
+            home_ControllerIme().gOToProduct();
+          },
+         */
+        ), 
+      ), 
       SizedBox(height: 21.v),
       Padding(
           padding: EdgeInsets.symmetric(horizontal: 24.h),
@@ -239,13 +387,15 @@ class HomeScreen extends GetWidget<HomeController> {
           alignment: Alignment.centerRight,
           child: Padding(
               padding: EdgeInsets.only(left: 10.h),
-              child: Obx(() => GridView.builder(
+              child:
+               Obx(() =>
+               GridView.builder(
                   shrinkWrap: true,
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      mainAxisExtent: 121.v,
+                      mainAxisExtent: 125.v,
                       crossAxisCount: 2,
-                      mainAxisSpacing: 10.h,
-                      crossAxisSpacing: 10.h),
+                      mainAxisSpacing: 25.h,
+                      crossAxisSpacing: 5.h),
                   physics: NeverScrollableScrollPhysics(),
                   itemCount: controller
                       .homeModelObj.value.userprofile1ItemList.value.length,
@@ -257,7 +407,7 @@ class HomeScreen extends GetWidget<HomeController> {
       SizedBox(height: 20.v),
       Divider(
           color: appTheme.black900.withOpacity(0.25),
-          indent: 24.h,
+          indent: 25.h,
           endIndent: 24.h),
       SizedBox(height: 19.v),
       SizedBox(
@@ -297,21 +447,163 @@ class HomeScreen extends GetWidget<HomeController> {
       SizedBox(height: 10.v),
       Padding(
           padding: EdgeInsets.symmetric(horizontal: 23.h),
-          child: Obx(() => GridView.builder(
-              shrinkWrap: true,
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  mainAxisExtent: 249.v,
-                  crossAxisCount: 2,
-                  mainAxisSpacing: 20.h,
-                  crossAxisSpacing: 20.h),
-              physics: NeverScrollableScrollPhysics(),
-              itemCount:
-                  controller.homeModelObj.value.menuItemList.value.length,
-              itemBuilder: (context, index) {
-                MenuItemModel model =
-                    controller.homeModelObj.value.menuItemList.value[index];
-                return MenuItemWidget(model);
-              }))),
+          child: 
+          //Obx(() =>
+          StreamBuilder(
+            stream:order.snapshots()  ,
+             builder:  (BuildContext context, AsyncSnapshot snapshot)  {
+              
+            if (snapshot.hasError) {
+          return Center(child: Text("Something went wrong"));
+                              }
+
+                   if(snapshot.connectionState == ConnectionState.waiting){
+                       return Center(
+                  child: CircularProgressIndicator(),
+                 ) ; 
+
+                   }
+                    dynamic data = snapshot.data! as dynamic;
+
+
+               return GridView.builder(
+                
+                  shrinkWrap: true,
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      mainAxisExtent: 249.v,
+                      crossAxisCount: 2,
+                      mainAxisSpacing: 20.h,
+                      crossAxisSpacing: 20.h),
+                  physics: NeverScrollableScrollPhysics(),
+                  itemCount:data.docs.length,
+                  itemBuilder: (context, index) {
+                     dynamic item= data.docs[index];
+                     // controller.homeModelObj.value.menuItemList.value.length,
+                /**
+                 *   itemBuilder: (context, index) {
+                    MenuItemModel model =
+                        controller.homeModelObj.value.menuItemList.value[index];
+                    return MenuItemWidget(model);
+                 */
+
+
+
+                    return Container(
+      padding: EdgeInsets.symmetric(
+        horizontal: 15.h,
+        vertical: 8.v,
+      ),
+      decoration: AppDecoration.fillBlack9002.copyWith(
+        borderRadius: BorderRadiusStyle.roundedBorder20,
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(height: 6.v),
+          Card(
+            clipBehavior: Clip.antiAlias,
+            elevation: 0,
+            color: theme.colorScheme.primaryContainer,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadiusStyle.roundedBorder20,
+            ),
+            child: Container(
+              height: 150.adaptSize,
+              width: 150.adaptSize,
+              decoration: AppDecoration.fillPrimaryContainer.copyWith(
+                borderRadius: BorderRadiusStyle.roundedBorder20,
+              ),
+              child: Stack(
+                alignment: Alignment.topRight,
+                children: [
+                 // Obx(
+                   // () => 
+                    CustomImageView(
+                      //imagePath: menuItemModelObj.image1!.value,
+                      imagePath: item['productImages'],
+                      height: 150.v,
+                      width: 148.h,
+                      radius: BorderRadius.circular(
+                        20.h,
+                      ),
+                      alignment: Alignment.center,
+                    ),
+                 // ),
+                  
+                 /**
+                  *  Obx(
+                    () => CustomImageView(q
+                      imagePath: menuItemModelObj.image2!.value,
+                      height: 16.v,
+                      width: 18.h,
+                      alignment: Alignment.topRight,
+                      margin: EdgeInsets.only(
+                        top: 14.v,
+                        right: 15.h,
+                      ),
+                    ),
+                  ),
+                  */
+                ],
+              ),
+            ),
+          ),
+          SizedBox(height: 12.v),
+          //Obx(
+           // () => 
+            Text(
+              item['productName'], 
+              //menuItemModelObj.text1!.value,
+             // style: theme.textTheme.titleMedium,
+            ),
+         // ),
+          Row(
+            children: [
+              //Obx(
+                //() =>
+                 Text(
+                  item['productName'], 
+                 // menuItemModelObj.text2!.value,
+                //  style: theme.textTheme.bodyLarge,
+                ),
+             // ),
+              Padding(
+                padding: EdgeInsets.only(left: 18.h),
+                child:
+                // Obx(
+                 // () => 
+                  Text(
+                    item['productName'], 
+                   // menuItemModelObj.text3!.value,
+                  //  style: theme.textTheme.bodyLarge!.copyWith(
+                  //    decoration: TextDecoration.lineThrough,
+                    ),
+                  ),
+              //  ),
+         ], ),
+              Padding(
+                padding: EdgeInsets.only(left: 6.h),
+                child:
+                // Obx(
+                 // () => 
+                  Text(
+                    item['productName'], 
+                   // menuItemModelObj.text4!.value,
+                    //style: theme.textTheme.bodyLarge,
+                  ),
+               // ),
+              ),
+            ],
+          ),
+                    );
+                  },
+                  );
+                  }
+                 
+             
+           )),
+              //),
       SizedBox(height: 40.v),
       CustomImageView(
           imagePath: ImageConstant.imgClosePrimary65x65,

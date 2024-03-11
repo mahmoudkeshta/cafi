@@ -1,7 +1,11 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:coffee_app/presentation/forgot_password_screen/binding/forgot_password_binding.dart';
 import 'package:coffee_app/presentation/forgot_password_screen/forgot_password_screen.dart';
+import 'package:coffee_app/presentation/order_success_screen/models/order.dart';
+import 'package:coffee_app/presentation/sign_in_screen/controller/getuserdatacontroller.dart';
 import 'package:coffee_app/presentation/sign_up_screen/services/auth.dart';
+import 'package:coffee_app/presentation/verify_screen/binding/verify_binding.dart';
+import 'package:coffee_app/presentation/verify_screen/verify_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:coffee_app/core/app_export.dart';
@@ -58,6 +62,8 @@ class SignInScreen extends GetWidget<SignInController> {
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
+      final GetUserDataController getUserDataController =
+      Get.put(GetUserDataController());
  
     // ignore: unused_local_variable
     LoginControllerImp controllerImp = Get.put(LoginControllerImp());
@@ -130,63 +136,80 @@ class SignInScreen extends GetWidget<SignInController> {
 
                       async{
 
-   try {
+  try {
   final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
     email: controller.phoneController.text,
     password: controller.passwordController.text,
   );
-    Get.offAll(HomeScreen(), binding: HomeBinding());
-          Get.snackbar(
-                            "تم",
-                            "تم تسجل دخول بنجاح",
-                            snackPosition: SnackPosition.BOTTOM,
-                            backgroundColor: Colors.green,
-                            colorText: Color.fromARGB(233, 254, 254, 255),
-                          );
+
+  // استرجاع بيانات المستخدم بنجاح
+  var userData = await getUserDataController.getUserData(credential!.user!.uid);
+
+  // التأكد من وجود البيانات والتحقق مما إذا كان المستخدم مسؤولًا أم لا
+  if (userData.isNotEmpty && userData[0]['isAdmin'] == true) {
+    // المستخدم مسؤول، يمكن تنفيذ الإجراءات المناسبة هنا
+   // Get.offAll(AdminMainScreen(), binding: AdminMainBinding());
     
-
-} on FirebaseAuthException catch (e) {
-  if ( e.code == 'user-not-found') {
-
-AwesomeDialog(
-            context: context,
-            dialogType: DialogType.info,
-            animType: AnimType.rightSlide,
-            title: 'Error',
-            desc: 'No user found for that email',
-            btnCancelOnPress: () {},
-            btnOkOnPress: () {},
-            )..show();
-    print('No user found for that email.');
-       
-            Get.snackbar(
-                            "Error",
-                            "Please try again",
-                            snackPosition: SnackPosition.BOTTOM,
-                            backgroundColor: Color.fromARGB(0, 252, 65, 9),
-                            colorText: Color.fromARGB(233, 254, 254, 255),
-                          );
-  } else if (e.code == 'wrong-password') {
-    print('Wrong password provided for that user.');
+    
     AwesomeDialog (
             context: context,
-            dialogType: DialogType.info,
-            animType: AnimType.rightSlide,
+           dialogType: DialogType.success,
+            animType: AnimType.bottomSlide,
+          
+            title: 'Success',
+            desc: 'Admin logged in successfully.............',
+            btnCancelOnPress: () {},
+            btnOkOnPress: () {Get.offAll(AddProductPage());},
+            btnOkIcon: Icons.cancel,
+            
+            )..show();
+    Get.snackbar(
+      
+      "Success",
+      "Admin logged in successfully",
+      snackPosition: SnackPosition.BOTTOM,
+      backgroundColor: Colors.green,
+      colorText: Color.fromARGB(233, 254, 254, 255),
+    );
+  } else {
+    // المستخدم ليس مسؤولا، قم بتسجيل الدخول إلى الواجهة الرئيسية للمستخدم العادي
+    Get.offAll(HomeScreen(), binding: HomeBinding());
+    Get.snackbar(
+      "Success",
+      "User logged in successfully",
+      snackPosition: SnackPosition.BOTTOM,
+      backgroundColor: Colors.green,
+      colorText: Color.fromARGB(233, 254, 254, 255),
+    );
+  }
+} on FirebaseAuthException catch (e) {
+  if (e.code == 'user-not-found') {
+     AwesomeDialog(
+            context: context,
+           dialogType: DialogType.error,
+            animType: AnimType.bottomSlide,
             title: 'Error',
-            desc: 'Wrong password provided for that user',
+            desc: 'user-not-found.............',
             btnCancelOnPress: () {},
             btnOkOnPress: () {},
             )..show();
-             Get.snackbar(
-                            "Error",
-                            "Please try again",
-                            snackPosition: SnackPosition.BOTTOM,
-                            backgroundColor: Color.fromARGB(0, 252, 65, 9),
-                            colorText: Color.fromARGB(233, 254, 254, 255),
-                          );
+    // يتم إظهار رسالة خطأ إذا لم يتم العثور على المستخدم
+    // يمكنك إظهار رسالة خطأ لكل حالة ممكنة من حالات FirebaseAuthException
+  } else if (e.code == 'wrong-password') {
+AwesomeDialog(
+            context: context,
+           dialogType: DialogType.error,
+            animType: AnimType.bottomSlide,
+            title: 'Error',
+            desc: 'wrong-password............',
+            btnCancelOnPress: () {},
+            btnOkOnPress: () {},
+            )..show();
+    // يتم إظهار رسالة خطأ إذا كانت كلمة المرور غير صحيحة
+    // يمكنك إظهار رسالة خطأ لكل حالة ممكنة من حالات FirebaseAuthException
   }
-
 }
+
 
 
                      //   Get.offAll(HomeScreen(), binding: HomeBinding());

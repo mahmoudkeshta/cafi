@@ -6,6 +6,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_statusbarcolor_ns/flutter_statusbarcolor_ns.dart';
 
 import 'core/app_export.dart';
 
@@ -29,11 +30,13 @@ class MyApp extends StatefulWidget {
   @override
   State<MyApp> createState() => _MyAppState();
 }
-
+    void changeStatusBarColor() {
+  FlutterStatusbarcolor.setStatusBarColor(Color(0XFFFF045F)); // قم بتغيير هذا اللون بلون الـ AppBar المطلوب
+}
 class _MyAppState extends State<MyApp> {
   @override
   void initState() {
-  
+  changeStatusBarColor();
     FirebaseAuth.instance
   .authStateChanges()
   .listen((User? user) {
@@ -44,6 +47,7 @@ class _MyAppState extends State<MyApp> {
     }
   });
    super.initState();
+    
   }
 
   // ignore: override_on_non_overriding_member

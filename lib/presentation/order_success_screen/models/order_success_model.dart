@@ -7,12 +7,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class OrderSuccessModel { }
 class ProductModel {
   final String productId;
+  final String uid;
   final String categoryId;
   final String productName;
   final String categoryName;
   final String salePrice;
   final String fullPrice;
-  final List productImages;
+  final String productImages;
   final String deliveryTime;
   final bool isSale;
   final String productDescription;
@@ -20,9 +21,11 @@ class ProductModel {
   final dynamic updatedAt;
   final String Discount;
   final String profilrpic;
+    
 
-  ProductModel({
+  ProductModel( {
     required this.profilrpic, 
+    required this.uid,
     required this.productId,
     required this.categoryId,
     required this.productName,
@@ -41,6 +44,7 @@ class ProductModel {
   Map<String, dynamic> toJson() {
     return {
       'productId': productId,
+      'uid': uid,
       'categoryId': categoryId,
       'productName': productName,
       'categoryName': categoryName,
@@ -65,6 +69,7 @@ class ProductModel {
    
     return ProductModel(
       productId: snapshot['productId'],
+      uid: snapshot['uid'],
       categoryId: snapshot['categoryId'],
       productName: snapshot['productName'],
       categoryName: snapshot['categoryName'],

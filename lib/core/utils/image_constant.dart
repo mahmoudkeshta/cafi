@@ -339,9 +339,9 @@ class ImageConstant {
 
   static String imgAttach = '$imagePath/img_attach.png';
 
-  static String imgSearchOnprimary = '$imagePath/img_search_onprimary.svg';
+  static String imgSearchOnprimary = '$imagePath/img_search_onprimary.png';
 
-  static String imgVector = '$imagePath/img_vector.svg';
+  static String imgVector = '$imagePath/img_vector.png';
 
   static String imgImage12 = '$imagePath/img_image_12.png';
 

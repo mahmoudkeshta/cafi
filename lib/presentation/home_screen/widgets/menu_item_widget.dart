@@ -58,7 +58,8 @@ class MenuItemWidget extends StatelessWidget {
                       alignment: Alignment.center,
                     ),
                   ),
-                  Obx(
+                 /**
+                  *  Obx(
                     () => CustomImageView(
                       imagePath: menuItemModelObj.image2!.value,
                       height: 16.v,
@@ -70,6 +71,7 @@ class MenuItemWidget extends StatelessWidget {
                       ),
                     ),
                   ),
+                  */
                 ],
               ),
             ),

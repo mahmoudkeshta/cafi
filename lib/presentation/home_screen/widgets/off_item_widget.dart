@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:coffee_app/core/app_export.dart';
 import '../controller/home_controller.dart';
@@ -18,7 +19,10 @@ class OffItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+     CollectionReference order = FirebaseFirestore.instance.collection('order');
+     
+    return 
+    SizedBox(
       width: 140.h,
       child: Align(
         alignment: Alignment.centerRight,
@@ -82,7 +86,8 @@ class OffItemWidget extends StatelessWidget {
             SizedBox(height: 6.v),
             Align(
               alignment: Alignment.centerRight,
-              child: Obx(
+              child:
+               Obx(
                 () => Text(
                   offItemModelObj.price!.value,
                   style: CustomTextStyles.labelLargeBlack900Medium,
