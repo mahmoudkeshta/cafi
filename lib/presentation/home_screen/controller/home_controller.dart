@@ -1,5 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:coffee_app/core/app_export.dart';
 import 'package:coffee_app/presentation/home_screen/models/home_model.dart';
+import 'package:flutter/material.dart';
 
 /// A controller class for the HomeScreen.
 ///
@@ -8,9 +10,14 @@ import 'package:coffee_app/presentation/home_screen/models/home_model.dart';
 class HomeController extends GetxController {
   Rx<HomeModel> homeModelObj = HomeModel().obs;
   Rx<int> sliderIndex = 0.obs;
+  
 }
 
  abstract class home_Controller extends GetxController {
+  final item;
+  home_Controller({ String ? this.item,});
+ 
+
   goToshop();
   gOToProduct();
   goToProfile();
@@ -18,8 +25,13 @@ class HomeController extends GetxController {
   goToCart();
   goToYourOrder();
   gotohome();
+  gotoSearch();
+
  }
 class home_ControllerIme extends home_Controller{
+   CollectionReference order = FirebaseFirestore.instance.collection('order');
+
+
   @override
   goToshop() {
   
@@ -28,8 +40,11 @@ class home_ControllerIme extends home_Controller{
   
   @override
   gOToProduct() {
-   
+  
      Get.toNamed(AppRoutes.productScreen);
+
+      
+
   }
   
   @override
@@ -60,5 +75,12 @@ class home_ControllerIme extends home_Controller{
   gotohome() {
 Get.toNamed(AppRoutes.homeScreen);
   }
+  
+  @override
+  gotoSearch() {
+ Get.toNamed(AppRoutes.searchFilterScreen);
+  }
+  
+
 }
  

@@ -5,14 +5,16 @@ import '../models/menu_item_model.dart';
 
 // ignore: must_be_immutable
 class MenuItemWidget extends StatelessWidget {
+ final item;
   MenuItemWidget(
-    this.menuItemModelObj, {
-    Key? key,
+    //this.menuItemModelObj, 
+    {
+    Key? key,  required this.item,
   }) : super(
           key: key,
         );
 
-  MenuItemModel menuItemModelObj;
+ // MenuItemModel menuItemModelObj;
 
   var controller = Get.find<HomeController>();
 
@@ -47,9 +49,12 @@ class MenuItemWidget extends StatelessWidget {
               child: Stack(
                 alignment: Alignment.topRight,
                 children: [
-                  Obx(
-                    () => CustomImageView(
-                      imagePath: menuItemModelObj.image1!.value,
+                
+                 // Obx(
+                    //() => 
+                    CustomImageView(
+                        imagePath: item['productImages'],
+                   //  imagePath: menuItemModelObj.image1!.value,
                       height: 150.v,
                       width: 148.h,
                       radius: BorderRadius.circular(
@@ -57,11 +62,13 @@ class MenuItemWidget extends StatelessWidget {
                       ),
                       alignment: Alignment.center,
                     ),
-                  ),
-                 /**
-                  *  Obx(
-                    () => CustomImageView(
-                      imagePath: menuItemModelObj.image2!.value,
+                 // ),
+                 
+                 // Obx(
+                    //() => 
+                    CustomImageView(
+                        imagePath: item['productImages'],
+                   //   imagePath: menuItemModelObj.image2!.value,
                       height: 16.v,
                       width: 18.h,
                       alignment: Alignment.topRight,
@@ -70,55 +77,65 @@ class MenuItemWidget extends StatelessWidget {
                         right: 15.h,
                       ),
                     ),
-                  ),
-                  */
+                 // ),
+                  
                 ],
               ),
             ),
           ),
           SizedBox(height: 12.v),
-          Obx(
-            () => Text(
-              menuItemModelObj.text1!.value,
+         // Obx(
+           // () => 
+            Text(
+               item['productName'],
+              
+             // menuItemModelObj.text1!.value,
               style: theme.textTheme.titleMedium,
             ),
-          ),
+        //  ),
           Row(
             children: [
-              Obx(
-                () => Text(
-                  menuItemModelObj.text2!.value,
+             // Obx(() =>
+                 Text(
+                   "Price",
+                 // menuItemModelObj.text2!.value,
                   style: theme.textTheme.bodyLarge,
                 ),
-              ),
+             // ),
               Padding(
                 padding: EdgeInsets.only(left: 18.h),
-                child: Obx(
-                  () => Text(
-                    menuItemModelObj.text3!.value,
+                child: //Obx( () => 
+                Text(
+                   item['fullPrice'],
+
+                   // menuItemModelObj.text3!.value,
                     style: theme.textTheme.bodyLarge!.copyWith(
                       decoration: TextDecoration.lineThrough,
                     ),
                   ),
                 ),
-              ),
+             // ),
               Padding(
                 padding: EdgeInsets.only(left: 6.h),
-                child: Obx(
-                  () => Text(
-                    menuItemModelObj.text4!.value,
+                child: 
+              // Obx(
+                //  () =>
+                   Text(
+                     item['fullPrice'],
+                 //   menuItemModelObj.text4!.value,
                     style: theme.textTheme.bodyLarge,
                   ),
-                ),
+               // ),
               ),
             ],
           ),
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Obx(
-                () => CustomImageView(
-                  imagePath: menuItemModelObj.image3!.value,
+             //Obx(() =>
+                 CustomImageView(
+                    //imagePath: item['productImages'],
+                //  imagePath: menuItemModelObj.image3!.value,
                   height: 10.v,
                   width: 11.h,
                   margin: EdgeInsets.only(
@@ -126,10 +143,11 @@ class MenuItemWidget extends StatelessWidget {
                     bottom: 6.v,
                   ),
                 ),
-              ),
-              Obx(
-                () => CustomImageView(
-                  imagePath: menuItemModelObj.image4!.value,
+             //),
+             // Obx( () => 
+                CustomImageView(
+                    //imagePath: item['productImages'],
+                 // imagePath: menuItemModelObj.image4!.value,
                   height: 10.v,
                   width: 11.h,
                   margin: EdgeInsets.only(
@@ -138,10 +156,10 @@ class MenuItemWidget extends StatelessWidget {
                     bottom: 6.v,
                   ),
                 ),
-              ),
-              Obx(
-                () => CustomImageView(
-                  imagePath: menuItemModelObj.image5!.value,
+              //),
+             // Obx(() => 
+              CustomImageView(
+                 // imagePath: menuItemModelObj.image5!.value,
                   height: 10.v,
                   width: 11.h,
                   margin: EdgeInsets.only(
@@ -150,10 +168,10 @@ class MenuItemWidget extends StatelessWidget {
                     bottom: 6.v,
                   ),
                 ),
-              ),
-              Obx(
-                () => CustomImageView(
-                  imagePath: menuItemModelObj.image6!.value,
+             // ),
+             // Obx(() =>
+              CustomImageView(
+                 // imagePath: menuItemModelObj.image6!.value,
                   height: 10.v,
                   width: 11.h,
                   margin: EdgeInsets.only(
@@ -162,15 +180,18 @@ class MenuItemWidget extends StatelessWidget {
                     bottom: 6.v,
                   ),
                 ),
-              ),
+            //  ),
               Padding(
                 padding: EdgeInsets.only(left: 13.h),
-                child: Obx(
-                  () => Text(
-                    menuItemModelObj.text5!.value,
+                child: 
+                //Obx(
+                //  () => 
+                  Text(
+                   "",
+                   // menuItemModelObj.text5!.value,
                     style: theme.textTheme.bodyMedium,
                   ),
-                ),
+                //),
               ),
             ],
           ),

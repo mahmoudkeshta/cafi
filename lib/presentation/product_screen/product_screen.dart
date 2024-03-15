@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 import 'models/menu2_item_model.dart';
 import 'package:flutter/material.dart';
 import 'models/jokiboy_item_model.dart';
@@ -16,9 +18,14 @@ import 'package:coffee_app/widgets/app_bar/appbar_trailing_image.dart';
 import 'widgets/sizeselector_item_widget.dart';
 
 class ProductScreen extends GetWidget<ProductController> {
-  const ProductScreen({Key? key}) : super(key: key);
+  final item = Get.arguments;
+   ProductScreen(  {Key? key,
+  
+  
+  }) : super(key: key);
   @override
   Widget build(BuildContext context) {
+     CollectionReference  order = FirebaseFirestore.instance.collection('order');
     return SafeArea(
         child: Scaffold(
             body: SizedBox(
@@ -36,7 +43,9 @@ class ProductScreen extends GetWidget<ProductController> {
                           child: Container(
                               width: 328.h,
                               margin: EdgeInsets.only(left: 24.h, right: 75.h),
-                              child: Text("msg_lorem_ipsum_is_simply2".tr,
+                              child: Text(
+                             //  item['productName'],
+                              "msg_lorem_ipsum_is_simply2".tr,
                                   maxLines: 2,
                                   overflow: TextOverflow.ellipsis,
                                   style:
@@ -52,6 +61,7 @@ class ProductScreen extends GetWidget<ProductController> {
                   SizedBox(height: 9.v),
                   _buildOneHundred(),
                   SizedBox(height: 23.v),
+                  
                   Align(
                       alignment: Alignment.centerLeft,
                       child: Padding(
@@ -61,12 +71,15 @@ class ProductScreen extends GetWidget<ProductController> {
                                   .headlineSmallBlack900Medium))),
                   SizedBox(height: 6.v),
                   _buildSugar(),
-                  SizedBox(height: 19.v),
+                 // SizedBox(height: 2.v),
+                   add_to_cart(),
                   Align(
                       alignment: Alignment.centerLeft,
                       child: Padding(
                           padding: EdgeInsets.only(left: 24.h),
-                          child: Text("lbl_related_coffee".tr,
+                          child: 
+                          Text("lbl_related_coffee".tr,
+                          
                               style:
                                   CustomTextStyles.headlineSmallBlack900_2))),
                   SizedBox(height: 20.v),
@@ -78,7 +91,7 @@ class ProductScreen extends GetWidget<ProductController> {
                       alignment: Alignment.centerLeft,
                       child: Padding(
                           padding: EdgeInsets.only(left: 24.h),
-                          child: Text("lbl_review".tr,
+                          child: Text("lbl_revieS".tr,
                               style: CustomTextStyles
                                   .headlineSmallBlack900Medium))),
                   SizedBox(height: 10.v),
@@ -105,8 +118,10 @@ class ProductScreen extends GetWidget<ProductController> {
               alignment: Alignment.topCenter,
               child: Container(
                   height: 52.v,
-                  width: double.maxFinite,
-                  decoration: BoxDecoration(color: theme.colorScheme.primary))),
+                 width: double.maxFinite,
+                  decoration: BoxDecoration(color: theme.colorScheme.primary)
+                  )
+                  ),
           Align(
               alignment: Alignment.center,
               child: SizedBox(
@@ -114,7 +129,8 @@ class ProductScreen extends GetWidget<ProductController> {
                   width: double.maxFinite,
                   child: Stack(alignment: Alignment.center, children: [
                     CustomImageView(
-                        imagePath: ImageConstant.imgMaskGroup452x428,
+                        imagePath:item['productImages'],
+                        // ImageConstant.imgMaskGroup452x428,
                         height: 452.v,
                         width: 428.h,
                         alignment: Alignment.center),
@@ -136,14 +152,16 @@ class ProductScreen extends GetWidget<ProductController> {
                                                   begin: Alignment(0.5, -0.02),
                                                   end: Alignment(0.5, 0.16),
                                                   colors: [
-                                                appTheme.black900,
-                                                appTheme.black900.withOpacity(0)
-                                              ])))),
+                                              //  appTheme.black900,
+                                               // appTheme.black900.withOpacity(0)
+                                              ]))
+                                              )
+                                              ),
                                   CustomAppBar(
                                       height: 96.v,
                                       leadingWidth: 53.h,
                                       leading: AppbarLeadingImage(
-                                          imagePath: ImageConstant
+                                         imagePath: ImageConstant
                                               .imgArrowLeftOnprimary,
                                           margin: EdgeInsets.only(
                                               left: 26.h, bottom: 8.v),
@@ -170,7 +188,9 @@ class ProductScreen extends GetWidget<ProductController> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("lbl_mocha_frappe".tr,
+              Text(
+                item['productName'],
+                //"lbl_mocha_frappe".tr,
                   style: CustomTextStyles.headlineSmallBlack900_2),
               Padding(
                   padding: EdgeInsets.only(top: 3.v, bottom: 4.v),
@@ -199,15 +219,19 @@ class ProductScreen extends GetWidget<ProductController> {
             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
           Opacity(
               opacity: 0.75,
-              child: Text("lbl_2_5".tr,
+              child: Text(  item['fullPrice'],
+                //"lbl_2_5".tr,
                   style: CustomTextStyles.displaySmallPrimaryBold
                       .copyWith(decoration: TextDecoration.lineThrough))),
           Opacity(
               opacity: 0.75,
               child: Padding(
                   padding: EdgeInsets.symmetric(vertical: 10.v),
-                  child: Text("lbl_discount".tr,
-                      style: CustomTextStyles.headlineSmallBlack900))),
+                  child: Text(
+                    //"lbl_discount".tr,
+                    item['fullPrice'],
+                     // style: CustomTextStyles.headlineSmallBlack900
+                      ))),
           Text("lbl_1_5".tr, style: CustomTextStyles.displaySmallPrimary)
         ]));
   }
@@ -297,36 +321,11 @@ class ProductScreen extends GetWidget<ProductController> {
                                           style: CustomTextStyles
                                               .titleLargeBlack900_2))
                                 ]))
-                      ]))),
-          Align(
-              alignment: Alignment.bottomCenter,
-              child: Container(
-                  width: double.maxFinite,
-                  margin: EdgeInsets.only(top: 32.v),
-                  padding: EdgeInsets.symmetric(vertical: 19.v),
-                  decoration: AppDecoration.gradientOnPrimaryToOnPrimary,
-                  child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Expanded(
-                            child: CustomOutlinedButton(
-                                text: "lbl_add_to_cart".tr,
-                                margin:
-                                    EdgeInsets.only(right: 9.h, bottom: 27.v),
-                                buttonStyle: CustomButtonStyles.outlinePrimary,
-                                buttonTextStyle: CustomTextStyles
-                                    .titleLargePrimarySemiBold)),
-                        Expanded(
-                            child: CustomOutlinedButton(
-                                text: "lbl_buy_now".tr,
-                                margin:
-                                    EdgeInsets.only(left: 9.h, bottom: 27.v),
-                                buttonStyle:
-                                    CustomButtonStyles.outlinePrimaryTL30,
-                                buttonTextStyle: CustomTextStyles
-                                    .titleLargeOnPrimarySemiBold))
-                      ]))),
+                      ]
+                      )
+                      )
+                      ),
+        
           Align(
               alignment: Alignment.bottomLeft,
               child: Padding(
@@ -350,6 +349,60 @@ class ProductScreen extends GetWidget<ProductController> {
                                 style: CustomTextStyles.titleLargeBlack900_2)))
                   ])))
         ]));
+  }
+
+  Align add_to_cart() {
+    return Align(
+            alignment: Alignment.bottomCenter,
+            child: Container(
+                width: double.maxFinite,
+                margin: EdgeInsets.only(top: 10.v),//32
+                padding: EdgeInsets.symmetric(vertical: 19.v),
+                decoration: AppDecoration.gradientOnPrimaryToOnPrimary,
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(
+                          child: CustomOutlinedButton(
+                              text: "lbl_add_to_cart".tr,
+                              margin:
+                                  EdgeInsets.only(right: 9.h, bottom: 27.v),
+                              buttonStyle: CustomButtonStyles.outlinePrimary,
+                              buttonTextStyle: CustomTextStyles
+                                  .titleLargePrimarySemiBold,
+                                  onPressed: (){},
+                                  )
+                                  
+                                  ),
+                      Expanded(
+                          
+                            child: CustomOutlinedButton(
+                                text: "lbl_buy_now".tr,
+                                margin:
+                                    EdgeInsets.only(left: 9.h, bottom: 27.v),
+                                buttonStyle:
+                                    CustomButtonStyles.outlinePrimaryTL30,
+                                buttonTextStyle: CustomTextStyles
+                                    .titleLargeOnPrimarySemiBold,
+                                    
+                                    onPressed: (){
+                                      
+                                     // item.isSale = true;
+                                           //item['isSale'] = true;
+                                       Get.toNamed(AppRoutes.cartScreen, arguments: item);
+                                       
+                                    },
+                                    
+                                    ),
+
+                          )
+                    ]
+                    )
+                    )
+                    
+                    );
+                     
   }
 
   /// Section Widget
@@ -448,6 +501,7 @@ class ProductScreen extends GetWidget<ProductController> {
                       height: 85.adaptSize,
                       width: 85.adaptSize,
                       decoration: BoxDecoration(
+                        
                           borderRadius: BorderRadiusStyle.circleBorder40),
                       child: CustomImageView(
                           imagePath: ImageConstant.imgImage1685x85,

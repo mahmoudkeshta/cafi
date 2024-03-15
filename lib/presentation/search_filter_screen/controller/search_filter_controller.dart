@@ -2,9 +2,18 @@ import 'package:coffee_app/core/app_export.dart';import 'package:coffee_app/pres
 ///
 /// This class manages the state of the SearchFilterScreen, including the
 /// current searchFilterModelObj
-class SearchFilterController extends GetxController {TextEditingController searchController = TextEditingController();
+class SearchFilterController extends GetxController 
+ //with GetTickerProviderStateMixin
+ {
+  
+ // late TabController tabcontroller=TabController(length: 2, vsync: this);
+  TextEditingController searchController = TextEditingController();
 
 Rx<SearchFilterModel> searchFilterModelObj = SearchFilterModel().obs;
 
-@override void onClose() { super.onClose(); searchController.dispose(); } 
+@override void onClose() {
+   super.onClose(); searchController.dispose(); 
+   
+   
+   } 
  }

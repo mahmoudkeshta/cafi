@@ -332,7 +332,7 @@ class ImageConstant {
   static String imgArrowRight = '$imagePath/img_arrow_right.svg';
 
   static String imgArrowLeftOnprimary =
-      '$imagePath/img_arrow_left_onprimary.svg';
+      '$imagePath/img_arrow_left_onprimary.png';
 
   static String imgCheckmarkPrimary6x9 =
       '$imagePath/img_checkmark_primary_6x9.svg';
@@ -356,7 +356,7 @@ class ImageConstant {
 
   static String imgImage1685x85 = '$imagePath/img_image_16_85x85.png';
 
-  static String imgSignal = '$imagePath/img_signal.svg';
+  static String imgSignal = '$imagePath/img_signal.png';
 
   static String imgEllipse2085x85 = '$imagePath/img_ellipse_20_85x85.png';
 
@@ -366,7 +366,7 @@ class ImageConstant {
 
   static String imgImage20 = '$imagePath/img_image_20.png';
 
-  static String imgFavorite = '$imagePath/img_favorite.svg';
+  static String imgFavorite = '$imagePath/img_favorite.png';
 
   static String imgSignalBlack900 = '$imagePath/img_signal_black_900.svg';
 
@@ -390,7 +390,7 @@ class ImageConstant {
 
   static String imgLock = '$imagePath/img_lock.svg';
 
-  static String imgSend = '$imagePath/img_send.svg';
+  static String imgSend = '$imagePath/img_send.png';
 
   static String imgRectangle190 = '$imagePath/img_rectangle_190.png';
 

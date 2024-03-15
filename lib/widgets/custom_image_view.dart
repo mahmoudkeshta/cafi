@@ -47,6 +47,16 @@ class CustomImageView extends StatelessWidget {
         : _buildWidget();
   }
 
+
+
+
+
+
+
+
+
+  
+
   Widget _buildWidget() {
     return Padding(
       padding: margin ?? EdgeInsets.zero,

@@ -1,3 +1,6 @@
+import 'package:coffee_app/presentation/cart_screen/models/cartItems.dart';
+import 'package:coffee_app/presentation/cart_screen/models/firestoreservice.dart';
+import 'package:coffee_app/presentation/order_success_screen/services/c1.dart';
 import 'package:flutter/material.dart';
 import 'package:coffee_app/core/app_export.dart';
 import 'package:coffee_app/widgets/app_bar/appbar_leading_image.dart';
@@ -10,7 +13,9 @@ import 'models/userprofile4_item_model.dart';
 import 'widgets/userprofile4_item_widget.dart';
 
 class CartScreen extends GetWidget<CartController> {
-  const CartScreen({Key? key}) : super(key: key);
+  final item = Get.arguments;
+   CartScreen({Key? key}) : super(key: key);
+   final FirestoreService _firestoreService = FirestoreService();
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -73,7 +78,8 @@ class CartScreen extends GetWidget<CartController> {
 
   /// Section Widget
   Widget _buildUserProfile() {
-    return Obx(() => ListView.separated(
+    return Obx(() =>
+     ListView.separated(
         physics: NeverScrollableScrollPhysics(),
         shrinkWrap: true,
         separatorBuilder: (context, index) {
@@ -86,12 +92,14 @@ class CartScreen extends GetWidget<CartController> {
                       thickness: 1.v,
                       color: appTheme.black900.withOpacity(0.25))));
         },
-        itemCount:
-            controller.cartModelObj.value.userprofile4ItemList.value.length,
+        itemCount:controller.cartModelObj.value.userprofile4ItemList.value.length,
+           // controller.cartModelObj.value.userprofile4ItemList.value.length,
         itemBuilder: (context, index) {
-          Userprofile4ItemModel model =
-              controller.cartModelObj.value.userprofile4ItemList.value[index];
-          return Userprofile4ItemWidget(model);
+         // Userprofile4ItemModel model =controller.cartModelObj.value.userprofile4ItemList.value[index];
+         //CartItem cartItem = controller.cartModelObj.value.userprofile4ItemList.value[index];
+          return Userprofile4ItemWidget(
+            item:item
+          );
         }));
   }
 
@@ -130,9 +138,43 @@ class CartScreen extends GetWidget<CartController> {
 
   /// Section Widget
   Widget _buildPlaceOrder() {
-    return CustomElevatedButton(
-        text: "lbl_place_order".tr,
-        margin: EdgeInsets.only(left: 24.h, right: 23.h, bottom: 34.v));
+    return 
+
+
+    
+    
+      CustomElevatedButton(
+          text: "lbl_place_order".tr,
+     margin: EdgeInsets.only(left: 24.0, right: 23.0, bottom: 34.0),
+        onPressed: (){
+          Get.toNamed(AppRoutes.checkoutOneTabContainerScreen);
+        },
+      /**
+       *     async {
+  try {
+    String res = await c1().uploadOrder(productId: item['productName'], 
+    productName: item['productName'].toString(),
+     salePrice: item['salePrice:'].toString(),
+      fullPrice: item['fullPrice'].toString(), 
+      createdAt: '',
+       updatedAt: '', productTotalPrice: 5.5,
+       
+       );
+    // Handle success response if needed
+  } catch (e) {
+    // Handle any errors or exceptions that occur during upload
+    print("Error uploading data: $e");
+  }
+
+       
+      
+        }, 
+       */
+        
+        
+          );
+  
+        
   }
 
   /// Common widget
@@ -147,10 +189,30 @@ class CartScreen extends GetWidget<CartController> {
       Text(priceText,
           style: theme.textTheme.titleLarge!.copyWith(color: appTheme.black900))
     ]);
+    
+  }
+
+    Future<void> _saveCartItemsToFirestore() async {
+    try {
+      // Convert your CartItem object to a map
+      Map<String, dynamic> cartItemData = {
+        'productId': item.productId,
+        'productName': item.productName,
+        // Add other properties as needed
+      };
+      await _firestoreService.addCartItem(cartItemData);
+      // Optionally, you can clear the cart or show a success message here
+    } catch (e) {
+      // Handle errors here
+      print('Error saving cart items: $e');
+      // Show an error message to the user
+    }
   }
 
   /// Navigates to the previous screen.
   onTapArrowLeft() {
     Get.back();
   }
+
+  
 }

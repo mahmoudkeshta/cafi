@@ -67,9 +67,12 @@ class _MyAppState extends State<MyApp> {
        // locale: Locale('en', 'US'),
         title: 'coffee_app',
         home: FirebaseAuth.instance.currentUser == null? SignInScreen():HomeScreen(),
-        initialBinding: InitialBindings(),
+      
+          initialBinding: InitialBindings(),
         initialRoute: AppRoutes.initialRoute,
         getPages: AppRoutes.pages,
+       
+
       );
 
       

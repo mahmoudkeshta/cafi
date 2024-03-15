@@ -63,6 +63,9 @@ class OrderSuccessOneScreen extends GetWidget<OrderSuccessOneController> {
                 text: "lbl_let_s_cook".tr,
                 margin: EdgeInsets.symmetric(horizontal: 64.h),
                 buttonStyle: CustomButtonStyles.outlineBlack,
+                onPressed: (() {
+                  Get.offAllNamed(AppRoutes.cookingOneScreen);
+                }),
               ),
               SizedBox(height: 19.v),
               Text(

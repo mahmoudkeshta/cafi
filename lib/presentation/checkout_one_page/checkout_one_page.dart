@@ -105,6 +105,9 @@ class CheckoutOnePage extends StatelessWidget {
                     CustomElevatedButton(
                       text: "lbl_pay".tr,
                       margin: EdgeInsets.only(left: 2.h),
+                      onPressed: (() {
+                        Get.offNamed(AppRoutes.paymentScreen);
+                      }),
                     ),
                   ],
                 ),

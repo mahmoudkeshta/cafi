@@ -1,3 +1,4 @@
+import 'package:coffee_app/presentation/home_screen/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:coffee_app/core/app_export.dart';
 import 'package:coffee_app/presentation/cafe_following_page/cafe_following_page.dart';
@@ -89,13 +90,15 @@ class SearchItemsScreen extends GetWidget<SearchItemsController> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
+                     
                         CustomImageView(
-                            imagePath: ImageConstant.imgArrowLeftOnprimary,
+                            //imagePath: ImageConstant.imgArrowLeftOnprimary,
+                          
                             height: 22.v,
                             width: 27.h,
                             margin: EdgeInsets.only(top: 53.v, bottom: 10.v),
                             onTap: () {
-                              onTapImgArrowLeft();
+                             Get.offAll(HomeScreen());
                             }),
                         Spacer(flex: 43),
                         Container(

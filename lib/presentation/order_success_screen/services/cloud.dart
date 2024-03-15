@@ -26,6 +26,8 @@ class cloudMethods {
     required String Discount,
     String? profilrpic,
     required Uint8List file,
+     
+
   }) async {
     String res = "some Error";
 //String productImages=await StorageMethods().uploadImageToStorage(file);
@@ -48,6 +50,7 @@ class cloudMethods {
           createdAt: DateTime.now(),
           updatedAt: DateTime.now(),
           Discount: Discount,
+           
           uid: uid);
       order.doc(productId).set(productModel.toJson());
       res = "Done";

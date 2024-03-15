@@ -6,16 +6,19 @@ import '../models/userprofile4_item_model.dart';
 
 // ignore: must_be_immutable
 class Userprofile4ItemWidget extends StatelessWidget {
+  final item;
   Userprofile4ItemWidget(
-    this.userprofile4ItemModelObj, {
-    Key? key,
+    //this.userprofile4ItemModelObj,
+     {
+      required this.item,
+    Key? key,  //required this.item,
   }) : super(
-          key: key,
+         key: key,
         );
 
-  Userprofile4ItemModel userprofile4ItemModelObj;
+//  Userprofile4ItemModel userprofile4ItemModelObj;
 
-  var controller = Get.find<CartController>();
+ // var controller = Get.find<CartController>();
 
   @override
   Widget build(BuildContext context) {
@@ -38,9 +41,11 @@ class Userprofile4ItemWidget extends StatelessWidget {
                   decoration: AppDecoration.fillPrimaryContainer.copyWith(
                     borderRadius: BorderRadiusStyle.circleBorder40,
                   ),
-                  child: Obx(
-                    () => CustomImageView(
-                      imagePath: userprofile4ItemModelObj.image!.value,
+                  child:
+                  // Obx(   () =>
+                     CustomImageView(
+                      imagePath: item['productImages'],
+                      //userprofile4ItemModelObj.image!.value,
                       height: 80.v,
                       width: 77.h,
                       radius: BorderRadius.circular(
@@ -48,7 +53,7 @@ class Userprofile4ItemWidget extends StatelessWidget {
                       ),
                       alignment: Alignment.center,
                     ),
-                  ),
+                //  ),
                 ),
                 Padding(
                   padding: EdgeInsets.only(
@@ -58,19 +63,23 @@ class Userprofile4ItemWidget extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Obx(
-                        () => Text(
-                          userprofile4ItemModelObj.title!.value,
+                    //  Obx(
+                      //  () => 
+                        Text(
+                         item['productName'],
+                         // userprofile4ItemModelObj.title!.value,
                           style: theme.textTheme.titleLarge,
                         ),
-                      ),
+                     // ),
                       SizedBox(height: 1.v),
-                      Obx(
-                        () => Text(
-                          userprofile4ItemModelObj.price!.value,
+                     // Obx(
+                       // () => 
+                        Text(
+                              item ['fullPrice'],
+                          //userprofile4ItemModelObj.price!.value,
                           style: theme.textTheme.titleLarge,
                         ),
-                      ),
+                    //  ),
                     ],
                   ),
                 ),
@@ -92,12 +101,14 @@ class Userprofile4ItemWidget extends StatelessWidget {
                     top: 27.v,
                     bottom: 14.v,
                   ),
-                  child: Obx(
-                    () => Text(
-                      userprofile4ItemModelObj.quantity!.value,
+                  child:// Obx(
+                  //  () => 
+                    Text(
+                     // userprofile4ItemModelObj.quantity!.value,
+                     '1',
                       style: CustomTextStyles.headlineSmallBlack900Medium,
                     ),
-                  ),
+                 // ),
                 ),
               ],
             ),
@@ -116,6 +127,7 @@ class Userprofile4ItemWidget extends StatelessWidget {
           ),
         ],
       ),
+      
     );
   }
 }

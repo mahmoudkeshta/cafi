@@ -464,10 +464,13 @@ class ProfileScreen extends GetWidget<ProfileController> {
               children: [
                 Align(
                   alignment: Alignment.bottomCenter,
+                  
                   child: Text(
+                   
                     //"lbl_yev_yev".tr,
                     _auth.currentUser!.email.toString(),
                     style: CustomTextStyles.displaySmallOnPrimary,
+                    
                   ),
                 ),
                 CustomImageView(

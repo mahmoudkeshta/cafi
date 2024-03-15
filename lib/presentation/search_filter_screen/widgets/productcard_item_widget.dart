@@ -4,21 +4,21 @@ import 'package:coffee_app/widgets/custom_rating_bar.dart';
 import '../controller/search_filter_controller.dart';
 import '../models/productcard_item_model.dart';
 
-// ignore: must_be_immutable
 class ProductcardItemWidget extends StatelessWidget {
+//final Map<String, dynamic> item;
+final item;
+//final Map<String, dynamic> data = item.data() as Map<String, dynamic>;
   ProductcardItemWidget(
-    this.productcardItemModelObj, {
+    {  required this.item,
     Key? key,
-  }) : super(
-          key: key,
-        );
-
-  ProductcardItemModel productcardItemModelObj;
+  }) : super(key: key);
 
   var controller = Get.find<SearchFilterController>();
 
   @override
   Widget build(BuildContext context) {
+   
+   
     return Container(
       padding: EdgeInsets.symmetric(
         horizontal: 15.h,
@@ -49,17 +49,19 @@ class ProductcardItemWidget extends StatelessWidget {
               child: Stack(
                 alignment: Alignment.topRight,
                 children: [
-                  Obx(
-                    () => CustomImageView(
-                      imagePath: productcardItemModelObj.productImage!.value,
+                 // Obx(
+                  //  () => 
+                    item['productImages'] != "" ?
+                    CustomImageView(
+                      imagePath: item['productImages'],
                       height: 150.v,
                       width: 148.h,
                       radius: BorderRadius.circular(
                         20.h,
                       ),
                       alignment: Alignment.center,
-                    ),
-                  ),
+                    ):CustomImageView(),
+                 // ),
                   CustomImageView(
                     imagePath: ImageConstant.imgFavorite,
                     height: 16.v,
@@ -75,11 +77,9 @@ class ProductcardItemWidget extends StatelessWidget {
             ),
           ),
           SizedBox(height: 12.v),
-          Obx(
-            () => Text(
-              productcardItemModelObj.productName!.value,
-              style: theme.textTheme.titleMedium,
-            ),
+          Text(
+            item['productName'],
+            style: theme.textTheme.titleMedium,
           ),
           SizedBox(
             height: 40.v,
@@ -89,12 +89,14 @@ class ProductcardItemWidget extends StatelessWidget {
               children: [
                 Align(
                   alignment: Alignment.topLeft,
-                  child: Obx(
-                    () => Text(
-                      productcardItemModelObj.priceLabel!.value,
+                  child:
+                  // Obx(
+                    //() =>
+                     Text(
+                      item['productName'],
                       style: theme.textTheme.bodyLarge,
                     ),
-                  ),
+                 // ),
                 ),
                 Align(
                   alignment: Alignment.center,
@@ -106,36 +108,42 @@ class ProductcardItemWidget extends StatelessWidget {
                       children: [
                         Align(
                           alignment: Alignment.topRight,
-                          child: Obx(
-                            () => Text(
-                              productcardItemModelObj.priceValue1!.value,
+                          child:
+                          // Obx(
+                           // () =>
+                             Text(
+                              item['productName'],
                               style: theme.textTheme.bodyLarge,
                             ),
-                          ),
+                         // ),
                         ),
                         Align(
                           alignment: Alignment.topRight,
                           child: Padding(
                             padding: EdgeInsets.only(right: 49.h),
-                            child: Obx(
-                              () => Text(
-                                productcardItemModelObj.priceValue2!.value,
+                            child:
+                            // Obx(
+                              //() => 
+                              Text(
+                                item['productName'],
                                 style: theme.textTheme.bodyLarge!.copyWith(
                                   decoration: TextDecoration.lineThrough,
-                                ),
+                                //),
                               ),
                             ),
                           ),
                         ),
                         Align(
                           alignment: Alignment.bottomRight,
-                          child: Obx(
-                            () => Text(
-                              productcardItemModelObj.ratingLabel!.value,
+                          child:
+                           //Obx(
+                            //() => 
+                            Text(
+                              item['productName'],
                               style: theme.textTheme.bodyMedium,
                             ),
                           ),
-                        ),
+                       // ),
                         Padding(
                           padding: EdgeInsets.only(bottom: 6.v),
                           child: CustomRatingBar(

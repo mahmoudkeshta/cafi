@@ -5,20 +5,22 @@ import '../models/userprofile1_item_model.dart';
 
 // ignore: must_be_immutable
 class Userprofile1ItemWidget extends StatelessWidget {
+  final item;
   Userprofile1ItemWidget(
-    this.userprofile1ItemModelObj, {
-    Key? key,
+    //this.userprofile1ItemModelObj,
+     {
+    Key? key, required this.item,
   }) : super(
           key: key,
         );
 
-  Userprofile1ItemModel userprofile1ItemModelObj;
+ // Userprofile1ItemModel userprofile1ItemModelObj;
 
   var controller = Get.find<HomeController>();
 
   @override
   Widget build(BuildContext context) {
-    return Align(
+    return item['isAdmin'] == true ? Align(
       alignment: Alignment.centerRight,
       child: Container(
         padding: EdgeInsets.symmetric(
@@ -51,9 +53,14 @@ class Userprofile1ItemWidget extends StatelessWidget {
                     decoration: AppDecoration.fillPrimaryContainer.copyWith(
                       borderRadius: BorderRadiusStyle.circleBorder40,
                     ),
-                    child: Obx(
-                      () => CustomImageView(
-                        imagePath: userprofile1ItemModelObj.circleImage!.value,
+                    child: 
+                    //Obx(
+                    //  () => 
+                      CustomImageView(
+
+                        imagePath:item['userImg'],
+                        // userprofile1ItemModelObj.circleImage!.value,
+                        
                         height: 85.adaptSize,
                         width: 85.adaptSize,
                         radius: BorderRadius.circular(
@@ -61,7 +68,7 @@ class Userprofile1ItemWidget extends StatelessWidget {
                         ),
                         alignment: Alignment.center,
                       ),
-                    ),
+                   // ),
                   ),
                 ],
               ),
@@ -75,12 +82,15 @@ class Userprofile1ItemWidget extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Obx(
-                    () => Text(
-                      userprofile1ItemModelObj.textStarbucks!.value,
+                 // Obx(
+                  //  () => 
+                    Text(
+                      item ['username'],
+                      
+                    //  userprofile1ItemModelObj.textStarbucks!.value,
                       style: CustomTextStyles.titleLargeMedium,
                     ),
-                  ),
+                //  ),
                   SizedBox(height: 2.v),
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -96,13 +106,16 @@ class Userprofile1ItemWidget extends StatelessWidget {
                       ),
                       Padding(
                         padding: EdgeInsets.only(left: 5.h),
-                        child: Obx(
-                          () => Text(
-                            userprofile1ItemModelObj.textRating!.value,
+                        child:
+                        // Obx(
+                        //  () => 
+                          Text(
+                           // userprofile1ItemModelObj.textRating!.value,
+                           "7.1 Rating",
                             style: theme.textTheme.bodyMedium,
                           ),
                         ),
-                      ),
+                     // ),
                     ],
                   ),
                   SizedBox(height: 3.v),
@@ -112,7 +125,7 @@ class Userprofile1ItemWidget extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Container(
-                          width: 70.h,
+                          width: 80.h,
                           padding: EdgeInsets.symmetric(
                             horizontal: 14.h,
                             vertical: 1.v,
@@ -120,22 +133,27 @@ class Userprofile1ItemWidget extends StatelessWidget {
                           decoration: AppDecoration.pink.copyWith(
                             borderRadius: BorderRadiusStyle.roundedBorder10,
                           ),
-                          child: Obx(
-                            () => Text(
-                              userprofile1ItemModelObj.textFollow!.value,
+                          child: 
+                          //Obx(() => 
+                            Text(
+                              "Follow",
+                             // userprofile1ItemModelObj.textFollow!.value,
                               style: theme.textTheme.labelLarge,
                             ),
-                          ),
+                        //  ),
                         ),
                         Padding(
                           padding: EdgeInsets.only(top: 3.v),
-                          child: Obx(
-                            () => Text(
-                              userprofile1ItemModelObj.textFollowers!.value,
+                          child: 
+                          //Obx(
+                           // () =>
+                             Text(
+                              "10k",
+                            //  userprofile1ItemModelObj.textFollowers!.value,
                               style: CustomTextStyles.bodyMediumBlack900_1,
                             ),
                           ),
-                        ),
+                        
                       ],
                     ),
                   ),
@@ -145,6 +163,6 @@ class Userprofile1ItemWidget extends StatelessWidget {
           ],
         ),
       ),
-    );
+    ):Align();
   }
 }
