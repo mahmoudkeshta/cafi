@@ -1,3 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:coffee_app/presentation/home_screen/controller/home_controller.dart';
+import 'package:coffee_app/presentation/home_screen/widgets/menu_item_widget.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:coffee_app/core/app_export.dart';
 import 'package:coffee_app/widgets/app_bar/appbar_leading_image.dart';
@@ -7,20 +11,79 @@ import 'package:coffee_app/widgets/app_bar/custom_app_bar.dart';
 import 'package:coffee_app/widgets/custom_rating_bar.dart';
 import 'controller/wishlist_controller.dart';
 
-class WishlistScreen extends GetWidget<WishlistController> {
-  const WishlistScreen({Key? key}) : super(key: key);
+class WishlistScreen1 extends GetWidget<WishlistController> {
+  final item1 = Get.arguments;
+  
+   WishlistScreen1({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
+    Get.lazyPut(()=>HomeController());
+        home_ControllerIme home_cont = Get.put(home_ControllerIme());
+    FirebaseAuth _auth=FirebaseAuth.instance;
+     CollectionReference Cart = FirebaseFirestore.instance.collection('Cart');
+    return 
+    SafeArea(
         child: Scaffold(
             appBar: _buildAppBar(),
             body: Container(
                 width: double.maxFinite,
                 padding: EdgeInsets.symmetric(horizontal: 24.h, vertical: 20.v),
                 child: Column(children: [
-                  _buildFavorite(),
+                  
+
+
+                  
+          StreamBuilder(
+            stream:Cart.snapshots()  ,
+             builder:  (BuildContext context, AsyncSnapshot snapshot)  {
+              
+            if (snapshot.hasError) {
+          return Center(child: Text("Something went wrong"));
+                              }
+
+                   if(snapshot.connectionState == ConnectionState.waiting){
+                       return Center(
+                  child: CircularProgressIndicator(),
+                 ) ; 
+
+                   }
+                    dynamic data = snapshot.data! as dynamic;
+
+
+               return GridView.builder(
+                
+                  shrinkWrap: true,
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      mainAxisExtent: 249.v,
+                      crossAxisCount: 2,
+                      mainAxisSpacing: 20.h,
+                      crossAxisSpacing: 20.h),
+                  physics: NeverScrollableScrollPhysics(),
+                  itemCount:data.docs.length,
+                  itemBuilder: (context, index) {
+                     dynamic item= data.docs[index];
+                     // controller.homeModelObj.value.menuItemList.value.length,
+                /**
+                 *   itemBuilder: (context, index) {
+                    MenuItemModel model =
+                        controller.homeModelObj.value.menuItemList.value[index];
+                    return MenuItemWidget(model);
+                 */
+                      
+                    return 
+              item['uid']==item1['uId'] ?   MenuItemWidget(item: item):Container();
+
+                 
+                  },
+                  );
+                  }
+                 
+             
+           
+           ),
+                  //_buildFavorite(),
                   SizedBox(height: 10.v),
-                  _buildFavorite2(),
+                 // _buildFavorite2(),
                   SizedBox(height: 5.v)
                 ]))));
   }
@@ -37,7 +100,8 @@ class WishlistScreen extends GetWidget<WishlistController> {
             }),
         centerTitle: true,
         title: AppbarSubtitleTwo(
-            text: "lbl_wishlist".tr,
+            text: item1['email'],
+            //"lbl_wishlist".tr,
             margin: EdgeInsets.only(top: 58.v, bottom: 11.v)),
         actions: [
           AppbarTrailingImage(

@@ -64,7 +64,7 @@ class OrderSuccessOneScreen extends GetWidget<OrderSuccessOneController> {
                 margin: EdgeInsets.symmetric(horizontal: 64.h),
                 buttonStyle: CustomButtonStyles.outlineBlack,
                 onPressed: (() {
-                  Get.offAllNamed(AppRoutes.cookingOneScreen);
+                  Get.offAllNamed(AppRoutes.deliveryScreen);
                 }),
               ),
               SizedBox(height: 19.v),

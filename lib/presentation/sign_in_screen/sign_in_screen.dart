@@ -1,4 +1,5 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:coffee_app/presentation/cafe_following_container_screen/cafe_following_container_screen.dart';
 import 'package:coffee_app/presentation/forgot_password_screen/binding/forgot_password_binding.dart';
 import 'package:coffee_app/presentation/forgot_password_screen/forgot_password_screen.dart';
 import 'package:coffee_app/presentation/order_success_screen/models/order.dart';
@@ -159,7 +160,7 @@ class SignInScreen extends GetWidget<SignInController> {
             title: 'Success',
             desc: 'Admin logged in successfully.............',
             btnCancelOnPress: () {},
-            btnOkOnPress: () {Get.offAll(AddProductPage());},
+            btnOkOnPress: () {Get.offAll(CafeFollowingContainerScreen());},
             btnOkIcon: Icons.cancel,
             
             )..show();

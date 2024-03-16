@@ -19,6 +19,7 @@ import 'widgets/sizeselector_item_widget.dart';
 
 class ProductScreen extends GetWidget<ProductController> {
   final item = Get.arguments;
+    
    ProductScreen(  {Key? key,
   
   
@@ -26,6 +27,7 @@ class ProductScreen extends GetWidget<ProductController> {
   @override
   Widget build(BuildContext context) {
      CollectionReference  order = FirebaseFirestore.instance.collection('order');
+      CollectionReference  users = FirebaseFirestore.instance.collection('users');
     return SafeArea(
         child: Scaffold(
             body: SizedBox(
@@ -391,7 +393,7 @@ class ProductScreen extends GetWidget<ProductController> {
                                      // item.isSale = true;
                                            //item['isSale'] = true;
                                        Get.toNamed(AppRoutes.cartScreen, arguments: item);
-                                       
+                                   
                                     },
                                     
                                     ),

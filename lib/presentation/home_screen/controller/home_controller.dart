@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:coffee_app/core/app_export.dart';
 import 'package:coffee_app/presentation/home_screen/models/home_model.dart';
+import 'package:coffee_app/presentation/order_success_screen/models/order.dart';
 import 'package:flutter/material.dart';
 
 /// A controller class for the HomeScreen.
@@ -26,6 +27,7 @@ class HomeController extends GetxController {
   goToYourOrder();
   gotohome();
   gotoSearch();
+  gotoAdd();
 
  }
 class home_ControllerIme extends home_Controller{
@@ -79,6 +81,12 @@ Get.toNamed(AppRoutes.homeScreen);
   @override
   gotoSearch() {
  Get.toNamed(AppRoutes.searchFilterScreen);
+  }
+  
+  @override
+  gotoAdd() {
+    // TODO: implement gotoAdd
+   Get.to(AddProductPage());
   }
   
 

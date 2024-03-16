@@ -91,6 +91,11 @@ class PaymentScreen extends GetWidget<PaymentController> {
         margin: EdgeInsets.only(left: 24.h, right: 23.h, bottom: 34.v),
         onPressed: (){
           Get.offNamed(AppRoutes.orderSuccessOneScreen);
+
+
+
+          
+          
         }
         
         );

@@ -55,6 +55,9 @@ class CookingScreen extends GetWidget<CookingController> {
         title: AppbarSubtitleTwo(
             text: "lbl_cooking".tr,
             
+            onTap: (){
+            Get.toNamed(AppRoutes.trackingOrdersScreen);
+                                       },
             margin: EdgeInsets.only(top: 61.v, bottom: 8.v)),
         styleType: Style.bgShadow);
   }
@@ -95,13 +98,14 @@ class CookingScreen extends GetWidget<CookingController> {
                               
                                   style: CustomTextStyles.titleLargeSemiBold),
                                   
+                                  
                               Padding(
                                   padding: EdgeInsets.only(top: 12.v),
                                   child: 
                                   GestureDetector(
                                     child: Text("msg_we_are_ready_to".tr,
                                         style: theme.textTheme.bodyLarge),
-                                       
+                                      
                                   ),
                                   
                                   )

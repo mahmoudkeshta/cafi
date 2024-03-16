@@ -1,6 +1,7 @@
 import 'package:coffee_app/presentation/cart_screen/models/cartItems.dart';
 import 'package:coffee_app/presentation/cart_screen/models/firestoreservice.dart';
 import 'package:coffee_app/presentation/order_success_screen/services/c1.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:coffee_app/core/app_export.dart';
 import 'package:coffee_app/widgets/app_bar/appbar_leading_image.dart';
@@ -14,10 +15,13 @@ import 'widgets/userprofile4_item_widget.dart';
 
 class CartScreen extends GetWidget<CartController> {
   final item = Get.arguments;
+   
    CartScreen({Key? key}) : super(key: key);
    final FirestoreService _firestoreService = FirestoreService();
   @override
   Widget build(BuildContext context) {
+    
+    
     return SafeArea(
         child: Scaffold(
             appBar: _buildAppBar(),
@@ -138,6 +142,8 @@ class CartScreen extends GetWidget<CartController> {
 
   /// Section Widget
   Widget _buildPlaceOrder() {
+     FirebaseAuth _auth=FirebaseAuth.instance;
+    String re=_auth.currentUser!.email.toString();
     return 
 
 
@@ -146,8 +152,34 @@ class CartScreen extends GetWidget<CartController> {
       CustomElevatedButton(
           text: "lbl_place_order".tr,
      margin: EdgeInsets.only(left: 24.0, right: 23.0, bottom: 34.0),
-        onPressed: (){
-          Get.toNamed(AppRoutes.checkoutOneTabContainerScreen);
+        onPressed: () async {
+        //  Get.toNamed(AppRoutes.checkoutOneTabContainerScreen);
+                 
+  try {
+    String res = await c1().uploadOrder(
+      productId: item['productId'], 
+    productName: item['productName'].toString(),
+     salePrice: item['salePrice'].toString(),
+      fullPrice: item['fullPrice'].toString(), 
+      createdAt: '',
+       updatedAt: '',
+       categoryName:item['categoryName'].toString(), 
+       deliveryTime:item['deliveryTime'].toString(),
+       productTotalPrice:5, 
+       productImages:item['productImages'].toString(), 
+       uid:_auth.currentUser!.uid.toString(),
+      // item1['uId'].toString(),
+       
+       );
+       Get.toNamed(AppRoutes.checkoutOneTabContainerScreen);
+    // Handle success response if needed
+  } catch (e) {
+    // Handle any errors or exceptions that occur during upload
+    print("Error uploading data: $e");
+  }
+
+       
+      
         },
       /**
        *     async {

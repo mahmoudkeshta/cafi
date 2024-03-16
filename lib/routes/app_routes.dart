@@ -1,3 +1,4 @@
+import 'package:coffee_app/presentation/wishlist_screen/wishlist_screen1.dart';
 import 'package:get/get.dart';
 import '../presentation/flash_screen/onboarding.dart';
 import '../presentation/loading_screen/loading_screen.dart';
@@ -346,6 +347,7 @@ class AppRoutes {
   static const String profileScreen = '/profile_screen';
 
   static const String wishlistScreen = '/wishlist_screen';
+  static const String wishlistScreen1 = '/Wishlist_Screen1';
 
   static const String notificationScreen = '/notification_screen';
 
@@ -884,6 +886,14 @@ class AppRoutes {
     GetPage(
       name: wishlistScreen,
       page: () => WishlistScreen(),
+      bindings: [
+        WishlistBinding(),
+      ],
+    ),
+
+    GetPage(
+      name: wishlistScreen1,
+      page: () => WishlistScreen1(),
       bindings: [
         WishlistBinding(),
       ],

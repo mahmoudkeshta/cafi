@@ -8,31 +8,33 @@ class CartItem {
   final String productName;
   final String? categoryName;
   final String salePrice;
+   final String uid;
   final String fullPrice;
-  final List ?productImages;
+  final String productImages;
   final String ?deliveryTime;
   final bool ?isSale;
   final String ?productDescription;
   final dynamic createdAt;
   final dynamic updatedAt;
   final int? productQuantity;
-  final double productTotalPrice;
+  final double? productTotalPrice;
 
-  CartItem({
+  CartItem( {
+   required this.uid,
     required this.productId,
      this.categoryId,
     required this.productName,
      this.categoryName,
     required this.salePrice,
     required this.fullPrice,
-     this.productImages,
+    required this.productImages,
      this.deliveryTime,
      this.isSale,
      this.productDescription,
     required this.createdAt,
     required this.updatedAt,
      this.productQuantity,
-    required this.productTotalPrice,
+    this.productTotalPrice,
   });
 
   Map<String, dynamic> toMap() {
@@ -51,6 +53,7 @@ class CartItem {
       'updatedAt': updatedAt,
       'productQuantity': productQuantity,
       'productTotalPrice': productTotalPrice,
+      'uid':uid,
     };
   }
 
@@ -71,6 +74,7 @@ class CartItem {
       updatedAt: snapshot['updatedAt'],
       productQuantity: snapshot['productQuantity'],
       productTotalPrice: snapshot['productTotalPrice'],
+      uid: snapshot['uid'],
     );
   }
 }

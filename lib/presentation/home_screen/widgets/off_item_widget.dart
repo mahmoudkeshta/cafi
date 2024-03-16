@@ -8,6 +8,7 @@ import '../models/off_item_model.dart';
 // ignore: must_be_immutable
 class OffItemWidget extends StatelessWidget {
   final item;
+  
   OffItemWidget(
    {
       

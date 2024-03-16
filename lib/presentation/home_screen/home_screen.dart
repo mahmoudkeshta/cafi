@@ -255,8 +255,8 @@ class HomeScreen extends GetWidget<HomeController> {
                               controller.homeModelObj.value.offItemList.value[index];
                           */
                           dynamic item=data.docs[index];
-                        
-                          return OffItemWidget(item:item);
+                         
+                          return OffItemWidget(item:item,);
                         
                           
                         });
@@ -385,6 +385,9 @@ class HomeScreen extends GetWidget<HomeController> {
           padding: EdgeInsets.symmetric(horizontal: 23.h),
           child: 
           //Obx(() =>
+
+
+
           StreamBuilder(
             stream:order.snapshots()  ,
              builder:  (BuildContext context, AsyncSnapshot snapshot)  {
@@ -422,7 +425,7 @@ class HomeScreen extends GetWidget<HomeController> {
                     return MenuItemWidget(model);
                  */
                       
-return MenuItemWidget(item:item);
+                    return MenuItemWidget(item:item);
 
                  
                   },
@@ -430,7 +433,18 @@ return MenuItemWidget(item:item);
                   }
                  
              
-           )),
+           
+           )
+           
+           ),
+
+
+
+
+
+
+
+
               //),
       SizedBox(height: 40.v),
       CustomImageView(
