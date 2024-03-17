@@ -87,7 +87,9 @@ class HomeScreen extends GetWidget<HomeController> {
               GestureDetector(
                 child: AppbarSubtitleFive(
                  // text: "lbl_mr_yev_yev".tr),
-                 text:_auth.currentUser!.email.toString())
+                 text: 
+                 _auth.currentUser!.email.toString()
+                 )
 
                 
                

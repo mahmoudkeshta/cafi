@@ -63,6 +63,7 @@ class SignInScreen extends GetWidget<SignInController> {
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
+    FirebaseAuth _auth=FirebaseAuth.instance;
       final GetUserDataController getUserDataController =
       Get.put(GetUserDataController());
  
@@ -150,7 +151,7 @@ class SignInScreen extends GetWidget<SignInController> {
   if (userData.isNotEmpty && userData[0]['isAdmin'] == true) {
     // المستخدم مسؤول، يمكن تنفيذ الإجراءات المناسبة هنا
    // Get.offAll(AdminMainScreen(), binding: AdminMainBinding());
-    
+    String v= _auth.currentUser!.email.toString();
     
     AwesomeDialog (
             context: context,
@@ -158,26 +159,30 @@ class SignInScreen extends GetWidget<SignInController> {
             animType: AnimType.bottomSlide,
           
             title: 'Success',
-            desc: 'Admin logged in successfully.............',
+            desc: 'Admin: $v logged in successfully.............',
             btnCancelOnPress: () {},
-            btnOkOnPress: () {Get.offAll(CafeFollowingContainerScreen());},
-            btnOkIcon: Icons.cancel,
+            btnOkOnPress: () {Get.offAll(CafeFollowingContainerScreen());
             
-            )..show();
-    Get.snackbar(
+                Get.snackbar(
       
       "Success",
-      "Admin logged in successfully",
+      "Admin: $v logged in successfully" ,
       snackPosition: SnackPosition.BOTTOM,
       backgroundColor: Colors.green,
       colorText: Color.fromARGB(233, 254, 254, 255),
     );
+            },
+            btnOkIcon: Icons.cancel,
+            
+            )..show();
+
   } else {
+       String v= _auth.currentUser!.email.toString();
     // المستخدم ليس مسؤولا، قم بتسجيل الدخول إلى الواجهة الرئيسية للمستخدم العادي
     Get.offAll(HomeScreen(), binding: HomeBinding());
     Get.snackbar(
       "Success",
-      "User logged in successfully",
+      "User: $v logged in successfully",
       snackPosition: SnackPosition.BOTTOM,
       backgroundColor: Colors.green,
       colorText: Color.fromARGB(233, 254, 254, 255),

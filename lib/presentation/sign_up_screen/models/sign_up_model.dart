@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 /// This class defines the variables used in the [sign_up_screen],
 /// and is typically used to hold data that is passed between different parts of the application.
-class SignUpModel { }
+class SignUpModel {}
 
 class UserModel {
   final String uId;
@@ -19,8 +19,13 @@ class UserModel {
   final bool isActive;
   final dynamic createdOn;
   final String city;
+  final String? about;
+  final String? createdAt;
+  final String? lastActivated;
+  final String? puchToken;
+  final String? online;
 
-  UserModel( {
+  UserModel({
     required this.uId,
     required this.password,
     required this.username,
@@ -35,6 +40,11 @@ class UserModel {
     required this.isActive,
     required this.createdOn,
     required this.city,
+    this.about,
+    this.createdAt,
+    this.lastActivated,
+    this.puchToken,
+    this.online,
   });
 
   // Serialize the UserModel instance to a JSON map
@@ -53,12 +63,19 @@ class UserModel {
       'isActive': isActive,
       'createdOn': createdOn,
       'city': city,
-      'password':password,
+      'password': password,
+         'about': about,
+      
+      'createdAt': createdAt,
+      'lastActivated': lastActivated,
+      'puchToken': puchToken,
+      'online': online,
+
     };
   }
 
-  factory UserModel.fromSnap(DocumentSnapshot snap){
-    var snapshot = snap.data() as Map<String,dynamic>;
+  factory UserModel.fromSnap(DocumentSnapshot snap) {
+    var snapshot = snap.data() as Map<String, dynamic>;
     return UserModel(
       uId: snapshot['uId'],
       username: snapshot['username'],
@@ -72,7 +89,14 @@ class UserModel {
       isAdmin: snapshot['isAdmin'],
       isActive: snapshot['isActive'],
       createdOn: snapshot['createdOn'],
-      city: snapshot['city'], password: snapshot['password'],
+      city: snapshot['city'],
+      password: snapshot['password'],
+        
+      createdAt: snapshot['createdAt'], 
+     lastActivated: snapshot['lastActivated'],
+    puchToken: snapshot['puchToken'],
+    online: snapshot['online'],
+
     );
   }
 }

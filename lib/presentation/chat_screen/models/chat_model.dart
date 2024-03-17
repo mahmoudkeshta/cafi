@@ -5,3 +5,49 @@ class ChatModel {Rx<List<ViewhierarchyItemModel>> viewhierarchyItemList = Rx(Lis
 Rx<List<UserprofileItemModel>> userprofileItemList = Rx([UserprofileItemModel(userImage:ImageConstant.imgEllipse2070x70.obs,companyName: "Amazon".obs,voiceMessage: "Voice Message".obs,companyLogo:ImageConstant.imgGroup2.obs,time: "02:00PM".obs)]);
 
  }
+ 
+class chatRoom{
+  final String ? id;
+  final List ?nembers;
+  final String ?lastMessage;
+   final String ? lastMessageTime;
+  final String ? createdAt;
+
+    
+
+  chatRoom(
+   {
+     required this.id,
+    required this.nembers,
+    required this.lastMessage,
+    required this.lastMessageTime,
+    required this.createdAt, 
+    
+    
+   }
+  
+  );
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'nembers': nembers,
+      'lastMessage': lastMessage,
+      'lastMessageTime': lastMessageTime,
+      'createdAt': createdAt,
+    
+     
+    };
+  }
+
+  factory chatRoom.fromJson(Map<String,dynamic>json){
+return chatRoom(
+  id: json ['id'] ?? "",
+ nembers:json ['nembers'] ,
+  lastMessage: json ['lastMessage'] ,
+  lastMessageTime: json['lastMessageTime'],
+  createdAt: json['createdAt'], 
+
+  );
+
+  }}

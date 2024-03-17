@@ -1,6 +1,7 @@
 
 
 import 'package:coffee_app/presentation/home_screen/home_screen.dart';
+import 'package:coffee_app/presentation/sign_in_screen/controller/getuserdatacontroller.dart';
 import 'package:coffee_app/presentation/sign_up_screen/services/auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -297,6 +298,8 @@ class SignUpScreen extends GetWidget<SignUpController> {
 
   /// Section Widget
   Widget _buildSignUpButton() {
+     final GetUserDataController getUserDataController =
+      Get.put(GetUserDataController());
     TextEditingController fullNameRowController = TextEditingController();
     TextEditingController phoneRowController = TextEditingController();
     TextEditingController addressRowController = TextEditingController();
@@ -310,23 +313,44 @@ class SignUpScreen extends GetWidget<SignUpController> {
  // ignore: unused_local_variable
 
         try  {
-           
-          String res = await AuthMethods().signup(email: controller.phoneRowController.text,
+            
+         final res = await AuthMethods().signup(email: controller.phoneRowController.text,
               password:controller.passwordRowController.text,
               username:  controller.fullNameRowController.text,
               dispose: controller.addressRowController.text);
-          if(res=='s'){
+
+                    // String g= res.toString();
+                   
+          
+              // var userData = await getUserDataController.getUserData(res!.user!.uid);
+           
+          if (res == null){
            Get.to(HomeScreen(),binding:HomeBinding());
                
           }else{
             
-            
-            print(res);
+                Get.snackbar(
+      
+      "Ererr",
+      " $res " ,
+      snackPosition: SnackPosition.BOTTOM,
+      backgroundColor: Colors.red,
+      colorText: Color.fromARGB(233, 254, 254, 255),
+    );
           
           
           }
         } on Exception catch (e) {
-          print(e);
+          //print(e);
+              
+                Get.snackbar(
+      
+      "Ererr",
+      " $e " ,
+      snackPosition: SnackPosition.BOTTOM,
+      backgroundColor: Colors.red,
+      colorText: Color.fromARGB(233, 254, 254, 255),
+    );
         }
 
 
