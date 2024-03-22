@@ -147,7 +147,8 @@ class HomeScreen extends GetWidget<HomeController> {
 
   /// Section Widget
   Widget _buildWidget() {
-    return Obx(() => CarouselSlider.builder(
+    return Obx(() => 
+    CarouselSlider.builder(
         options: CarouselOptions(
             height: 150.v,
             initialPage: 0,

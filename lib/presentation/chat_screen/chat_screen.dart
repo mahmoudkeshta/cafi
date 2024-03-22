@@ -1,3 +1,13 @@
+//import 'dart:js';
+
+import 'dart:ffi';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:coffee_app/presentation/chat_screen/firebase/fire_database.dart';
+import 'package:coffee_app/presentation/chat_screen/models/chat_model.dart';
+import 'package:coffee_app/widgets/custom_elevated_button.dart';
+import 'package:coffee_app/widgets/custom_text_form_field.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:coffee_app/core/app_export.dart';
 import 'package:coffee_app/widgets/app_bar/appbar_title.dart';
@@ -12,7 +22,7 @@ import 'widgets/viewhierarchy_item_widget.dart';
 
 // ignore_for_file: must_be_immutable
 class ChatScreen extends GetWidget<ChatController> {
-  const ChatScreen({Key? key})
+  ChatScreen({Key? key})
       : super(
           key: key,
         );
@@ -27,7 +37,7 @@ class ChatScreen extends GetWidget<ChatController> {
             mainAxisSize: MainAxisSize.min,
             children: [
               _buildChat(),
-              SizedBox(height: 21.v),
+             // SizedBox(height: 21.v),
               Expanded(
                 child: SingleChildScrollView(
                   child: Container(
@@ -59,15 +69,15 @@ class ChatScreen extends GetWidget<ChatController> {
                             ],
                           ),
                         ),
-                        SizedBox(height: 17.v),
+                     //   SizedBox(height: 17.v),
                         Container(
-                          height: 531.v,
+                        //  height: 531.v,
                           width: 381.h,
                           margin: EdgeInsets.only(left: 1.h),
                           child: Stack(
                             alignment: Alignment.center,
                             children: [
-                              _buildMorida(),
+                           //   _buildMorida(),
                               _buildUserProfile(),
                             ],
                           ),
@@ -80,7 +90,7 @@ class ChatScreen extends GetWidget<ChatController> {
             ],
           ),
         ),
-        floatingActionButton: _buildFloatingActionButton(),
+        floatingActionButton: _buildFloatingActionButton( context),
       ),
     );
   }
@@ -145,7 +155,7 @@ class ChatScreen extends GetWidget<ChatController> {
                 ),
               ),
             ],
-            styleType: Style.bgFill,
+           styleType: Style.bgFill,
           ),
           Align(
             alignment: Alignment.bottomCenter,
@@ -166,7 +176,7 @@ class ChatScreen extends GetWidget<ChatController> {
                         child: Divider(
                           height: 1.v,
                           thickness: 1.v,
-                          color: appTheme.black900.withOpacity(0.1),
+                        color: appTheme.black900.withOpacity(0.1),
                         ),
                       ),
                     );
@@ -253,51 +263,138 @@ class ChatScreen extends GetWidget<ChatController> {
   Widget _buildUserProfile() {
     return Align(
       alignment: Alignment.center,
-      child: Obx(
-        () => ListView.separated(
-          physics: NeverScrollableScrollPhysics(),
-          shrinkWrap: true,
-          separatorBuilder: (
-            context,
-            index,
-          ) {
-            return Padding(
-              padding: EdgeInsets.symmetric(vertical: 10.0.v),
-              child: SizedBox(
-                width: 380.h,
-                child: Divider(
-                  height: 1.v,
-                  thickness: 1.v,
-                  color: appTheme.black900.withOpacity(0.1),
-                ),
-              ),
-            );
-          },
-          itemCount:
-              controller.chatModelObj.value.userprofileItemList.value.length,
-          itemBuilder: (context, index) {
-            UserprofileItemModel model =
-                controller.chatModelObj.value.userprofileItemList.value[index];
-            return UserprofileItemWidget(
-              model,
-            );
-          },
-        ),
-      ),
+      child: //Obx(
+       // () =>
+         StreamBuilder(
+           stream: FirebaseFirestore.instance.
+           collection("rooms")
+           .where('members',arrayContains:FirebaseAuth.instance.currentUser!.uid)
+           //.orderBy('lastMessageTime',descending: true)
+           .snapshots(),
+           
+           builder: (context,AsyncSnapshot<QuerySnapshot> snapshot) {
+    
+            if(snapshot.hasData){
+List<chatRoom> items = (snapshot.data!.docs as List<dynamic>).map((e) =>
+ chatRoom.fromJson(e.data() as Map<String, dynamic>)).toList()..sort((a,b)=>
+  b.lastMessageTime!.compareTo(a.lastMessageTime!));
+
+             return ListView.separated(
+              physics: NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              separatorBuilder: (
+                context,
+                index,
+              ) {
+                return Padding(
+                  padding: EdgeInsets.symmetric(vertical: 10.0.v),
+                  child: SizedBox(
+                    width: 380.h,
+                    child: Divider(
+                      height: 1.v,
+                      thickness: 1.v,
+                      color: appTheme.black900.withOpacity(0.1),
+                    ),
+                  ),
+                );
+              },
+              itemCount: items.length,
+             //    controller.chatModelObj.value.userprofileItemList.value.length,
+              itemBuilder: (context, index) {
+/**
+ *                 UserprofileItemModel model =
+                    controller.chatModelObj.value.userprofileItemList.value[index];
+ */
+                return 
+              /**
+               *   ListTile(
+                  title: Text(items[index].lastMessageTime.toString()),
+                );
+               */
+                UserprofileItemWidget(items:items[index]);
+              }
+                     );
+             
+            } else{
+
+              return Center(child: CircularProgressIndicator(),);
+            }
+          
+           }
+           
+         ),
+     // ),
     );
   }
 
   /// Section Widget
-  Widget _buildFloatingActionButton() {
-    return CustomFloatingButton(
-      height: 80,
-      width: 80,
-      backgroundColor: theme.colorScheme.primary,
-      child: CustomImageView(
-        imagePath: ImageConstant.imgForward,
-        height: 40.0.v,
-        width: 40.0.h,
-      ),
-    );
-  }
+// Define the controller outside of the widget to maintain its state.
+TextEditingController text = TextEditingController();
+
+
+Widget _buildFloatingActionButton(BuildContext context) {
+  FirebaseAuth _auth = FirebaseAuth.instance;
+
+  return CustomFloatingButton(
+    height: 80,
+    width: 80,
+    backgroundColor: theme.colorScheme.primary,
+    child: CustomImageView(
+      imagePath: ImageConstant.imgForward,
+      onTap: () {
+        // Show the bottom sheet using the proper context.
+        showModalBottomSheet(
+          context: context,
+          builder: (BuildContext context) {
+            // Calculate keyboard height
+            double keyboardHeight = MediaQuery.of(context).viewInsets.bottom;
+
+            return SingleChildScrollView(
+              padding: EdgeInsets.only(
+                bottom: keyboardHeight + MediaQuery.of(context).padding.bottom,
+              ),
+              child: Container(
+                padding: EdgeInsets.all(20),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Row(
+                      children: [Text("Enter Email")],
+                    ),
+                    CustomTextFormField(
+                      controller: text,
+                      hintText: "Enter email",
+                    ),
+                    CustomElevatedButton(
+                      text: "create chat",
+                      onPressed: () {
+                        // Perform actions when the button in the bottom sheet is pressed.
+                        // For example, create a chat room here.
+                        if(text.text.isNotEmpty){
+                         FireData().creatRoom(text.text).then((value) {
+                          setState(){
+                            text.text="";
+                          }
+                          Navigator.pop(context);
+                         });
+                        }
+                       
+                      //  Navigator.pop(context); // Close the bottom sheet
+                      },
+                    ),
+                  ],
+                ),
+              ),
+            );
+          },
+        );
+      },
+      height: 40.0.v,
+      width: 40.0.h,
+    ),
+  );
 }
+
+
+  }
+

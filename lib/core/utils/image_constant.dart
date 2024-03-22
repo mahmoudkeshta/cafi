@@ -59,7 +59,7 @@ class ImageConstant {
 
   static String imgEllipse55 = '$imagePath/img_ellipse_55.png';
 
-  static String imgForward = '$imagePath/img_forward.svg';
+  static String imgForward = '$imagePath/img_forward.png';
 
   // Active Chat images
   static String imgImage1658x58 = '$imagePath/img_image_16_58x58.png';

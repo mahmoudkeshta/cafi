@@ -100,7 +100,7 @@ class OnBoarding extends StatelessWidget {
  ...List.generate(onBoardingList.length, (index) => AnimatedContainer(duration: const Duration(milliseconds: 900),
  width: 8,
  height: 13,
-  padding: const EdgeInsets.only(right: 50.0, bottom: 50.0),
+  padding: const EdgeInsets.only(right: 5.0, bottom: 5.0),
  decoration: const BoxDecoration(
    // ignore: unnecessary_const
    color: const Color(0xFFFF3951), 

@@ -8,7 +8,7 @@ Rx<List<UserprofileItemModel>> userprofileItemList = Rx([UserprofileItemModel(us
  
 class chatRoom{
   final String ? id;
-  final List ?nembers;
+  final List ?members;
   final String ?lastMessage;
    final String ? lastMessageTime;
   final String ? createdAt;
@@ -18,7 +18,7 @@ class chatRoom{
   chatRoom(
    {
      required this.id,
-    required this.nembers,
+    required this.members,
     required this.lastMessage,
     required this.lastMessageTime,
     required this.createdAt, 
@@ -31,7 +31,7 @@ class chatRoom{
   Map<String, dynamic> toJson() {
     return {
       'id': id,
-      'nembers': nembers,
+      'members': members,
       'lastMessage': lastMessage,
       'lastMessageTime': lastMessageTime,
       'createdAt': createdAt,
@@ -43,7 +43,7 @@ class chatRoom{
   factory chatRoom.fromJson(Map<String,dynamic>json){
 return chatRoom(
   id: json ['id'] ?? "",
- nembers:json ['nembers'] ,
+ members:json ['members'] ,
   lastMessage: json ['lastMessage'] ,
   lastMessageTime: json['lastMessageTime'],
   createdAt: json['createdAt'], 

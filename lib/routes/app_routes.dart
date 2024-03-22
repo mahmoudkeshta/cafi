@@ -574,6 +574,7 @@ class AppRoutes {
         ChatBinding(),
       ],
     ),
+
     GetPage(
       name: activeChatScreen,
       page: () => ActiveChatScreen(),
