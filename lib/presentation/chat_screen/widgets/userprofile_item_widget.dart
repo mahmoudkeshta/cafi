@@ -25,11 +25,15 @@ class UserprofileItemWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      
       child: Align(
+        
         alignment: Alignment.center,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
+          
           children: [
+            
             Container(
               height: 70.adaptSize,
               width: 70.adaptSize,

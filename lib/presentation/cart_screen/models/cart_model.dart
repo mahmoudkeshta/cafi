@@ -4,8 +4,5 @@ class CartModel {Rx<List<Userprofile4ItemModel>> userprofile4ItemList = Rx([User
 
 
 
-
-
-
  }
 

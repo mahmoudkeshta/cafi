@@ -21,6 +21,9 @@ class ProductModel {
   final dynamic updatedAt;
   final String Discount;
   final String profilrpic;
+    final List size;
+    final List ice;
+    final List sugar;
     
 
   ProductModel( {
@@ -39,6 +42,7 @@ class ProductModel {
     required this.createdAt,
     required this.updatedAt,
     required this.Discount,
+         required  this.size,  required  this.ice,  required  this.sugar,
   });
 
   Map<String, dynamic> toJson() {
@@ -58,6 +62,9 @@ class ProductModel {
       'updatedAt': updatedAt,
       'Discount': Discount,
       'profilrpic': profilrpic,
+         'size': size,
+      'ice': ice,
+      'sugar': sugar,
       
 
     };
@@ -82,6 +89,7 @@ class ProductModel {
       createdAt: snapshot['createdAt'],
       updatedAt: snapshot['updatedAt'],
       Discount: snapshot['Discount'], profilrpic: snapshot['profilrpic'],
+        size :snapshot['size'], ice:snapshot ['ice'], sugar:snapshot ['sugar'],
     );
   }
 }

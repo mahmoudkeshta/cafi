@@ -22,6 +22,7 @@ import 'widgets/viewhierarchy_item_widget.dart';
 
 // ignore_for_file: must_be_immutable
 class ChatScreen extends GetWidget<ChatController> {
+  
   ChatScreen({Key? key})
       : super(
           key: key,
@@ -36,7 +37,7 @@ class ChatScreen extends GetWidget<ChatController> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              _buildChat(),
+             _buildChat(),
              // SizedBox(height: 21.v),
               Expanded(
                 child: SingleChildScrollView(
@@ -101,6 +102,7 @@ class ChatScreen extends GetWidget<ChatController> {
       height: 362.v,
       width: double.maxFinite,
       child: Stack(
+        
         alignment: Alignment.bottomCenter,
         children: [
           CustomAppBar(
@@ -261,6 +263,7 @@ class ChatScreen extends GetWidget<ChatController> {
 
   /// Section Widget
   Widget _buildUserProfile() {
+  
     return Align(
       alignment: Alignment.center,
       child: //Obx(

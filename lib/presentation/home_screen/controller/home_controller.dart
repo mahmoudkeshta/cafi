@@ -58,7 +58,7 @@ class home_ControllerIme extends home_Controller{
   @override
   goToCart() {
   
-    Get.toNamed(AppRoutes.cartScreen);
+    Get.toNamed(AppRoutes.cartScreen,arguments: item);
   }
 
   @override

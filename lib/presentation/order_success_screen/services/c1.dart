@@ -15,12 +15,15 @@ uploadOrder({
    required String fullPrice,
    required String productImages,
   String ?deliveryTime,
-   bool ?isSale,
+  required  bool isSale,
    String ?productDescription,
    required dynamic createdAt,
    required dynamic updatedAt,
   required double productTotalPrice,
     required String  uid,
+      required  List size,
+  required  List  ice,
+   required  List sugar,
      
 
   }) async {
@@ -36,13 +39,14 @@ uploadOrder({
    categoryName:"",
    productImages: productImages,
    deliveryTime:"",
-   isSale:false,
+   isSale:isSale,
     salePrice: salePrice, 
     fullPrice: fullPrice,
      createdAt: DateTime.now(),
       updatedAt:DateTime.now(), 
       productTotalPrice:productTotalPrice,
        uid: uid,
+          size: size, ice: [], sugar: []
         );
             Cart.doc(productId).set(cartItem.toMap());
       res = "Done";

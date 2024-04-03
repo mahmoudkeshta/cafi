@@ -26,6 +26,9 @@ class cloudMethods {
     required String Discount,
     String? profilrpic,
     required Uint8List file,
+      required  List size,
+  required  List  ice,
+   required  List sugar,
      
 
   }) async {
@@ -50,8 +53,10 @@ class cloudMethods {
           createdAt: DateTime.now(),
           updatedAt: DateTime.now(),
           Discount: Discount,
-           
-          uid: uid);
+          
+          uid: uid,
+           size: size, ice: [], sugar: []
+           );
       order.doc(productId).set(productModel.toJson());
       res = "Done";
     } catch (e) {

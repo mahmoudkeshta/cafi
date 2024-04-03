@@ -18,7 +18,9 @@ class CartItem {
   final dynamic updatedAt;
   final int? productQuantity;
   final double? productTotalPrice;
-
+      final List size;
+    final List ice;
+    final List sugar;
   CartItem( {
    required this.uid,
     required this.productId,
@@ -35,6 +37,7 @@ class CartItem {
     required this.updatedAt,
      this.productQuantity,
     this.productTotalPrice,
+          required  this.size,  required  this.ice,  required  this.sugar,
   });
 
   Map<String, dynamic> toMap() {
@@ -54,6 +57,9 @@ class CartItem {
       'productQuantity': productQuantity,
       'productTotalPrice': productTotalPrice,
       'uid':uid,
+          'size': size,
+      'ice': ice,
+      'sugar': sugar,
     };
   }
 
@@ -75,6 +81,8 @@ class CartItem {
       productQuantity: snapshot['productQuantity'],
       productTotalPrice: snapshot['productTotalPrice'],
       uid: snapshot['uid'],
+       size :snapshot['size'], ice:snapshot ['ice'], sugar:snapshot ['sugar'],
+    
     );
   }
 }

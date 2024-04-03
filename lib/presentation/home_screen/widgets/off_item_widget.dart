@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:coffee_app/presentation/cart_screen/controller/cart_controller.dart';
 import 'package:coffee_app/presentation/product_screen/product_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:coffee_app/core/app_export.dart';
@@ -26,6 +27,7 @@ class OffItemWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
      CollectionReference order = FirebaseFirestore.instance.collection('order');
+      cart_controller cart_con=Get.put(cart_controller(),permanent: true);
      
     return 
    item['Discount'] != ""? GestureDetector(
@@ -120,7 +122,11 @@ class OffItemWidget extends StatelessWidget {
          onTap: (() {
                           
           // Navigator.of(context).push(MaterialPageRoute(builder: (context)=>ProductScreen(item:item))) ;   
-                   Get.toNamed(AppRoutes.productScreen, arguments: item);
+                   Get.toNamed(AppRoutes.productScreen,
+                    arguments: item
+                    );
+cart_controller().saveItem(Get.arguments);
+               //   cart_controller().gotopro(item);
                         }),
    ): Container();
   }

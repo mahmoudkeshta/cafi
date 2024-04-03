@@ -458,7 +458,7 @@ class ProfileScreen extends GetWidget<ProfileController> {
           SizedBox(height: 13.v),
           SizedBox(
             height: 187.v,
-            width: 154.h,
+            width: 154.h,//154.h
             child: Stack(
               alignment: Alignment.topCenter,
               children: [
@@ -470,7 +470,7 @@ class ProfileScreen extends GetWidget<ProfileController> {
                     //"lbl_yev_yev".tr,
                     _auth.currentUser!.email.toString(),
                     style: CustomTextStyles.displaySmallOnPrimary,
-                    
+                     textScaleFactor: 0.50,
                   ),
                 ),
                 CustomImageView(

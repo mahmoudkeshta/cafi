@@ -1,4 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:coffee_app/presentation/cart_screen/controller/cart_controller.dart';
+import 'package:coffee_app/presentation/cart_screen/controller/cart_controller.dart';
+import 'package:coffee_app/presentation/order_success_screen/services/c1.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import 'models/menu2_item_model.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +23,8 @@ import 'widgets/sizeselector_item_widget.dart';
 
 class ProductScreen extends GetWidget<ProductController> {
   final item = Get.arguments;
-    
+       cart_controller cart_con=Get.put(cart_controller(),permanent: true);
+         final CartController5 cartController5 = Get.put<CartController5>(CartController5());
    ProductScreen(  {Key? key,
   
   
@@ -28,6 +33,7 @@ class ProductScreen extends GetWidget<ProductController> {
   Widget build(BuildContext context) {
      CollectionReference  order = FirebaseFirestore.instance.collection('order');
       CollectionReference  users = FirebaseFirestore.instance.collection('users');
+    
     return SafeArea(
         child: Scaffold(
             body: SizedBox(
@@ -46,8 +52,8 @@ class ProductScreen extends GetWidget<ProductController> {
                               width: 328.h,
                               margin: EdgeInsets.only(left: 24.h, right: 75.h),
                               child: Text(
-                             //  item['productName'],
-                              "msg_lorem_ipsum_is_simply2".tr,
+                               item['productName'],
+                            //  "msg_lorem_ipsum_is_simply2".tr,
                                   maxLines: 2,
                                   overflow: TextOverflow.ellipsis,
                                   style:
@@ -61,8 +67,8 @@ class ProductScreen extends GetWidget<ProductController> {
                   SizedBox(height: 17.v),
                   _buildAddToCart(),
                   SizedBox(height: 9.v),
-                  _buildOneHundred(),
-                  SizedBox(height: 23.v),
+                 // _buildOneHundred(),
+                  //SizedBox(height: 23.v),
                   
                   Align(
                       alignment: Alignment.centerLeft,
@@ -97,8 +103,8 @@ class ProductScreen extends GetWidget<ProductController> {
                               style: CustomTextStyles
                                   .headlineSmallBlack900Medium))),
                   SizedBox(height: 10.v),
-                  _buildJokiboy(),
-                  SizedBox(height: 30.v),
+                 // _buildJokiboy(),
+                //  SizedBox(height: 30.v),
                   CustomImageView(
                       imagePath: ImageConstant.imgClosePrimary65x65,
                       height: 65.adaptSize,
@@ -121,7 +127,11 @@ class ProductScreen extends GetWidget<ProductController> {
               child: Container(
                   height: 52.v,
                  width: double.maxFinite,
-                  decoration: BoxDecoration(color: theme.colorScheme.primary)
+                  decoration: BoxDecoration(color: theme.colorScheme.primary,
+               
+                  
+                  
+                  )
                   )
                   ),
           Align(
@@ -131,7 +141,9 @@ class ProductScreen extends GetWidget<ProductController> {
                   width: double.maxFinite,
                   child: Stack(alignment: Alignment.center, children: [
                     CustomImageView(
-                        imagePath:item['productImages'],
+                        imagePath:
+                        
+                        cartController5.itemData1.value= item['productImages'],
                         // ImageConstant.imgMaskGroup452x428,
                         height: 452.v,
                         width: 428.h,
@@ -184,14 +196,20 @@ class ProductScreen extends GetWidget<ProductController> {
 
   /// Section Widget
   Widget _buildMochaFrappe() {
+   final CartController5 cartController5 = Get.put<CartController5>(CartController5());
+
     return Padding(
+      
         padding: EdgeInsets.symmetric(horizontal: 24.h),
         child: Row(
+          
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              
               Text(
-                item['productName'],
+                 //'${cartController1.item.value}',
+             cartController5.itemData.value =item['productName'],
                 //"lbl_mocha_frappe".tr,
                   style: CustomTextStyles.headlineSmallBlack900_2),
               Padding(
@@ -221,7 +239,8 @@ class ProductScreen extends GetWidget<ProductController> {
             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
           Opacity(
               opacity: 0.75,
-              child: Text(  item['fullPrice'],
+              child: Text(  
+                cartController5.itemData2.value=item['fullPrice'],
                 //"lbl_2_5".tr,
                   style: CustomTextStyles.displaySmallPrimaryBold
                       .copyWith(decoration: TextDecoration.lineThrough))),
@@ -230,8 +249,8 @@ class ProductScreen extends GetWidget<ProductController> {
               child: Padding(
                   padding: EdgeInsets.symmetric(vertical: 10.v),
                   child: Text(
-                    //"lbl_discount".tr,
-                    item['fullPrice'],
+                    "lbl_discount".tr,
+                   // item['fullPrice'],
                      // style: CustomTextStyles.headlineSmallBlack900
                       ))),
           Text("lbl_1_5".tr, style: CustomTextStyles.displaySmallPrimary)
@@ -240,21 +259,43 @@ class ProductScreen extends GetWidget<ProductController> {
 
   /// Section Widget
   Widget _buildSizeSelector() {
+        CollectionReference order = FirebaseFirestore.instance.collection('order');
     return Padding(
         padding: EdgeInsets.symmetric(horizontal: 24.h),
-        child: Obx(() => ListView.separated(
-            physics: NeverScrollableScrollPhysics(),
-            shrinkWrap: true,
-            separatorBuilder: (context, index) {
-              return SizedBox(height: 1.v);
-            },
-            itemCount: controller
-                .productModelObj.value.sizeselectorItemList.value.length,
-            itemBuilder: (context, index) {
-              SizeselectorItemModel model = controller
-                  .productModelObj.value.sizeselectorItemList.value[index];
-              return SizeselectorItemWidget(model);
-            })));
+        child:
+        // Obx(() => 
+        StreamBuilder(
+          stream: order.snapshots(),
+          builder: (BuildContext context, AsyncSnapshot snapshot) {
+             dynamic data=snapshot.data!;
+                      if (snapshot.hasError) {
+          return Center(child: Text("Something went wrong"));
+                              }
+
+                   if(snapshot.connectionState == ConnectionState.waiting){
+                 return Center(
+                  child: CircularProgressIndicator(),
+                 ) ;  };
+            return ListView.separated(
+                physics: NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                separatorBuilder: (context, index) {
+                  return SizedBox(height: 1.v);
+                },
+                itemCount: controller
+                    .productModelObj.value.sizeselectorItemList.value.length,
+                itemBuilder: (context, index) {
+                  dynamic item=data.docs[index];
+                  SizeselectorItemModel model = controller
+                      .productModelObj.value.sizeselectorItemList.value[index];
+                  return SizeselectorItemWidget(item:item
+                  );
+                }
+                );
+          }
+        )
+            //)
+            );
   }
 
   /// Section Widget
@@ -296,6 +337,7 @@ class ProductScreen extends GetWidget<ProductController> {
                                                       .withOpacity(0.44),
                                                   width: 2.h)))),
                                   Text("lbl_10".tr,
+                                  
                                       style: theme.textTheme.titleLarge)
                                 ])),
                         SizedBox(height: 9.v),
@@ -319,9 +361,11 @@ class ProductScreen extends GetWidget<ProductController> {
                                                   width: 2.h)))),
                                   Opacity(
                                       opacity: 0.75,
+                                      
                                       child: Text("lbl_20".tr,
                                           style: CustomTextStyles
-                                              .titleLargeBlack900_2))
+                                              .titleLargeBlack900_2,
+                                              ))
                                 ]))
                       ]
                       )
@@ -348,12 +392,14 @@ class ProductScreen extends GetWidget<ProductController> {
                         child: Padding(
                             padding: EdgeInsets.only(left: 10.h),
                             child: Text("lbl_50".tr,
+                          
                                 style: CustomTextStyles.titleLargeBlack900_2)))
                   ])))
         ]));
   }
 
   Align add_to_cart() {
+       FirebaseAuth _auth=FirebaseAuth.instance;
     return Align(
             alignment: Alignment.bottomCenter,
             child: Container(
@@ -373,7 +419,33 @@ class ProductScreen extends GetWidget<ProductController> {
                               buttonStyle: CustomButtonStyles.outlinePrimary,
                               buttonTextStyle: CustomTextStyles
                                   .titleLargePrimarySemiBold,
-                                  onPressed: (){},
+                               
+                                    onPressed: () async{
+                                        try {
+    String res = await c1().uploadOrder(
+ productId: item['productId'], 
+    productName: item['productName'].toString(),
+     salePrice: item['salePrice'].toString(),
+      fullPrice: item['fullPrice'].toString(), 
+      createdAt: '',
+       updatedAt: '',
+       categoryName:item['categoryName'].toString(), 
+       deliveryTime:item['deliveryTime'].toString(),
+       productTotalPrice:5, 
+       productImages:item['productImages'].toString(), 
+       uid:_auth.currentUser!.uid.toString(), isSale: false,
+       size: [item['size'][0].toString(),'n'], ice: [], sugar: [],
+      // item1['uId'].toString(),
+       
+       );
+  Get.toNamed(AppRoutes.cartScreen, arguments: item);
+    // Handle success response if needed
+  } catch (e) {
+    // Handle any errors or exceptions that occur during upload
+    print("Error uploading data: $e");
+  }
+                                      cart_controller().gotohome();
+                                  },
                                   )
                                   
                                   ),
@@ -388,12 +460,35 @@ class ProductScreen extends GetWidget<ProductController> {
                                 buttonTextStyle: CustomTextStyles
                                     .titleLargeOnPrimarySemiBold,
                                     
-                                    onPressed: (){
-                                      
+                                    onPressed: () async{
+                                        try {
+    String res = await c1().uploadOrder(
+      productId: item['productId'], 
+    productName: item['productName'].toString(),
+     salePrice: item['salePrice'].toString(),
+      fullPrice: item['fullPrice'].toString(), 
+      createdAt: '',
+       updatedAt: '',
+       categoryName:item['categoryName'].toString(), 
+       deliveryTime:item['deliveryTime'].toString(),
+       productTotalPrice:5, 
+       productImages:item['productImages'].toString(), 
+       uid:_auth.currentUser!.uid.toString(), isSale: false,
+       size: [], ice: [], sugar: [],
+      // item1['uId'].toString(),
+       
+       );
+  Get.toNamed(AppRoutes.cartScreen, arguments: item);
+    // Handle success response if needed
+  } catch (e) {
+    // Handle any errors or exceptions that occur during upload
+    print("Error uploading data: $e");
+  }
+
                                      // item.isSale = true;
                                            //item['isSale'] = true;
-                                       Get.toNamed(AppRoutes.cartScreen, arguments: item);
-                                   
+                                    
+                              //     cart_controller().goToCart(item);
                                     },
                                     
                                     ),

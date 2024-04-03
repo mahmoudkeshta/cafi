@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:coffee_app/presentation/cart_screen/controller/cart_controller.dart';
 import 'package:coffee_app/presentation/notification_screen/binding/notification_binding.dart';
 import 'package:coffee_app/presentation/notification_screen/notification_screen.dart';
 import 'package:coffee_app/presentation/order_success_screen/models/order.dart';
@@ -42,11 +43,13 @@ import 'package:coffee_app/presentation/cafe_following_page/cafe_following_page.
 import 'widgets/widget_item_widget.dart';
 
 class HomeScreen extends GetWidget<HomeController> {
-  const HomeScreen({Key? key}) : super(key: key);
+    final item = Get.arguments;
+   HomeScreen({Key? key}) : super(key: key);
+  
   @override
   Widget build(BuildContext context) {
     // ignore: unused_local_variable
-    home_ControllerIme home_cont = Get.put(home_ControllerIme());
+    home_ControllerIme home_cont = Get.put(home_ControllerIme(),permanent: true);
    
     return SafeArea(
         child: Scaffold(
@@ -172,6 +175,7 @@ class HomeScreen extends GetWidget<HomeController> {
   ///
   ///
   Widget _buildScrollView() {
+      cart_controller cart_con=Get.put(cart_controller(),permanent: true);
     home_ControllerIme home_controllerIme = Get.put(home_ControllerIme());
     CollectionReference order = FirebaseFirestore.instance.collection('order');
     CollectionReference users = FirebaseFirestore.instance.collection('users');

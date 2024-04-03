@@ -23,6 +23,10 @@ class _AddProductPageState extends State<AddProductPage> {
   final TextEditingController productDescriptionController = TextEditingController();
     final TextEditingController categoryNameController = TextEditingController();
     final TextEditingController DiscountController = TextEditingController();
+        final TextEditingController lbl_small = TextEditingController();
+        final TextEditingController lbl_meduim = TextEditingController();
+        final TextEditingController lbl_large = TextEditingController();
+
   // Other controllers...
 
   Uint8List? file;
@@ -116,7 +120,35 @@ class _AddProductPageState extends State<AddProductPage> {
               decoration: InputDecoration(labelText: 'Discount'),
               maxLines: null,
             ), 
-            
+             SizedBox(height: 10.0),
+        Row(
+  children: [
+    Expanded(
+      child: TextField(
+        controller: lbl_small,
+        decoration: InputDecoration(labelText: "lbl_small"),
+        maxLines: null,
+      ),
+    ),
+    SizedBox(width: 2.0),
+    Expanded(
+      child: TextField(
+        controller: lbl_meduim,
+        decoration: InputDecoration(labelText: 'lbl_meduim'),
+        maxLines: null,
+      ),
+    ),
+    SizedBox(width: 2.0),
+    Expanded(
+      child: TextField(
+        controller: lbl_large,
+        decoration: InputDecoration(labelText: 'lbl_large'),
+        maxLines: null,
+      ),
+    ),
+  ],
+),
+
                        
            
               SizedBox(height: 20.0),
@@ -131,7 +163,8 @@ class _AddProductPageState extends State<AddProductPage> {
       productDescription: productDescriptionController.text,
       Discount: DiscountController.text,
       file: file!,
-      uid: 'KZxUE5YjefhKRngTvy5wcGp2XKy2'
+      uid: 'KZxUE5YjefhKRngTvy5wcGp2XKy2', size: [lbl_small.text,lbl_meduim.text,lbl_large.text], ice: [], sugar: []
+      
     );
     // Handle success response if needed
   } catch (e) {

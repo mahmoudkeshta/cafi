@@ -1,5 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:coffee_app/presentation/cart_screen/models/cartItems.dart';
 import 'package:coffee_app/presentation/cart_screen/models/firestoreservice.dart';
+import 'package:coffee_app/presentation/home_screen/controller/home_controller.dart';
 import 'package:coffee_app/presentation/order_success_screen/services/c1.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -14,52 +16,81 @@ import 'models/userprofile4_item_model.dart';
 import 'widgets/userprofile4_item_widget.dart';
 
 class CartScreen extends GetWidget<CartController> {
+           final CartController controller = Get.find();
   final item = Get.arguments;
-   
+   dynamic item1;
+   FirebaseAuth _auth=FirebaseAuth.instance;
    CartScreen({Key? key}) : super(key: key);
    final FirestoreService _firestoreService = FirestoreService();
+  cart_controller cart_con=Get.put(cart_controller(),permanent: true);
+     home_ControllerIme home_cont = Get.put(home_ControllerIme(),permanent: true);
+ final CartController1 cartController = Get.put<CartController1>(cart_controller());
+     
   @override
   Widget build(BuildContext context) {
+
     
-    
-    return SafeArea(
-        child: Scaffold(
+    return   //  item['uid'].toString()==_auth.currentUser!.uid.toString()?
+     SafeArea(
+         
+        child: 
+    Scaffold(
             appBar: _buildAppBar(),
-            body: Container(
-                width: double.maxFinite,
-                padding: EdgeInsets.symmetric(horizontal: 23.h, vertical: 9.v),
-                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      _buildUserProfile(),
-                      SizedBox(height: 22.v),
-                      Padding(
-                          padding: EdgeInsets.only(left: 1.h),
-                          child: Text("lbl_order_summary".tr,
-                              style: CustomTextStyles.headlineSmallBlack900_2)),
-                      SizedBox(height: 6.v),
-                      Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 1.h),
-                          child: _buildVat(
-                              vatText: "lbl_sub_total".tr,
-                              priceText: "lbl_7_20".tr)),
-                      SizedBox(height: 10.v),
-                      Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 1.h),
-                          child: _buildVat(
-                              vatText: "lbl_vat".tr, priceText: "lbl_0_50".tr)),
-                      SizedBox(height: 19.v),
-                      _buildThirtyTwo(),
-                      SizedBox(height: 29.v),
-                      _buildTotal(),
-                      SizedBox(height: 1.v)
-                    ])),
-            bottomNavigationBar: _buildPlaceOrder()));
+            body:   SingleChildScrollView(
+              child:  Container(
+                  width: double.maxFinite,
+                  padding: EdgeInsets.symmetric(horizontal: 23.h, vertical: 9.v),
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        _buildUserProfile(),
+                        SizedBox(height: 22.v),
+                        
+                         Padding(
+                            padding: EdgeInsets.only(left: 1.h),
+                            child: Text("lbl_order_summary".tr,
+                                style: CustomTextStyles.headlineSmallBlack900_2)),
+                        SizedBox(height: 6.v),
+                        Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 1.h),
+                            child:
+                             _buildVat(
+                                vatText: "lbl_sub_total".tr,
+                                priceText:
+                                "lbl_7_20".tr
+                              
+                                )
+                                ),
+                        SizedBox(height: 10.v),
+                        Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 1.h),
+                            child: _buildVat(
+                                vatText: "lbl_vat".tr, priceText: "lbl_0_50".tr)),
+                        SizedBox(height: 19.v),
+                        _buildThirtyTwo(),
+                        SizedBox(height: 29.v),
+                        _buildTotal(),
+                        SizedBox(height: 1.v)
+                      ]
+                      
+                      
+                    ),
+                 
+                    
+                      ),
+                      
+                      
+            ),
+            bottomNavigationBar: _buildPlaceOrder()
+            )
+            );
+            ;//:Container();
   }
 
   /// Section Widget
   PreferredSizeWidget _buildAppBar() {
+    
     return CustomAppBar(
         leadingWidth: 52.h,
         leading: AppbarLeadingImage(
@@ -82,29 +113,79 @@ class CartScreen extends GetWidget<CartController> {
 
   /// Section Widget
   Widget _buildUserProfile() {
-    return Obx(() =>
-     ListView.separated(
-        physics: NeverScrollableScrollPhysics(),
-        shrinkWrap: true,
-        separatorBuilder: (context, index) {
-          return Padding(
-              padding: EdgeInsets.symmetric(vertical: 5.0.v),
-              child: SizedBox(
-                  width: 381.h,
-                  child: Divider(
-                      height: 1.v,
-                      thickness: 1.v,
-                      color: appTheme.black900.withOpacity(0.25))));
-        },
-        itemCount:controller.cartModelObj.value.userprofile4ItemList.value.length,
-           // controller.cartModelObj.value.userprofile4ItemList.value.length,
-        itemBuilder: (context, index) {
-         // Userprofile4ItemModel model =controller.cartModelObj.value.userprofile4ItemList.value[index];
-         //CartItem cartItem = controller.cartModelObj.value.userprofile4ItemList.value[index];
-          return Userprofile4ItemWidget(
-            item:item
+
+    CollectionReference Cart = FirebaseFirestore.instance.collection('Cart');
+    return 
+   // Obx(() =>
+
+    // GetBuilder<cart_controller>(
+      
+    //   builder: (context) 
+      // {
+        // return
+          StreamBuilder(
+          stream:Cart.snapshots()  ,
+            builder: (BuildContext context, AsyncSnapshot snapshot) {
+               dynamic data=snapshot.data!;
+                              if (snapshot.hasError) {
+          return Center(child: Text("Something went wrong"));
+                              }
+
+                   if(snapshot.connectionState == ConnectionState.waiting){
+                 return Center(
+                  child: CircularProgressIndicator(),
+                 ) ;  };
+              return ListView.separated(
+                physics: NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                separatorBuilder: (BuildContext context,  int index) {
+             
+                  return 
+                 item1['isSale'] == false && item1['uid'] == _auth.currentUser!.uid.toString()?  
+                  Padding(
+                      padding: EdgeInsets.symmetric(vertical: 5.0.v),
+                      child: SizedBox(
+                          width: 381.h,
+                          child: Divider(
+                              height: 1.v,
+                              thickness: 1.v,
+                              color: appTheme.black900.withOpacity(0.25)))
+                              )
+                              :Container();
+                              
+                },
+                itemCount://controller.products.length,
+                snapshot.data.docs.length,
+                //controller.cartModelObj.value.userprofile4ItemList.value.length,
+                   // controller.cartModelObj.value.userprofile4ItemList.value.length,
+                itemBuilder: ( context, index) {
+                 //  dynamic 
+                  item1=data.docs[index];
+// item1=controller.products[index];
+               
+                 // Userprofile4ItemModel model =controller.cartModelObj.value.userprofile4ItemList.value[index];
+                 //CartItem cartItem = controller.cartModelObj.value.userprofile4ItemList.value[index];
+                  return item1['isSale'] == false && item1['uid'] == _auth.currentUser!.uid.toString()? 
+                   Userprofile4ItemWidget(item:item1,
+                /**
+                 *   controller: controller,
+                product: controller.products.keys.toList()[index],
+                quantity: controller.products.values.toList()[index],
+                index: index, 
+                 */
+                   )
+                   :Container();
+                  
+                 // cart_controller.UserWidge();
+                }
+                //)
+                
+                );
+            }
+         // )
           );
-        }));
+    //   }
+    // );
   }
 
   /// Section Widget
@@ -131,7 +212,8 @@ class CartScreen extends GetWidget<CartController> {
 
   /// Section Widget
   Widget _buildTotal() {
-    return Padding(
+    return 
+    Padding(
         padding: EdgeInsets.only(right: 1.h),
         child:
             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
@@ -168,6 +250,7 @@ class CartScreen extends GetWidget<CartController> {
        productTotalPrice:5, 
        productImages:item['productImages'].toString(), 
        uid:_auth.currentUser!.uid.toString(),
+       isSale:true, size: [], ice: [], sugar: [],
       // item1['uId'].toString(),
        
        );
@@ -243,7 +326,7 @@ class CartScreen extends GetWidget<CartController> {
 
   /// Navigates to the previous screen.
   onTapArrowLeft() {
-    Get.back();
+      cart_controller().gotoback();
   }
 
   
