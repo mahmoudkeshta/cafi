@@ -19,6 +19,7 @@ class CafeFollowingPage extends StatelessWidget {
   CafeFollowingPage({Key? key}) : super(key: key);
   CafeFollowingController controller =
       Get.put(CafeFollowingController(CafeFollowingModel().obs));
+      
   @override
   Widget build(BuildContext context) {
     
@@ -40,16 +41,17 @@ class CafeFollowingPage extends StatelessWidget {
                                   style: theme.textTheme.headlineLarge))),
                       SizedBox(height: 6.v),
                     //  _buildUserProfile(),
+                    
                       SizedBox(height: 23.v),
                       Align(
                           alignment: Alignment.centerLeft,
                           child: Padding(
                               padding: EdgeInsets.only(left: 24.h),
-                              child: Text("lbl_coupon".tr,
+                              child: Text("lbl_Usersr".tr,
                                   style: theme.textTheme.headlineLarge))),
                       SizedBox(height: 6.v),
                       _buildUserProfile1(),
-                      SizedBox(height: 18.v),
+                      SizedBox(height: 20.v),
                       Align(
                           alignment: Alignment.centerLeft,
                           child: Padding(
@@ -69,6 +71,17 @@ class CafeFollowingPage extends StatelessWidget {
                       Text("lbl_loading".tr, style: theme.textTheme.titleMedium)
                     ])))));
   }
+
+
+
+
+
+
+
+
+
+
+  
 
   /// Section Widget
   PreferredSizeWidget _buildAppBar() {

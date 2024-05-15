@@ -1,8 +1,12 @@
 
 
+import 'dart:convert';
+
 import 'package:coffee_app/presentation/home_screen/home_screen.dart';
 import 'package:coffee_app/presentation/sign_in_screen/controller/getuserdatacontroller.dart';
+import 'package:coffee_app/presentation/sign_in_screen/sign_in_screen.dart';
 import 'package:coffee_app/presentation/sign_up_screen/services/auth.dart';
+import 'package:crypto/crypto.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:coffee_app/core/app_export.dart';
@@ -22,6 +26,8 @@ class SignUpScreen extends GetWidget<SignUpController> {
 
   SignUpScreen({Key? key}) : super(key: key);
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  
+ 
   @override
   Widget build(BuildContext context) {
     SignUp_ControllerImg signUp_ControllerImg = Get.put(SignUp_ControllerImg());
@@ -300,10 +306,22 @@ class SignUpScreen extends GetWidget<SignUpController> {
   Widget _buildSignUpButton() {
      final GetUserDataController getUserDataController =
       Get.put(GetUserDataController());
+      
     TextEditingController fullNameRowController = TextEditingController();
     TextEditingController phoneRowController = TextEditingController();
     TextEditingController addressRowController = TextEditingController();
     TextEditingController addpasswordController = TextEditingController();
+
+String encryptPassword(String password) {
+if  (password.isNotEmpty){
+ var bytes = utf8.encode(password); // تحويل كلمة المرور إلى بايتات.
+  var digest = sha256.convert(bytes); // تجزئة البايتات إلى SHA-256.
+  return digest.toString(); 
+}
+ return '';
+ // إرجاع القيمة المشفرة كنص.
+}
+    final encryptedPassword = encryptPassword(controller.passwordRowController.text);
      // SignUp_ControllerImg signUp_ControllerImg = Get.put(SignUp_ControllerImg());
     return CustomElevatedButton(text: "lbl_sign_up".tr,
     onPressed: ()
@@ -313,9 +331,11 @@ class SignUpScreen extends GetWidget<SignUpController> {
  // ignore: unused_local_variable
 
         try  {
+          
             
          final res = await AuthMethods().signup(email: controller.phoneRowController.text,
-              password:controller.passwordRowController.text,
+              password:  encryptedPassword,//controller.passwordRowController.text,
+                
               username:  controller.fullNameRowController.text,
               dispose: controller.addressRowController.text);
 
@@ -324,20 +344,18 @@ class SignUpScreen extends GetWidget<SignUpController> {
           
               // var userData = await getUserDataController.getUserData(res!.user!.uid);
            
-          if (res == null){
-           Get.to(HomeScreen(),binding:HomeBinding());
-               
-          }else{
+   if  (res != null){
             
+   
                 Get.snackbar(
-      
-      "Ererr",
-      " $res " ,
-      snackPosition: SnackPosition.BOTTOM,
-      backgroundColor: Colors.red,
-      colorText: Color.fromARGB(233, 254, 254, 255),
-    );
-          
+                            "تم",
+                            "ارسال الايميل التحقق من عنوان البريد الإلكتروني الخاص بك." ,
+                            snackPosition: SnackPosition.BOTTOM,
+                            backgroundColor: Colors.green,
+                            colorText: Color.fromARGB(233, 254, 254, 255),
+                          );
+            FirebaseAuth.instance.currentUser!.sendEmailVerification();   
+                 Get.to(SignInScreen()); 
           
           }
         } on Exception catch (e) {

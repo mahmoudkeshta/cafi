@@ -3,6 +3,8 @@ import 'package:coffee_app/presentation/cart_screen/controller/cart_controller.d
 import 'package:coffee_app/presentation/cart_screen/controller/cart_controller.dart';
 import 'package:coffee_app/presentation/order_success_screen/services/c1.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/widgets.dart';
 
 import 'models/menu2_item_model.dart';
 import 'package:flutter/material.dart';
@@ -40,7 +42,7 @@ class ProductScreen extends GetWidget<ProductController> {
                 width: double.maxFinite,
                 child: SingleChildScrollView(
                     child: Column(children: [
-                  _buildView(),
+                  _buildView(context),
                   SizedBox(height: 23.v),
                   _buildMochaFrappe(),
                   SizedBox(height: 7.v),
@@ -66,6 +68,7 @@ class ProductScreen extends GetWidget<ProductController> {
                   _buildSizeSelector(),
                   SizedBox(height: 17.v),
                   _buildAddToCart(),
+                  
                   SizedBox(height: 9.v),
                  // _buildOneHundred(),
                   //SizedBox(height: 23.v),
@@ -115,9 +118,23 @@ class ProductScreen extends GetWidget<ProductController> {
                   SizedBox(height: 2.v)
                 ])))));
   }
-
+ void _showSecondPage(BuildContext context) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (ctx) => Scaffold(
+          appBar: AppBar(title: Text('second page')),
+          body: Center(
+            child: Hero(
+              tag: 'my-hero-animation-tag',
+              child: Image.asset('res/images/material_design_3.png'),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
   /// Section Widget
-  Widget _buildView() {
+  Widget _buildView(BuildContext context) {
     return SizedBox(
         height: 452.v,
         width: double.maxFinite,
@@ -140,14 +157,15 @@ class ProductScreen extends GetWidget<ProductController> {
                   height: 452.v,
                   width: double.maxFinite,
                   child: Stack(alignment: Alignment.center, children: [
-                    CustomImageView(
-                        imagePath:
-                        
-                        cartController5.itemData1.value= item['productImages'],
-                        // ImageConstant.imgMaskGroup452x428,
-                        height: 452.v,
-                        width: 428.h,
-                        alignment: Alignment.center),
+                   CustomImageView(
+                          imagePath:
+                          
+                          cartController5.itemData1.value= item['productImages'],
+                          // ImageConstant.imgMaskGroup452x428,
+                          height: 452.v,
+                          width: 428.h,
+                          alignment: Alignment.center),
+                   
                     Align(
                         alignment: Alignment.center,
                         child: SizedBox(
@@ -181,13 +199,18 @@ class ProductScreen extends GetWidget<ProductController> {
                                               left: 26.h, bottom: 8.v),
                                           onTap: () {
                                             onTapArrowLeft();
+                                         
+                                         
                                           }),
                                       actions: [
-                                        AppbarTrailingImage(
-                                            imagePath:
-                                                ImageConstant.imgFavorite,
-                                            margin: EdgeInsets.symmetric(
-                                                horizontal: 24.h))
+                                        GestureDetector(
+                                            onTap: () => _showSecondPage(context),
+                                          child: AppbarTrailingImage(
+                                              imagePath:
+                                                  ImageConstant.imgFavorite,
+                                              margin: EdgeInsets.symmetric(
+                                                  horizontal: 24.h)),
+                                        )
                                       ])
                                 ])))
                   ])))
@@ -478,7 +501,11 @@ class ProductScreen extends GetWidget<ProductController> {
       // item1['uId'].toString(),
        
        );
+      
   Get.toNamed(AppRoutes.cartScreen, arguments: item);
+  Center(
+                  child: CircularProgressIndicator(),
+                 ) ;
     // Handle success response if needed
   } catch (e) {
     // Handle any errors or exceptions that occur during upload

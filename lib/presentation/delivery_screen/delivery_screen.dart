@@ -17,28 +17,33 @@ class DeliveryScreen extends GetWidget<DeliveryController> {
             body: Container(
                 width: double.maxFinite,
                 padding: EdgeInsets.symmetric(horizontal: 59.h),
-                child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SizedBox(height: 14.v),
-                      CustomImageView(
-                          imagePath: ImageConstant.imgImage53,
-                          height: 170.adaptSize,
-                          width: 170.adaptSize),
-                      SizedBox(height: 33.v),
-                      Text("lbl_delivery_pickup".tr,
-                          style: CustomTextStyles.displaySmallPrimary),
-                      SizedBox(height: 26.v),
-                      CustomElevatedButton(
-                          height: 100.v,
-                          text: "lbl_wait".tr,
-                          margin: EdgeInsets.symmetric(horizontal: 5.h),
-                          buttonStyle: CustomButtonStyles.fillAmberATL50,
-                          buttonTextStyle: theme.textTheme.displaySmall!),
-                      SizedBox(height: 21.v),
-                      Text("msg_please_wait_this".tr,
-                          style: theme.textTheme.bodyLarge)
-                    ])),
+                child: InkWell(
+                  child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SizedBox(height: 14.v),
+                        CustomImageView(
+                            imagePath: ImageConstant.imgImage53,
+                            height: 170.adaptSize,
+                            width: 170.adaptSize),
+                        SizedBox(height: 33.v),
+                        Text("lbl_delivery_pickup".tr,
+                            style: CustomTextStyles.displaySmallPrimary),
+                        SizedBox(height: 26.v),
+                        CustomElevatedButton(
+                            height: 100.v,
+                            text: "lbl_wait".tr,
+                            margin: EdgeInsets.symmetric(horizontal: 5.h),
+                            buttonStyle: CustomButtonStyles.fillAmberATL50,
+                            buttonTextStyle: theme.textTheme.displaySmall!),
+                        SizedBox(height: 21.v),
+                        Text("msg_please_wait_this".tr,
+                            style: theme.textTheme.bodyLarge)
+                      ]),
+                      onTap: () {
+                          Get.toNamed(AppRoutes.trackingOrdersScreen);
+                      },
+                )),
             bottomNavigationBar: _buildGetHelp()));
   }
 
@@ -50,7 +55,8 @@ class DeliveryScreen extends GetWidget<DeliveryController> {
             imagePath: ImageConstant.imgArrowLeftOnprimary,
             margin: EdgeInsets.only(left: 24.h, top: 67.v, bottom: 19.v),
             onTap: () {
-              onTapArrowLeft();
+             Get.toNamed(AppRoutes.homeScreen);
+              // onTapArrowLeft();
             }),
         centerTitle: true,
         title: AppbarSubtitleTwo(

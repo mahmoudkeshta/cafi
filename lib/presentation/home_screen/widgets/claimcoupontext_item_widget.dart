@@ -26,7 +26,7 @@ class ClaimcoupontextItemWidget extends StatelessWidget {
       decoration: AppDecoration.yellow.copyWith(
         borderRadius: BorderRadiusStyle.roundedBorder20,
       ),
-      width: 170.h,
+      width: 190.h,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.center,

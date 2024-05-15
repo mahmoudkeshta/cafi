@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:coffee_app/presentation/cafe_following_container_screen/cafe_following_container_screen.dart';
 import 'package:coffee_app/presentation/forgot_password_screen/binding/forgot_password_binding.dart';
@@ -7,6 +9,7 @@ import 'package:coffee_app/presentation/sign_in_screen/controller/getuserdatacon
 import 'package:coffee_app/presentation/sign_up_screen/services/auth.dart';
 import 'package:coffee_app/presentation/verify_screen/binding/verify_binding.dart';
 import 'package:coffee_app/presentation/verify_screen/verify_screen.dart';
+import 'package:crypto/crypto.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:coffee_app/core/app_export.dart';
@@ -25,6 +28,15 @@ import 'controller/sign_in_controller.dart';
 class SignInScreen extends GetWidget<SignInController> {
   TextEditingController emailController =TextEditingController();
   TextEditingController passwordController =TextEditingController();
+  String encryptPassword(String password) {
+  var bytes = utf8.encode(password); // تحويل كلمة المرور إلى بايتات.
+  var digest = sha256.convert(bytes); // تجزئة البايتات إلى SHA-256.
+  return digest.toString(); // إرجاع القيمة المشفرة كنص.
+}
+ 
+      int wrongPasswordAttempts = 0; // متغير لتتبع عدد محاولات كلمة المرور الخاطئة
+final int maxAttempts = 3;
+
   /*
   * signin() async {
     try {
@@ -137,21 +149,29 @@ class SignInScreen extends GetWidget<SignInController> {
 
 
                       async{
-
+             
+final encryptedPassword = encryptPassword(controller.passwordController.text);
   try {
-  final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+ // عدد محاولات كلمة المرور الخاطئة القصوى قبل حظر المستخدم
+    
+   final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
     email: controller.phoneController.text,
-    password: controller.passwordController.text,
+    password: encryptedPassword,//controller.passwordController.text,
   );
+
+  
+  
+
 
   // استرجاع بيانات المستخدم بنجاح
   var userData = await getUserDataController.getUserData(credential!.user!.uid);
 
   // التأكد من وجود البيانات والتحقق مما إذا كان المستخدم مسؤولًا أم لا
-  if (userData.isNotEmpty && userData[0]['isAdmin'] == true) {
+  if (userData.isNotEmpty && userData[0]['isAdmin'] == true && FirebaseAuth.instance.currentUser!.emailVerified  ) {
     // المستخدم مسؤول، يمكن تنفيذ الإجراءات المناسبة هنا
    // Get.offAll(AdminMainScreen(), binding: AdminMainBinding());
     String v= _auth.currentUser!.email.toString();
+    
     
     AwesomeDialog (
             context: context,
@@ -175,20 +195,69 @@ class SignInScreen extends GetWidget<SignInController> {
             btnOkIcon: Icons.cancel,
             
             )..show();
-
-  } else {
+}  else if  (userData.isNotEmpty && userData[0]['isCafe'] == true && FirebaseAuth.instance.currentUser!.emailVerified ){
+    String v= _auth.currentUser!.email.toString();
+     Get.snackbar(
+      "Success",
+      "Cafe: $v logged in successfully",
+      snackPosition: SnackPosition.BOTTOM,
+      backgroundColor: Colors.green,
+      colorText: Color.fromARGB(233, 254, 254, 255),
+    );
+  }
+   else if  (userData.isNotEmpty && userData[0]['isDelivery'] == true && FirebaseAuth.instance.currentUser!.emailVerified){
+      String v= _auth.currentUser!.email.toString();
+       Get.snackbar(
+      "Success",
+      "Delivery: $v logged in successfully",
+      snackPosition: SnackPosition.BOTTOM,
+      backgroundColor: Colors.green,
+      colorText: Color.fromARGB(233, 254, 254, 255),
+    );
+  }
+  
+   else if( userData.isNotEmpty && FirebaseAuth.instance.currentUser!.emailVerified) {
        String v= _auth.currentUser!.email.toString();
     // المستخدم ليس مسؤولا، قم بتسجيل الدخول إلى الواجهة الرئيسية للمستخدم العادي
     Get.offAll(HomeScreen(), binding: HomeBinding());
+     wrongPasswordAttempts = 0;
     Get.snackbar(
       "Success",
       "User: $v logged in successfully",
       snackPosition: SnackPosition.BOTTOM,
       backgroundColor: Colors.green,
       colorText: Color.fromARGB(233, 254, 254, 255),
+      
     );
   }
 } on FirebaseAuthException catch (e) {
+
+             wrongPasswordAttempts++;
+
+                Get.snackbar(
+      
+      "Ererr",
+      " $e " ,
+      snackPosition: SnackPosition.BOTTOM,
+      backgroundColor: Colors.red,
+      colorText: Color.fromARGB(233, 254, 254, 255),
+    );
+   
+      if (wrongPasswordAttempts >= maxAttempts) {
+      // قم بتنفيذ الإجراءات المناسبة لمنع المستخدم، مثل إظهار رسالة خطأ أو منعه من المحاولة لفترة معينة
+      // يمكنك تنفيذ الإجراءات الخاصة بك هنا
+
+                Get.snackbar(
+      
+      "Ererr",
+      " Limit of logins allowed" ,
+      snackPosition: SnackPosition.BOTTOM,
+      backgroundColor: Colors.red,
+      colorText: Color.fromARGB(233, 254, 254, 255),
+    );
+    Get.offAllNamed(AppRoutes.refundDeclinedScreen);
+    }
+
   if (e.code == 'user-not-found') {
      AwesomeDialog(
             context: context,
@@ -235,6 +304,7 @@ AwesomeDialog(
                         }, */
                       
                    onTap: () async {
+                   
                                   AwesomeDialog(
             context: context,
             dialogType: DialogType.info,
@@ -251,6 +321,7 @@ AwesomeDialog(
                           );
             
             },
+            
             btnOkOnPress: () async{ await FirebaseAuth.instance.sendPasswordResetEmail(email:controller.phoneController.text );
              Get.snackbar(
                             "تم",
@@ -493,4 +564,4 @@ AwesomeDialog(
       ],
     );
   }
-}
+  }

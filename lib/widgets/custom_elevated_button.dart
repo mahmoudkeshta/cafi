@@ -52,7 +52,11 @@ class CustomElevatedButton extends BaseButton {
         decoration: decoration,
         child: ElevatedButton(
           style: buttonStyle,
-          onPressed: isDisabled ?? false ? null : onPressed ?? () {},
+          onPressed: isDisabled ?? false ? null : onPressed ?? () {
+            
+          Get.toNamed(AppRoutes.orderSuccessOneScreen);
+   
+          },
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,

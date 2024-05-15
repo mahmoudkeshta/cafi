@@ -28,8 +28,8 @@ class Userprofile4ItemWidget extends StatelessWidget {
     
      cart_controller cart_con=Get.put(cart_controller(),permanent: true);
   final item;
-  //final CartController5 cartController5 = Get.find<CartController5>();
-    //CartController5 cartController5=Get.put(CartController5(),permanent: true);
+ // final CartController5 cartController5 = Get.find<CartController5>();
+    CartController5 cartController5=Get.put(CartController5(),permanent: true);
    // CartController cartController=Get.put(CartController(),permanent: true);
   Userprofile4ItemWidget(
     //this.userprofile4ItemModelObj,

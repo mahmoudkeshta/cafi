@@ -90,7 +90,7 @@ class PaymentScreen extends GetWidget<PaymentController> {
         text: "lbl_add_other_bank".tr,
         margin: EdgeInsets.only(left: 24.h, right: 23.h, bottom: 34.v),
         onPressed: (){
-          Get.offNamed(AppRoutes.orderSuccessOneScreen);
+          Get.offNamed(AppRoutes.pickupScreen);
 
 
 

@@ -70,7 +70,7 @@ TextEditingController searchController= TextEditingController();
                   _buildMenu()
                 ]))),
             bottomNavigationBar: _buildBottomBar()
-            )
+            ),
             );
   }
 

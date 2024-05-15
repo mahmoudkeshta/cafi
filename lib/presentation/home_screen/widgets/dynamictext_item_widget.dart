@@ -5,9 +5,12 @@ import '../models/dynamictext_item_model.dart';
 
 // ignore: must_be_immutable
 class DynamictextItemWidget extends StatelessWidget {
+
   DynamictextItemWidget(
+    
     this.dynamictextItemModelObj, {
     Key? key,
+    
   }) : super(
           key: key,
         );
@@ -19,15 +22,17 @@ class DynamictextItemWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 70.h,
+      width: 79.h,
       child: Padding(
         padding: EdgeInsets.only(
           top: 10.v,
           bottom: 6.v,
         ),
         child: Column(
+          
           children: [
             Container(
+              
               height: 70.adaptSize,
               width: 70.adaptSize,
               decoration: AppDecoration.fillPrimaryContainer.copyWith(
@@ -47,7 +52,8 @@ class DynamictextItemWidget extends StatelessWidget {
             ),
             Obx(
               () => Text(
-                dynamictextItemModelObj.dynamicText!.value,
+               
+               dynamictextItemModelObj.dynamicText!.value,
                 style: CustomTextStyles.titleMediumBlack900,
               ),
             ),

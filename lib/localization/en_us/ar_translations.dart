@@ -2,6 +2,9 @@
 
 // ignore: duplicate_ignore, duplicate_ignore
 final Map<String, String> arAr = {
+  "Limit of logins allowed_1":"بعد دقيقه سوف يتم محاولة تسجيل دخول",
+   "lbl_login1": "تسجيل دخول بعد دقيقه واحد",
+  
   // شاشة التحميل
   "lbl_cafi": "كافيه",
 
@@ -14,6 +17,11 @@ final Map<String, String> arAr = {
 
   // شاشة فلاش
   "lbl_get_start": "ابدأ", "lbl_working_power": "قوة العمل",
+
+"lbl_Usersr": "مستخدمين",
+"lbl_mm": "عرض",
+  "Limit of logins allowed":" حد مسموح من تسجيل دخول",
+
 
   // شاشة التسجيل
   "lbl_full_name": "الاسم الكامل", "lbl_your_address": "عنوانك",
@@ -233,7 +241,7 @@ final Map<String, String> arAr = {
   "msg_you_cart_have_successfully": "تمت إضافة العنصر إلى سلة التسوق بنجاح",
   "lbl_ama": "أما",
   "lbl_coupon": "كوبون",
-  "lbl_free_2": "2مجاناً",
+  "lbl_free_2": "عرض ",
   "lbl_free_5": "مجاناً",
   "lbl_search_shop2": "البحث في المتجر...",
   "lbl_chinese": "صيني",

@@ -16,9 +16,12 @@ final Map<String, String> enUs = {
 
   // Sign up - Action Screen
   "msg_st_271_sen_sok": "St 271, Sen Sok, Phnom Penh",
-
+"lbl_Usersr": "Users",
+"lbl_mm": "show",
   // Success Screen
   "lbl_login": "Login",
+  "lbl_login1": "Sign in one minute",
+  
   "msg_you_have_successfully_create": "You have successfully\ncreate account",
 
   // Forgot Password One Screen
@@ -211,6 +214,9 @@ final Map<String, String> enUs = {
   "msg_you_aren_t_follw": "You aren’t follw refund policy",
   "msg_your_refund_is_declined": "Your refund is \ndeclined",
 
+  "Limit of logins allowed":"Limit of logins allowed",
+
+  "Limit of logins allowed_1":"After a minute, a login attempt will be made",
   // Profile Screen
   "lbl_2022_cafi": "@2022 Cafi",
   "lbl_cafe_following": "Cafe Following",
@@ -319,7 +325,7 @@ final Map<String, String> enUs = {
   "msg_you_cart_have_successfully": "You cart have \nsuccessfully added",
 
   // Cafe Following Screen
-  "lbl_ama": "Ama", "lbl_coupon": "Coupon", "lbl_free_2": "Free 2\$",
+  "lbl_ama": "Ama", "lbl_coupon": "Coupon", "lbl_free_2": "show",
   "lbl_free_5": "Free 5\$", "lbl_search_shop2": "Search Shop...",
 
   // Setting Screen

@@ -19,7 +19,7 @@ class ProfileItemWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 68.h,
+      width: 80.h,//68
       child: Align(
         alignment: Alignment.center,
         child: Column(
@@ -31,7 +31,7 @@ class ProfileItemWidget extends StatelessWidget {
                 width: 51.h,
               ),
             ),
-            SizedBox(height: 5.v),
+            SizedBox(height: 3.v),
             Obx(
               () => Text(
                 profileItemModelObj.balance1!.value,

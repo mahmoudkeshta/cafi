@@ -551,8 +551,21 @@ class ProfileScreen extends GetWidget<ProfileController> {
                     ProfileItemModel model = controller
                         .profileModelObj.value.profileItemList.value[index];
 
-                    return ProfileItemWidget(
-                      model,
+                    return InkWell(
+                      onTap: () {
+                        if (index == 0) {
+          Navigator.pushNamed(context, AppRoutes.balanceScreen);
+        }  else if(index == 1) {
+ Navigator.pushNamed(context, AppRoutes.rewardScreen);
+        } else if(index == 2){
+ Navigator.pushNamed(context, AppRoutes.inviteOneScreen);
+        }else{
+  Navigator.pushNamed(context, AppRoutes.giftCardScreen);
+        }
+                      },
+                      child: ProfileItemWidget(
+                        model,
+                      ),
                     );
                   },
                 ),

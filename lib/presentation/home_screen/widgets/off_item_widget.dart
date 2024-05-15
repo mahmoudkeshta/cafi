@@ -128,6 +128,9 @@ class OffItemWidget extends StatelessWidget {
 cart_controller().saveItem(Get.arguments);
                //   cart_controller().gotopro(item);
                         }),
-   ): Container();
+   ): Container(
+     
+              child: Text('cd'),
+   );
   }
 }

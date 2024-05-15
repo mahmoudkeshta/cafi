@@ -7,12 +7,13 @@ class ProfileItemModel {
   ProfileItemModel({
     this.balance,
     this.balance1,
-
+  
     this.id,
   }) {
     balance = balance ?? Rx(ImageConstant.imgRectangle100);
     balance1 = balance1 ?? Rx("Balance");
-    balance1 = balance1 ?? Rx(Profile_ControllerIgm().goToGiftCard());
+   
+
     id = id ?? Rx("");
     
   // ignore: unused_local_variable
@@ -20,6 +21,6 @@ class ProfileItemModel {
   }
   Rx<String>? balance;
   Rx<String>? balance1;
-
+  
   Rx<String>? id;
 }

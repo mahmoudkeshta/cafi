@@ -27,7 +27,11 @@ class HomeModel {
         dynamicImage: ImageConstant.imgImage13.obs, dynamicText: "Hot".obs),
     DynamictextItemModel(
         dynamicImage: ImageConstant.imgImage14.obs, dynamicText: "Tea".obs),
-    DynamictextItemModel(dynamicText: "Frappe".obs)
+          DynamictextItemModel(
+        dynamicImage: ImageConstant.imgImage13.obs, dynamicText: "Coffee".obs),
+           DynamictextItemModel(
+        dynamicImage: ImageConstant.imgImage18.obs, dynamicText: "Healthy".obs),
+    //DynamictextItemModel(dynamicText: "Frappe".obs)
   ]);
   Rx<List<OffItemModel>> offItemList = Rx([
     OffItemModel(

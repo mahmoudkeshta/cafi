@@ -7,7 +7,7 @@ import 'profile_item_model.dart';
 class ProfileModel  {
   Rx<List<ProfileItemModel>> profileItemList = Rx([
     ProfileItemModel(
-        balance: ImageConstant.imgRectangle100.obs, balance1: "Balance".obs),
+        balance: ImageConstant.imgRectangle100.obs, balance1: "Balance".obs,),
     ProfileItemModel(
         balance: ImageConstant.imgRectangle101.obs, balance1: "Reward".obs),
     ProfileItemModel(

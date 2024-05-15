@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:coffee_app/presentation/cart_screen/controller/cart_controller.dart';
+
 import 'package:coffee_app/presentation/notification_screen/binding/notification_binding.dart';
 import 'package:coffee_app/presentation/notification_screen/notification_screen.dart';
 import 'package:coffee_app/presentation/order_success_screen/models/order.dart';
@@ -45,6 +46,7 @@ import 'widgets/widget_item_widget.dart';
 class HomeScreen extends GetWidget<HomeController> {
     final item = Get.arguments;
    HomeScreen({Key? key}) : super(key: key);
+   
   
   @override
   Widget build(BuildContext context) {
@@ -57,10 +59,26 @@ class HomeScreen extends GetWidget<HomeController> {
             body: SizedBox(
                 width: double.maxFinite,
                 child: Column(
-                    children: [SizedBox(height: 19.v), _buildScrollView()])),
+                    children: [SizedBox(height: 19.v), _buildScrollView(context)])),
             bottomNavigationBar: _buildBottomBar()));
   }
-
+  
+void _showSecondPage(BuildContext context) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (ctx) => Scaffold(
+          appBar: AppBar(title: Text('second page')),
+          body: Center(
+            child: Hero(
+              tag: 'my-hero-animation-tag',
+              child: Image.asset('res/images/material_design_3.png'),
+              
+            ),
+          ),
+        ),
+      ),
+    );
+  }
   /// Section Widget
   PreferredSizeWidget _buildAppBar() {
 
@@ -72,9 +90,12 @@ class HomeScreen extends GetWidget<HomeController> {
       
         height: 95.v,//112
         leadingWidth: 73.h,
+      
         leading:
          AppbarLeadingIconbutton(
-            imagePath: ImageConstant.imgClosePrimary,
+            imagePath:
+            ImageConstant.
+            imgClosePrimary,
             margin: EdgeInsets.only(left: 24.h, top: 52.v, bottom: 11.v),
             onTap: () {
               
@@ -104,8 +125,10 @@ class HomeScreen extends GetWidget<HomeController> {
               child: AppbarTrailingImage(
                 onTap: (){
                  home_ControllerIme().gotoSearch();
+                 
                 },
-                  imagePath: ImageConstant.imgSearchOnprimary,
+                  imagePath://item["userImg"],
+                      ImageConstant.imgSearchOnprimary,
                   margin: EdgeInsets.fromLTRB(17.h, 61.v, 14.h, 3.v)),
             ),
                 
@@ -150,6 +173,7 @@ class HomeScreen extends GetWidget<HomeController> {
 
   /// Section Widget
   Widget _buildWidget() {
+    
     return Obx(() => 
     CarouselSlider.builder(
         options: CarouselOptions(
@@ -174,7 +198,8 @@ class HomeScreen extends GetWidget<HomeController> {
   ///
   ///
   ///
-  Widget _buildScrollView() {
+  Widget _buildScrollView(BuildContext context) {
+    
       cart_controller cart_con=Get.put(cart_controller(),permanent: true);
     home_ControllerIme home_controllerIme = Get.put(home_ControllerIme());
     CollectionReference order = FirebaseFirestore.instance.collection('order');
@@ -203,6 +228,7 @@ class HomeScreen extends GetWidget<HomeController> {
           child: Padding(
               padding: EdgeInsets.only(left: 24.h),
               child: Text("lbl_categories".tr,
+              
                   style: CustomTextStyles.headlineSmallBlack900_2))),
       SizedBox(
           height: 111.v,
@@ -217,7 +243,19 @@ class HomeScreen extends GetWidget<HomeController> {
               itemBuilder: (context, index) {
                 DynamictextItemModel model = controller
                     .homeModelObj.value.dynamictextItemList.value[index];
-                return DynamictextItemWidget(model);
+                return InkWell(
+                  
+                  onTap: (){
+              
+                     // Navigator.pushNamed(context, AppRoutes.categoriesScreen,);
+                     Get.toNamed( AppRoutes.categoriesScreen,arguments: model);
+                      
+                  },
+                  child: DynamictextItemWidget(model,
+                  
+                  )
+                
+                );
               }))),
       SizedBox(height: 12.v),
       Align(
@@ -290,6 +328,7 @@ class HomeScreen extends GetWidget<HomeController> {
               child: Text(
                 "lbl_shop".tr,
                 style: CustomTextStyles.headlineSmallBlack900_2,
+                
               ),
               onTap: () {
                 home_ControllerIme().goToshop();
@@ -341,7 +380,7 @@ class HomeScreen extends GetWidget<HomeController> {
                         Userprofile1ItemModel model = controller
                             .homeModelObj.value.userprofile1ItemList.value[index];
                             dynamic item= data.docs[index];
-                       return  item['isAdmin'] == true ? Userprofile1ItemWidget(item :item):Text("");
+                       return  item['isCafe'] == true ? Userprofile1ItemWidget(item :item):Container();
                       });
                  }
                )
@@ -497,6 +536,7 @@ class HomeScreen extends GetWidget<HomeController> {
         return DefaultWidget();
     }
   }
+
 
   /// Navigates to the previous screen.
   onTapClose() {

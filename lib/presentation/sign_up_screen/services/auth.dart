@@ -42,7 +42,7 @@ class AuthMethods{
             isAdmin: false,
             isActive: true,
             createdOn: "",
-            city: "", password: password);
+            city: "", password: password, isCafe: false, isDelivery: false);
         FirebaseFirestore.instance.collection("users").doc(userCredential.user!.uid).set(userModel.toMap());
       }else{
       }

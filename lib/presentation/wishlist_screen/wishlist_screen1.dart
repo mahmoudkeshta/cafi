@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:coffee_app/presentation/home_screen/controller/home_controller.dart';
 import 'package:coffee_app/presentation/home_screen/widgets/menu_item_widget.dart';
+import 'package:coffee_app/presentation/setting_screen/binding/setting_binding.dart';
+import 'package:coffee_app/presentation/setting_screen/setting_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:coffee_app/core/app_export.dart';
@@ -9,6 +11,7 @@ import 'package:coffee_app/widgets/app_bar/appbar_subtitle_two.dart';
 import 'package:coffee_app/widgets/app_bar/appbar_trailing_image.dart';
 import 'package:coffee_app/widgets/app_bar/custom_app_bar.dart';
 import 'package:coffee_app/widgets/custom_rating_bar.dart';
+import 'package:flutter/widgets.dart';
 import 'controller/wishlist_controller.dart';
 
 class WishlistScreen1 extends GetWidget<WishlistController> {
@@ -96,7 +99,8 @@ class WishlistScreen1 extends GetWidget<WishlistController> {
             imagePath: ImageConstant.imgArrowLeftOnprimary,
             margin: EdgeInsets.only(left: 24.h, top: 67.v, bottom: 19.v),
             onTap: () {
-              onTapArrowLeft();
+             onTapArrowLeft();
+                 
             }),
         centerTitle: true,
         title: AppbarSubtitleTwo(
@@ -104,9 +108,24 @@ class WishlistScreen1 extends GetWidget<WishlistController> {
             //"lbl_wishlist".tr,
             margin: EdgeInsets.only(top: 58.v, bottom: 11.v)),
         actions: [
+          
+          
           AppbarTrailingImage(
-              imagePath: ImageConstant.imgSend,
-              margin: EdgeInsets.fromLTRB(24.h, 67.v, 24.h, 18.v))
+                    imagePath: 
+                    ImageConstant.imgSend,
+                    margin: EdgeInsets.fromLTRB(24.h, 67.v, 24.h, 18.v),
+                    onTap: (){
+                       Get.toNamed(AppRoutes.settingScreen,arguments:item1 );
+                    },),
+                    
+       
+          
+           
+          
+           
+        
+        
+        
         ],
         styleType: Style.bgShadow);
   }

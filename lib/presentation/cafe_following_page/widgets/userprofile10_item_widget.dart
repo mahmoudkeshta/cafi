@@ -71,7 +71,8 @@ class Userprofile10ItemWidget extends StatelessWidget {
                         padding: EdgeInsets.only(left: 10.h),
                         child: //Obx( () => 
                           Text(
-                            item1['username'],
+                            
+                           item1['username'],
                            // userprofile10ItemModelObj.userName!.value,
                             style: theme.textTheme.headlineSmall,
                           ),

@@ -44,6 +44,21 @@ class _AddProductPageState extends State<AddProductPage> {
              uid: 'gXEj5n8wY9NrCcWCqfmw8xtVaEB3');
     }catch(e){}
   } */
+    void _showSecondPage(BuildContext context) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (ctx) => Scaffold(
+          appBar: AppBar(title: Text('second page')),
+          body: Center(
+            child: Hero(
+              tag: 'my-hero-animation-tag',
+              child: Image.asset('assets/images/img_ellipse_20_85x85.png'),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -93,6 +108,31 @@ class _AddProductPageState extends State<AddProductPage> {
               controller:categoryNameController,
               decoration: InputDecoration(labelText: 'categoryName'),
             ),
+            Center(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          const SizedBox(
+            height: 20.0,
+          ),
+          ListTile(
+            leading: GestureDetector(
+              onTap: () => _showSecondPage(context),
+              child: const Hero(
+                tag: 'my-hero-animation-tag',
+                child: CircleAvatar(
+                  backgroundImage:
+                      AssetImage('assets/images/img_ellipse_20_85x85.png'),
+                ),
+              ),
+            ),
+            title: const Text(
+              'Tap on the photo to view the animation transition.',
+            ),
+          ),
+        ],
+      ),
+            ),
               SizedBox(height: 10.0),
             TextField(
               controller: salePriceController,
@@ -110,6 +150,7 @@ class _AddProductPageState extends State<AddProductPage> {
             ),
             SizedBox(height: 10.0),
             TextField(
+              onTap: () => _showSecondPage(context),
               controller: productDescriptionController,
               decoration: InputDecoration(labelText: 'Product Description'),
               maxLines: null,

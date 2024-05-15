@@ -17,6 +17,8 @@ class UserModel {
   final String street;
   final bool isAdmin;
   final bool isActive;
+    final bool isCafe;
+     final bool isDelivery;
   final dynamic createdOn;
   final String city;
   final String? about;
@@ -45,6 +47,8 @@ class UserModel {
     this.lastActivated,
     this.puchToken,
     this.online,
+       required this.isCafe,
+         required this.isDelivery,
   });
 
   // Serialize the UserModel instance to a JSON map
@@ -70,7 +74,8 @@ class UserModel {
       'lastActivated': lastActivated,
       'puchToken': puchToken,
       'online': online,
-
+'isCafe': isCafe,
+'isDelivery': isDelivery,
     };
   }
 
@@ -95,7 +100,7 @@ class UserModel {
       createdAt: snapshot['createdAt'], 
      lastActivated: snapshot['lastActivated'],
     puchToken: snapshot['puchToken'],
-    online: snapshot['online'],
+    online: snapshot['online'], isCafe: snapshot['isCafe'], isDelivery: snapshot['isDelivery'],
 
     );
   }

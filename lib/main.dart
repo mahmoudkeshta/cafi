@@ -1,4 +1,6 @@
 
+import 'dart:ui';
+
 import 'package:coffee_app/presentation/home_screen/home_screen.dart';
 import 'package:coffee_app/presentation/sign_in_screen/sign_in_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -31,7 +33,9 @@ class MyApp extends StatefulWidget {
   State<MyApp> createState() => _MyAppState();
 }
     void changeStatusBarColor() {
-  FlutterStatusbarcolor.setStatusBarColor(Color(0XFFFF045F)); // قم بتغيير هذا اللون بلون الـ AppBar المطلوب
+  FlutterStatusbarcolor.setStatusBarColor(Color(0XFFFF045F)); 
+
+  // قم بتغيير هذا اللون بلون الـ AppBar المطلوب
 }
 class _MyAppState extends State<MyApp> {
   @override

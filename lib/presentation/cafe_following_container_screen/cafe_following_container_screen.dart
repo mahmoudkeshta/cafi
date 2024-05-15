@@ -20,8 +20,8 @@ String getCurrentRoute(BottomBarEnum type) {
    home_ControllerIme home_controllerIme = Get.put(home_ControllerIme());
   switch (type) {
     case BottomBarEnum.Home: return AppRoutes.cafeFollowingPage;
-     case BottomBarEnum.Orders: return home_ControllerIme().gotoAdd(); case BottomBarEnum.Chat: return "/";
-      case BottomBarEnum.Cart: return "/"; case BottomBarEnum.Profile: return "/"; default: return "/";} } 
+     case BottomBarEnum.Orders: return home_ControllerIme().gotoAdd(); case BottomBarEnum.Chat: return home_ControllerIme().goToChat();
+      case BottomBarEnum.Cart: return "/"; case BottomBarEnum.Profile: return home_ControllerIme().goToProfile(); default: return "/";} } 
 ///Handling page based on route
 Widget getCurrentPage(String currentRoute) { switch (currentRoute) {case AppRoutes.cafeFollowingPage:
  return CafeFollowingPage(); default: return DefaultWidget();} } 
