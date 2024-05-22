@@ -1,14 +1,17 @@
+import 'package:coffee_app/presentation/cart_screen/controller/cart_controller.dart';
 import 'package:coffee_app/presentation/sign_in_screen/binding/sign_in_binding.dart';
+import 'package:coffee_app/presentation/sign_in_screen/finger_print.dart';
 import 'package:coffee_app/presentation/sign_in_screen/sign_in_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:local_auth/local_auth.dart';
 import 'models/profile_item_model.dart';
 import 'controller/profile_controller.dart';
 import 'package:coffee_app/core/app_export.dart';
 import 'package:coffee_app/widgets/custom_icon_button.dart';
 import 'package:coffee_app/widgets/app_bar/custom_app_bar.dart';
 import 'package:coffee_app/widgets/app_bar/appbar_subtitle_two.dart';
-
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'widgets/profile_item_widget.dart';
 
 // ignore_for_file: must_be_immutable
@@ -17,11 +20,16 @@ class ProfileScreen extends GetWidget<ProfileController> {
       : super(
           key: key,
         );
+        
   @override
   Widget build(BuildContext context) {
+   
+    
     // ignore: unused_local_variable
     Profile_ControllerIgm profile_controllerIgm =Get.put(Profile_ControllerIgm());
-    
+     final CartController5 cartController5 = Get.put<CartController5>(CartController5());
+   
+   
     return SafeArea(
       child: Scaffold(
         body: SizedBox(
@@ -257,6 +265,7 @@ class ProfileScreen extends GetWidget<ProfileController> {
                                 },
                                 ),
                               ),
+                              
                             ],
                           ),
                         ),
@@ -333,11 +342,13 @@ class ProfileScreen extends GetWidget<ProfileController> {
                                   //profile_controllerIgm.got();
                                 },
                                 ),
+                                
                               ),
                             ],
                           ),
                         ),
                         SizedBox(height: 13.v),
+                        
                         _buildLineTwentyNine(),
                         SizedBox(height: 11.v),
                         Padding(
@@ -376,16 +387,67 @@ class ProfileScreen extends GetWidget<ProfileController> {
                         _buildLineTwentyNine(),
                         SizedBox(height: 11.v),
                         _buildThumbsUp(),
+                        SizedBox(height: 11.v),
+                    ElevatedButton.icon(
+          onPressed: () async {
+            final localAuth = LocalAuthentication();
+            bool didAuthenticate = false;
+
+            try {
+              // يتحقق من توافر بصمات الأصابع على الجهاز
+              bool canCheckBiometrics = await localAuth.canCheckBiometrics;
+              if (canCheckBiometrics) {
+                // يتم عرض طلب تسجيل بصمات الأصابع على الجهاز
+                didAuthenticate = await localAuth.authenticate(
+                  localizedReason: 'Please register your fingerprint',
+               // تسجيل بصمات الأصابع يبقى نشطًا حتى بعد الخروج من التطبيق
+                );
+              }
+            } catch (e) {
+              print('Error: $e');
+            }
+
+            if (didAuthenticate) {
+              // تم تسجيل بصمات الأصابع بنجاح
+              print('Fingerprint registered successfully');
+              cartController5.itemData4.value = '';
+                 cartController5.itemData5.value = '';
+            } else {
+              // فشل في تسجيل بصمات الأصابع
+              print('Failed to register fingerprint');
+            }
+          },
+            
+icon: Icon(Icons.fingerprint,size: 30,color: Colors.white ),
+                
+            // أيقونة بصمة الأصبع
+             label: Padding(
+               padding: const EdgeInsets.only(left: 9.0),
+               child: Text(' Reset Fingerprint', style: TextStyle(
+            fontSize: 20,color: Colors.white ,// حجم النص بالبكسل
+                 ),),
+             ),
+        ),
+        
+   
+             
+           
+                      
                       ],
                     ),
+                    
                   ),
+                  
                 ),
               ),
             ],
           ),
+          
         ),
       ),
     );
+
+  
   }
 
   /// Section Widget
@@ -627,7 +689,7 @@ class ProfileScreen extends GetWidget<ProfileController> {
              GestureDetector(
                child:
                Text(
-                "lbl_2022_cafi".tr,
+                "lbl_2024_cafi".tr,
                 style: CustomTextStyles.bodyLargeBlack900_1,
                          ),
                          onTap:(){

@@ -20,7 +20,8 @@ class Userprofile1ItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return item['isAdmin'] == true ? Align(
+    var shortUsername = item['username'].substring(0, 8);
+    return item['isCafe'] == true ? Align(
       alignment: Alignment.centerRight,
       child: Container(
         padding: EdgeInsets.symmetric(
@@ -74,6 +75,7 @@ class Userprofile1ItemWidget extends StatelessWidget {
               ),
             ),
             Padding(
+              
               padding: EdgeInsets.only(
                 left: 8.h,
                 top: 7.v,
@@ -84,8 +86,9 @@ class Userprofile1ItemWidget extends StatelessWidget {
                 children: [
                  // Obx(
                   //  () => 
+                  
                     Text(
-                      item ['username'],
+                     shortUsername,
                       
                     //  userprofile1ItemModelObj.textStarbucks!.value,
                       style: CustomTextStyles.titleLargeMedium,

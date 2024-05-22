@@ -17,7 +17,7 @@ class LoadingController extends GetxController {
     // Delay navigation to the next screen after 10 seconds
     Future.delayed(Duration(seconds: 1), () {
       // Navigate to the next screen
-      Get.off(OnBoarding());//flashScreenTwoScreen
+      Get.to(OnBoarding());//flashScreenTwoScreen
       // Use Get.offAll() if you want to remove all the previous routes from the stack
     });
   }

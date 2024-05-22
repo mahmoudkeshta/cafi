@@ -1,4 +1,4 @@
-// ignore_for_file: equal_keys_in_map
+
 
 // ignore: duplicate_ignore, duplicate_ignore
 final Map<String, String> arAr = {
@@ -10,6 +10,7 @@ final Map<String, String> arAr = {
 
   // شاشة فلاش
   "lbl_best_coffee": "أفضل قهوة",
+
  "lbl_Dialog_chanepassword": " هل تريد تغيير كلمه السر ؟",
 
   // شاشة فلاش
@@ -172,7 +173,7 @@ final Map<String, String> arAr = {
   "msg_your_refund_is_successfully": "تم استرداد المبلغ الخاص بك\nبنجاح",
   "msg_you_aren_t_follw": "أنت لم تتبع سياسة الاسترداد",
   "msg_your_refund_is_declined": "تم رفض استرداد المبلغ الخاص بك",
-  "lbl_2022_cafi": "@كافي 2022",
+  "lbl_2024_cafi": "@كافي 2024",
   "lbl_cafe_following": "متابعة المقاهي",
   "lbl_my_account": "حسابي",
   "lbl_my_wistlist": "قائمة الرغبات",

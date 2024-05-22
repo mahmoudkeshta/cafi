@@ -232,7 +232,8 @@ void _showSecondPage(BuildContext context) {
                   style: CustomTextStyles.headlineSmallBlack900_2))),
       SizedBox(
           height: 111.v,
-          child: Obx(() => ListView.separated(
+          child: //Obx(() =>
+           ListView.separated(
               padding: EdgeInsets.symmetric(horizontal: 24.h),
               scrollDirection: Axis.horizontal,
               separatorBuilder: (context, index) {
@@ -256,7 +257,9 @@ void _showSecondPage(BuildContext context) {
                   )
                 
                 );
-              }))),
+              })
+              //)
+              ),
       SizedBox(height: 12.v),
       Align(
           alignment: Alignment.centerLeft,

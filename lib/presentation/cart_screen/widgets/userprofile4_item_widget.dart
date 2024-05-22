@@ -61,7 +61,7 @@ class Userprofile4ItemWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
      // final ProductController productController = Get.find();
-     
+     final itemId =item['productId'];
     return 
     
     Container(
@@ -177,7 +177,7 @@ class Userprofile4ItemWidget extends StatelessWidget {
                  ),
                  onTap: (){
                  // controller.removeProduct(product);
-                 
+                 Controller.decrement(itemId);
                     
                  },
                       ),
@@ -195,7 +195,7 @@ class Userprofile4ItemWidget extends StatelessWidget {
                          // userprofile4ItemModelObj.quantity!.value,
                  //      '$quantity',
                       //'2',
-                      '  ${Controller.counter.value} ',
+                      ' ${controller.getProductCounter(itemId).value}',
                    //   '  ${Controller.m.value.toString()} ',
                   
                           style: CustomTextStyles.headlineSmallBlack900Medium,
@@ -215,7 +215,7 @@ class Userprofile4ItemWidget extends StatelessWidget {
                   height: 24.adaptSize,
                   width: 24.adaptSize,
                   onTap: () {
-                    Controller.decrement();
+                      Controller.increment(itemId);
                 // controller.addProduct(product);
                   },
                   child:   Icon(

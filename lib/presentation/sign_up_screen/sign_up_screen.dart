@@ -16,6 +16,7 @@ import 'package:coffee_app/widgets/custom_text_form_field.dart';
 import 'package:coffee_app/core/utils/validation_functions.dart';
 
 import 'package:coffee_app/widgets/app_bar/appbar_leading_image.dart';
+import 'package:local_auth/local_auth.dart';
 // ignore: unused_import;
 
 import '../home_screen/binding/home_binding.dart';
@@ -344,7 +345,7 @@ if  (password.isNotEmpty){
           
               // var userData = await getUserDataController.getUserData(res!.user!.uid);
            
-   if  (res != null){
+   if  (encryptedPassword.isNotEmpty  ){
             
    
                 Get.snackbar(
@@ -371,8 +372,8 @@ if  (password.isNotEmpty){
     );
         }
 
-
-
+      
+    
 
     }
    /* async{

@@ -319,7 +319,7 @@ class ImageConstant {
 
   static String imgVector2 = '$imagePath/img_vector_2.svg';
 
-  static String imgCheckmarkPrimary = '$imagePath/img_checkmark_primary.svg';
+  static String imgCheckmarkPrimary = '$imagePath/img_checkmark_primary.png';
 
   static String imgImage6 = '$imagePath/img_image_6.png';
 

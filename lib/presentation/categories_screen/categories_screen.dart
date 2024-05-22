@@ -15,6 +15,7 @@ import 'package:flutter/widgets.dart';
 import 'controller/categories_controller.dart';
 
 class CategoriesScreen extends GetWidget<CategoriesController> {
+  
    CategoriesScreen(   {Key? key
   ,
   }) : super(key: key);
@@ -24,6 +25,10 @@ class CategoriesScreen extends GetWidget<CategoriesController> {
   Widget build(BuildContext context) {
       CartController5 cartController5=Get.put(CartController5(),permanent: true);
      CollectionReference order = FirebaseFirestore.instance.collection('order');
+   
+   
+    
+   
     return SafeArea(
         child: Scaffold(
             appBar: _buildAppBar(),

@@ -21,12 +21,12 @@ class ClaimcoupontextItemWidget extends StatelessWidget {
     return Container(
       padding: EdgeInsets.symmetric(
         horizontal: 11.h,
-        vertical: 14.v,
+        vertical: 10.v,
       ),
       decoration: AppDecoration.yellow.copyWith(
         borderRadius: BorderRadiusStyle.roundedBorder20,
       ),
-      width: 190.h,
+      width: 230.h,//190.h,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.center,

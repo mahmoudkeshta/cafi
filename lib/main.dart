@@ -9,12 +9,14 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_statusbarcolor_ns/flutter_statusbarcolor_ns.dart';
+import 'package:get_storage/get_storage.dart';
 
 import 'core/app_export.dart';
 
 void main() async {
 
   WidgetsFlutterBinding.ensureInitialized();
+    await GetStorage.init();
   await Firebase.initializeApp(
 
   );
@@ -57,6 +59,7 @@ class _MyAppState extends State<MyApp> {
   // ignore: override_on_non_overriding_member
   @override
   Widget build(BuildContext context) {
+       FirebaseAuth firebaseAuth = FirebaseAuth.instance;
     
     return Sizer(builder: (context, orientation, deviceType) {
       return GetMaterialApp(
@@ -70,11 +73,11 @@ class _MyAppState extends State<MyApp> {
       fallbackLocale: Locale('ar', 'AR'),
        // locale: Locale('en', 'US'),
         title: 'coffee_app',
-        home: FirebaseAuth.instance.currentUser == null? SignInScreen():HomeScreen(),
+        home: firebaseAuth.currentUser == null ? SignInScreen():HomeScreen(),
       
           initialBinding: InitialBindings(),
         initialRoute: AppRoutes.initialRoute,
-        getPages: AppRoutes.pages,
+       getPages: AppRoutes.pages,
        
 
       );

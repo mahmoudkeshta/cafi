@@ -84,7 +84,7 @@ class MenuItemWidget extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(height: 12.v),
+            SizedBox(height: 2.v),
            // Obx(
              // () => 
               Text(

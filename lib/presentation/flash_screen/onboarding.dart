@@ -83,7 +83,7 @@ class OnBoarding extends StatelessWidget {
                       margin: EdgeInsets.symmetric(horizontal: 14),
                       onPressed: (){
                       //  Get.offAll(SignInActionScreen(),binding:SignInActionBinding());
-                        Get.offAll(SignInScreen(),binding:SignInBinding());
+                        Get.to(SignInScreen(),binding:SignInBinding());
                       },
                     ),
                    // SizedBox(height: 10.h),

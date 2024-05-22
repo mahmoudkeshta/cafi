@@ -40,7 +40,7 @@ class SignUp_ControllerImg extends SignUp_Controller{
   @override
   gotohome() {
     // TODO: implement gotohome
-      Get.offAll(() => HomeScreen());
+      Get.to(() => HomeScreen());
   }
 
 

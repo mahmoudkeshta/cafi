@@ -25,6 +25,7 @@ goToRefund();
 goToAboutCompany();
 goToAboutSignOut();
 goToAboutPassword();
+goToset();
 
 
 
@@ -116,6 +117,13 @@ class Profile_ControllerIgm extends Profile_Controller{
   goToAboutPassword() {
     
     Get.toNamed(AppRoutes.changePasswordScreen);
+  }
+  
+  @override
+  goToset() {
+    // TODO: implement goToset
+
+
   }
 
 

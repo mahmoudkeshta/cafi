@@ -218,7 +218,7 @@ final Map<String, String> enUs = {
 
   "Limit of logins allowed_1":"After a minute, a login attempt will be made",
   // Profile Screen
-  "lbl_2022_cafi": "@2022 Cafi",
+  "lbl_2024_cafi": "@2024 Cafi",
   "lbl_cafe_following": "Cafe Following",
   "lbl_my_account": "My Account",
   "lbl_my_wistlist": "My Wistlist",

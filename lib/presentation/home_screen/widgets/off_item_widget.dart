@@ -99,9 +99,9 @@ class OffItemWidget extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(height: 6.v),
+              SizedBox(height: 3.v),
               Align(
-                alignment: Alignment.centerRight,
+                alignment: Alignment.center,
                 child:
                 // Obx(
                  // () => 
@@ -130,7 +130,7 @@ cart_controller().saveItem(Get.arguments);
                         }),
    ): Container(
      
-              child: Text('cd'),
+        //      child: Text('cd'),
    );
   }
 }

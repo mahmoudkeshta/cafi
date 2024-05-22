@@ -174,7 +174,9 @@ class CartScreen extends GetWidget<CartController> {
                 index: index, 
                  */
                    )
-                   :Container();
+                   :Container(
+                  
+                   );
                   
                  // cart_controller.UserWidge();
                 }
@@ -328,6 +330,7 @@ class CartScreen extends GetWidget<CartController> {
   onTapArrowLeft() {
       cart_controller().gotoback();
   }
+  
 
   
 }
